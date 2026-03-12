@@ -1,0 +1,30 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# pnpm 9.5+ の Catalogs 機能を利用
+catalogs:
+  # 全体で共通するバージョン
+  default:
+    typescript: ^5.5.0
+    "@biomejs/biome": ^1.8.3
+    vitest: ^2.0.0
+    turbo: ^2.0.0
+    "@types/node": ^24.0.0
+  # フロントエンド関連（Web、Mobile）
+  frontend:
+    react: ^18.3.1
+    react-dom: ^18.3.1
+    vite: ^5.3.1
+    "@vitejs/plugin-react": ^4.3.1
+    "@types/react": ^18.3.3
+    "@types/react-dom": ^18.3.0
+  # バックエンド関連
+  backend:
+    "@nestjs/core": ^10.3.9
+    "@nestjs/common": ^10.3.9
+    "@nestjs/cli": ^10.3.2
+    "@nestjs/platform-express": ^10.3.9
+    "reflect-metadata": ^0.2.2
+    "rxjs": ^7.8.1
+    "@types/express": ^4.17.21

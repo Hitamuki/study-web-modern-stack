@@ -1,0 +1,27 @@
+[tools]
+node = "24"
+pnpm = "latest"
+
+[tasks.install]
+run = "pnpm install"
+description = "依存関係をインストールします"
+
+[tasks.dev]
+run = "pnpm dev"
+description = "開発サーバーを起動します"
+
+[tasks.build]
+run = "pnpm build"
+description = "プロジェクトをビルドします"
+
+[tasks.lint]
+run = "pnpm lint"
+description = "静的解析を実行します"
+
+[tasks.format]
+run = "pnpm format"
+description = "コードを整形します"
+
+[tasks.test]
+run = "pnpm test"
+description = "テストを実行します"

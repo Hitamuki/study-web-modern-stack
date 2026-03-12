@@ -1,0 +1,24 @@
+{
+  "name": "@memo-app/api",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nest start --watch",
+    "build": "nest build",
+    "lint": "biome lint ."
+  },
+  "dependencies": {
+    "@nestjs/common": "catalog:backend",
+    "@nestjs/core": "catalog:backend",
+    "@nestjs/platform-express": "catalog:backend",
+    "reflect-metadata": "catalog:backend",
+    "rxjs": "catalog:backend"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "catalog:backend",
+    "@types/express": "catalog:backend",
+    "@types/node": "catalog:",
+    "typescript": "catalog:",
+    "@biomejs/biome": "catalog:"
+  }
+}

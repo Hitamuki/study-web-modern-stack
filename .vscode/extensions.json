@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "biomejs.biome",
+    "vercel.turborepo",
+    "hashicorp.terraform",
+    "graphql.vscode-graphql",
+    "editorconfig.editorconfig"
+  ]
+}

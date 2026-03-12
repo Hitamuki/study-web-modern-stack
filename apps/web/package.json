@@ -1,0 +1,22 @@
+{
+  "name": "@memo-app/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "biome lint ."
+  },
+  "dependencies": {
+    "react": "catalog:frontend",
+    "react-dom": "catalog:frontend"
+  },
+  "devDependencies": {
+    "vite": "catalog:frontend",
+    "@vitejs/plugin-react": "catalog:frontend",
+    "@types/react": "catalog:frontend",
+    "@types/react-dom": "catalog:frontend",
+    "typescript": "catalog:",
+    "@biomejs/biome": "catalog:"
+  }
+}
