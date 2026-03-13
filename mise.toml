@@ -1,6 +1,9 @@
 [tools]
 node = "24"
 pnpm = "latest"
+terraform = "latest"
+tflint = "latest"
+terraform-docs = "latest"
 
 [tasks.install]
 run = "pnpm install"

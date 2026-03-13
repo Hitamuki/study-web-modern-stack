@@ -27,5 +27,8 @@
     "*.tf": "terraform",
     "*.tfvars": "terraform"
   },
-  "terraform.languageServer.enabled": true
+  "terraform.languageServer.enabled": true,
+  "[terraform]": {
+    "editor.defaultFormatter": "hashicorp.terraform"
+  }
 }
