@@ -1,0 +1,30 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: study_web_pg
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: memo
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  hasura:
+    image: hasura/graphql-engine:v2.20.0
+    container_name: study_web_hasura
+    depends_on:
+      - postgres
+    ports:
+      - "8080:8080"
+    environment:
+      HASURA_GRAPHQL_DATABASE_URL: "postgres://user:password@postgres:5432/memo"
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
+      HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecretkey"
+      HASURA_GRAPHQL_CORS_DOMAIN: "*"
+
+volumes:
+  postgres-data:
+    name: study_web_pgdata

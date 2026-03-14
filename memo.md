@@ -4,15 +4,18 @@
 
 ## 完了項目の概要
 
-| 項目                                     | 概要                        | 技術的な知見・詳細                                                                                                |
-| :--------------------------------------- | :-------------------------- | :---------------------------------------------------------------------------------------------------------------- |
-| **GitHub リポジトリ作成 & 初期 push**    | プロジェクトの Git 管理開始 | `main` ブランチへの初期コミットとリモート連携を完了。                                                             |
-| **エディターの拡張機能、設定**           | 開発体験 (DX) の向上        | `.vscode/settings.json` での自動整形設定や推奨拡張機能を整備し、チーム開発での環境差異を低減。                    |
-| **mise & CONTRIBUTING.md の整備**        | ランタイム・貢献フロー管理  | `mise` を活用し Node.js (v24) や pnpm のバージョンをプロジェクト単位で固定。                                      |
-| **pnpm Workspace (Catalogs) の導入**     | 依存関係の一元管理          | `pnpm-workspace.yaml` の `catalogs` 機能を活用し、複数パッケージ間で共通ライブラリのバージョンを同期。            |
-| **Turborepo による実行パイプライン定義** | ビルド・タスクの効率化      | `turbo.json` に `build`, `lint`, `dev`, `test` を定義。パッケージ間の依存関係を考慮した高速なタスク実行を可能に。 |
-| **Biome による静的解析の統合**           | 高速な Lint/Format          | `biome.json` により Linter と Formatter を統合。ESLint/Prettier よりも高速な解析を実現。                          |
-| **Terraform によるインフラ構成管理**     | AWS リソースのコード化      | `main.tf` で VPC, Subnet, RDS 等のインフラを定義。`main.tftest.hcl` で設定検証テストを実装。                      |
+| 項目                                                       | 概要                        | 技術的な知見・詳細                                                                                                |
+| :--------------------------------------------------------- | :-------------------------- | :---------------------------------------------------------------------------------------------------------------- |
+| **GitHub リポジトリ作成 & 初期 push**                      | プロジェクトの Git 管理開始 | `main` ブランチへの初期コミットとリモート連携を完了。                                                             |
+| **エディターの拡張機能、設定**                             | 開発体験 (DX) の向上        | `.vscode/settings.json` での自動整形設定や推奨拡張機能を整備し、チーム開発での環境差異を低減。                    |
+| **mise & CONTRIBUTING.md の整備**                          | ランタイム・貢献フロー管理  | `mise` を活用し Node.js (v24) や pnpm のバージョンをプロジェクト単位で固定。                                      |
+| **pnpm Workspace (Catalogs) の導入**                       | 依存関係の一元管理          | `pnpm-workspace.yaml` の `catalogs` 機能を活用し、複数パッケージ間で共通ライブラリのバージョンを同期。            |
+| **Turborepo による実行パイプライン定義**                   | ビルド・タスクの効率化      | `turbo.json` に `build`, `lint`, `dev`, `test` を定義。パッケージ間の依存関係を考慮した高速なタスク実行を可能に。 |
+| **Biome による静的解析の統合**                             | 高速な Lint/Format          | `biome.json` により Linter と Formatter を統合。ESLint/Prettier よりも高速な解析を実現。                          |
+| **Terraform によるインフラ構成管理**                       | AWS リソースのコード化      | `main.tf` で VPC, Subnet, RDS 等のインフラを定義。`main.tftest.hcl` で設定検証テストを実装。                      |
+| **GraphQL の 3 要素概念把握**                              | GraphQL 基礎理解            | Query（取得）、Mutation（変更）、Subscription（リアルタイム）の役割を学習。REST API との違いを把握。              |
+| **Docker Compose による PostgreSQL / Hasura の起動**       | ローカル開発環境構築        | `docker-compose.yml` で PostgreSQL と Hasura を定義。ポートマッピングと環境変数設定によりローカル起動を実現。     |
+| **Hasura コンソールでの `memos` テーブル作成と CRUD 操作** | GraphQL API の実践操作      | Hasura コンソールでテーブル作成、GraphiQL で Query/Mutation を実行。自動生成された GraphQL スキーマの確認。       |
 
 ## 主要な知見
 
@@ -54,3 +57,15 @@ Terraform を用いて AWS リソース（VPC, Subnet, Internet Gateway, Securit
   - `terraform test` で `main.tftest.hcl` に定義した検証シナリオを実行
 
 `terraform.tfvars` には `db_password` などの機密値を定義しています。環境変数 `TF_VAR_db_password` を使って上書きすることも可能です。
+
+### 7. Hasura による GraphQL API の自動生成
+
+Hasura を PostgreSQL に接続することで、データベーススキーマから自動的に GraphQL API を生成できることを確認。コンソール上でテーブルを作成するだけで Query/Mutation が利用可能になり、開発効率が大幅に向上。
+
+### 8. Docker Compose によるローカル開発環境の簡易構築
+
+`docker-compose.yml` を用いて PostgreSQL と Hasura を一括起動。コンテナ間ネットワークにより Hasura が Postgres に接続可能。ホストポートの競合を避けるため、5433:5432 のマッピングを実施。
+
+### 9. Hasura コンソールの操作体験
+
+コンソール内でテーブル作成、権限設定、GraphiQL でのクエリ実行が可能。CRUD 操作を通じて GraphQL の直感的な操作性を体感。自動生成されたスキーマがリアルタイムで反映される点が便利。
