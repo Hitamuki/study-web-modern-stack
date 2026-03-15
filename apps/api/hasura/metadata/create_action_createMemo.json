@@ -1,0 +1,16 @@
+{
+  "type": "create_action",
+  "args": {
+    "name": "createMemo",
+    "definition": {
+      "kind": "synchronous",
+      "arguments": [
+        { "name": "content", "type": "String!" }
+      ],
+      "output_type": "CreateMemoResponse",
+      "handler": "http://host.docker.internal:3000/hasura/actions/createMemo",
+      "timeout": 60
+    },
+    "comment": "Create memo via NestJS domain logic (Hasura Actions)"
+  }
+}

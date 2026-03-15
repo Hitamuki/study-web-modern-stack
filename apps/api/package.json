@@ -5,17 +5,24 @@
   "scripts": {
     "dev": "nest start --watch",
     "build": "nest build",
-    "lint": "biome lint ."
+    "start:debug": "nest start --debug",
+    "lint": "biome lint .",
+    "postinstall": "prisma generate",
+    "db:push": "prisma db push",
+    "db:reset": "prisma db push --force-reset",
+    "db:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@nestjs/common": "catalog:backend",
     "@nestjs/core": "catalog:backend",
     "@nestjs/platform-express": "catalog:backend",
+    "@prisma/client": "catalog:backend",
     "reflect-metadata": "catalog:backend",
     "rxjs": "catalog:backend"
   },
   "devDependencies": {
     "@nestjs/cli": "catalog:backend",
+    "prisma": "catalog:backend",
     "@types/express": "catalog:backend",
     "@types/node": "catalog:",
     "typescript": "catalog:",

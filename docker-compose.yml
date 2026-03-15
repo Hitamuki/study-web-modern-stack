@@ -19,6 +19,9 @@ services:
       - postgres
     ports:
       - "8080:8080"
+    # Linux で host.docker.internal を使う場合に必要（Mac/Windows は不要）
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
     environment:
       HASURA_GRAPHQL_DATABASE_URL: "postgres://user:password@postgres:5432/memo"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
