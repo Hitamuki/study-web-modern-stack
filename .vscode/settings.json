@@ -30,5 +30,6 @@
   "terraform.languageServer.enabled": true,
   "[terraform]": {
     "editor.defaultFormatter": "hashicorp.terraform"
-  }
+  },
+  "kiroAgent.configureMCP": "Disabled"
 }

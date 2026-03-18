@@ -19,6 +19,10 @@ catalogs:
     "@vitejs/plugin-react": ^4.3.1
     "@types/react": ^18.3.3
     "@types/react-dom": ^18.3.0
+    "@apollo/client": ^4.1.6
+    graphql: ^16.13.1
+    "@graphql-codegen/cli": ^5.0.2
+    "@graphql-codegen/client-preset": ^4.2.6
   # バックエンド関連
   backend:
     "@nestjs/core": ^10.3.9

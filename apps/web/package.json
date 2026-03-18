@@ -5,18 +5,24 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "biome lint ."
+    "lint": "biome lint .",
+    "codegen": "graphql-codegen"
   },
   "dependencies": {
+    "@apollo/client": "catalog:frontend",
+    "graphql": "catalog:frontend",
     "react": "catalog:frontend",
     "react-dom": "catalog:frontend"
   },
   "devDependencies": {
-    "vite": "catalog:frontend",
-    "@vitejs/plugin-react": "catalog:frontend",
+    "@biomejs/biome": "catalog:",
+    "@graphql-codegen/cli": "catalog:frontend",
+    "@graphql-codegen/client-preset": "catalog:frontend",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",
+    "@vitejs/plugin-react": "catalog:frontend",
     "typescript": "catalog:",
-    "@biomejs/biome": "catalog:"
+    "vite": "catalog:frontend"
   }
 }
