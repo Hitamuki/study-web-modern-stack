@@ -2,20 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "api:dev",
-      "type": "shell",
-      "command": "pnpm dev",
-      "options": {
-        "cwd": "${workspaceFolder}/apps/api"
-      },
-      "isBackground": true,
-      "problemMatcher": ["$tsc-watch"],
-      "presentation": {
-        "reveal": "always",
-        "panel": "dedicated"
-      }
-    },
-    {
       "label": "web:dev",
       "type": "shell",
       "command": "pnpm dev",
@@ -25,12 +11,12 @@
       "isBackground": true,
       "problemMatcher": {
         "pattern": {
-          "regexp": "^$"
+          "regexp": "^"
         },
         "background": {
           "activeOnStart": true,
-          "beginsPattern": ".",
-          "endsPattern": "VITE v.* ready in"
+          "beginsPattern": "VITE",
+          "endsPattern": "ready in"
         }
       },
       "presentation": {
@@ -39,11 +25,22 @@
       }
     },
     {
-      "label": "web:codegen",
+      "label": "mobile:web",
       "type": "shell",
-      "command": "pnpm codegen",
+      "command": "pnpm web",
       "options": {
-        "cwd": "${workspaceFolder}/apps/web"
+        "cwd": "${workspaceFolder}/apps/mobile"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Starting Metro Bundler",
+          "endsPattern": "(Metro )?waiting on (http|exp)"
+        }
       },
       "presentation": {
         "reveal": "always",

@@ -4,6 +4,7 @@
     "vercel.turborepo",
     "hashicorp.terraform",
     "graphql.vscode-graphql",
-    "editorconfig.editorconfig"
+    "editorconfig.editorconfig",
+    "expo.vscode-expo-tools"
   ]
 }

@@ -2,6 +2,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Debug API (NestJS)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "pnpm",
+      "runtimeArgs": ["run", "start:debug"],
+      "cwd": "${workspaceFolder}/apps/api",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
       "name": "Debug Web (Chrome)",
       "type": "chrome",
       "request": "launch",
@@ -13,28 +23,22 @@
       "skipFiles": ["<node_internals>/**"]
     },
     {
-      "name": "Debug API (NestJS)",
-      "type": "node",
+      "name": "Debug Mobile (Web)",
+      "type": "chrome",
       "request": "launch",
-      "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["run", "start:debug"],
-      "cwd": "${workspaceFolder}/apps/api",
-      "console": "integratedTerminal",
-      "skipFiles": ["<node_internals>/**"]
-    },
-    {
-      "name": "Attach to API",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "restart": true,
-      "skipFiles": ["<node_internals>/**"]
+      "url": "http://localhost:8081",
+      "webRoot": "${workspaceFolder}/apps/mobile",
+      "preLaunchTask": "mobile:web"
     }
   ],
   "compounds": [
     {
-      "name": "Full Stack Debug",
+      "name": "Full Stack Debug (Web)",
       "configurations": ["Debug Web (Chrome)", "Debug API (NestJS)"]
+    },
+    {
+      "name": "Full Stack Debug (Mobile Web)",
+      "configurations": ["Debug Mobile (Web)", "Debug API (NestJS)"]
     }
   ]
 }
