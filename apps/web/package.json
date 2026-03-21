@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "biome lint .",
-    "codegen": "graphql-codegen"
+    "lint": "biome lint ."
   },
   "dependencies": {
     "@apollo/client": "catalog:frontend",
@@ -15,9 +14,8 @@
     "react-dom": "catalog:frontend"
   },
   "devDependencies": {
+    "@repo/graphql": "workspace:*",
     "@biomejs/biome": "catalog:",
-    "@graphql-codegen/cli": "catalog:frontend",
-    "@graphql-codegen/client-preset": "catalog:frontend",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",

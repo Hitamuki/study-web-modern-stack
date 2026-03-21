@@ -11,19 +11,19 @@ catalogs:
     vitest: ^2.0.0
     turbo: ^2.0.0
     "@types/node": ^24.0.0
-  # フロントエンド関連（Web、Mobile）
+  # フロントエンド関連（Web、Mobile、Desktop）
   frontend:
-    react: ^18.3.1
-    react-dom: ^18.3.1
+    react: ^19.0.0
+    react-dom: ^19.0.0
     vite: ^5.3.1
     "@vitejs/plugin-react": ^4.3.1
-    "@types/react": ^18.3.3
-    "@types/react-dom": ^18.3.0
+    "@types/react": ^19.0.0
+    "@types/react-dom": ^19.0.0
     "@apollo/client": ^4.1.6
     graphql: ^16.13.1
     "@graphql-codegen/cli": ^5.0.2
     "@graphql-codegen/client-preset": ^4.2.6
-  # バックエンド関連
+  # バックエンド関連（Web API）
   backend:
     "@nestjs/core": ^10.3.9
     "@nestjs/common": ^10.3.9

@@ -4,6 +4,7 @@ pnpm = "latest"
 terraform = "latest"
 tflint = "latest"
 terraform-docs = "latest"
+hasura-cli = "latest"
 
 [tasks.install]
 run = "pnpm install"

@@ -1,0 +1,8 @@
+version: 3
+endpoint: http://localhost:8080
+admin_secret: myadminsecretkey
+metadata_directory: metadata
+# Prisma がマイグレーションを管理するため、Hasura 側はメタデータのみを対象にします。
+actions:
+  kind: synchronous
+  handler_webhook_base_url: http://host.docker.internal:3000

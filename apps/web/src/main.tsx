@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { ApolloProvider } from './app/providers/ApolloProvider';
+import { ApolloProvider } from '@repo/graphql';
 import { MemosPage } from './pages/Memos';
 
 // Basic global resets

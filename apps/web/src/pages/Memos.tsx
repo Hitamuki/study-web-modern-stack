@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client/react';
-import { gql } from '../shared/graphql';
+import { gql } from '@repo/graphql';
 
 const GET_MEMOS = gql(`
   query GetMemos {
@@ -22,7 +22,7 @@ export const MemosPage = () => {
     <div style={styles.container}>
       <h1 style={styles.title}>Memo List</h1>
       <div style={styles.grid}>
-        {data?.memos.map((memo: { id: string, content: string, created_at: string }) => (
+        {data?.memos.map((memo) => (
           <div key={memo.id} style={styles.card}>
             <p style={styles.content}>{memo.content}</p>
             <div style={styles.meta}>

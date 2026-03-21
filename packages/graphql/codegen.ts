@@ -8,9 +8,10 @@ const config: CodegenConfig = {
       }
     }
   },
-  documents: ['src/**/*.{ts,tsx}'],
+  // Scan all apps and packages for documents
+  documents: ['../../apps/*/src/**/*.{ts,tsx}', '../../packages/*/src/**/*.{ts,tsx}'],
   generates: {
-    './src/shared/graphql/': {
+    './src/generated/': {
       preset: 'client',
       plugins: [],
       presetConfig: {

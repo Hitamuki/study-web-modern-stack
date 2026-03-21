@@ -8,8 +8,7 @@ import {
   Text,
   View,
 } from 'react-native';
-// NOTE: codegen 実行後に正しいパスからインポートするように調整が必要な場合があります
-import { gql } from '../shared/graphql/generated';
+import { gql } from '@repo/graphql';
 
 const GET_MEMOS = gql(`
   query GetMemos {
@@ -51,7 +50,7 @@ export const MemosPage = () => {
       </View>
       <FlatList
         data={data?.memos}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => String(item.id)}
         contentContainerStyle={styles.list}
         renderItem={({ item }) => (
           <View style={styles.card}>
