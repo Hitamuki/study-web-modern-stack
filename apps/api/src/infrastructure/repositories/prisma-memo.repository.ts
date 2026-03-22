@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Memo } from '../../domain/entities/memo.entity';
-import type { MemoRepository } from '../../domain/repositories/memo.repository';
+import type { CreateMemoInput, MemoRepository } from '../../domain/repositories/memo.repository';
 import { MemoId } from '../../domain/value-objects/memo-id.vo';
 import { PrismaService } from '../persistence/prisma.service';
 
@@ -8,11 +8,7 @@ import { PrismaService } from '../persistence/prisma.service';
 export class PrismaMemoRepository implements MemoRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create(
-    content: string,
-    createdAt: Date,
-    updatedAt: Date,
-  ): Promise<Memo> {
+  async create({ content, createdAt, updatedAt }: CreateMemoInput): Promise<Memo> {
     const row = await this.prisma.memo.create({
       data: { content, createdAt, updatedAt },
     });

@@ -10,6 +10,6 @@ export class CreateMemoUseCase {
 
   async execute(dto: CreateMemoDto): Promise<Memo> {
     const now = new Date();
-    return this.memoRepository.create(dto.content, now, now);
+    return this.memoRepository.create({ content: dto.content, createdAt: now, updatedAt: now });
   }
 }

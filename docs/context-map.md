@@ -15,6 +15,7 @@ flowchart TD
   subgraph Frontend
     W[Web React+Apollo]
     M[Mobile Expo+Apollo]
+    D[Desktop Electron+Apollo]
   end
 
   subgraph Infra
@@ -23,6 +24,7 @@ flowchart TD
 
   W -->|GraphQL| H
   M -->|GraphQL| H
+  D -->|GraphQL| H
   H -->|Hasura Actions| N
   H -->|SQL auto-generated| P
   N -->|DB access ORM/Query| P

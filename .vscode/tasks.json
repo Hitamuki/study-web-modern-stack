@@ -46,6 +46,29 @@
         "reveal": "always",
         "panel": "dedicated"
       }
+    },
+    {
+      "label": "desktop:dev",
+      "type": "shell",
+      "command": "pnpm dev",
+      "options": {
+        "cwd": "${workspaceFolder}/apps/desktop"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "electron-vite",
+          "endsPattern": "build the electron main process successfully"
+        }
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated"
+      }
     }
   ]
 }

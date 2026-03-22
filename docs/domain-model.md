@@ -1,6 +1,6 @@
 # ドメインモデル図
 
-このドキュメントでは、メモ共有アプリのドメインモデルを示します。
+このドキュメントでは、メモアプリのドメインモデルを示します。
 
 ```mermaid
 classDiagram
@@ -13,14 +13,17 @@ classDiagram
   }
 
   class MemoId {
-    +string value
+    -string _value
+    +get value() string
+    +equals(other: MemoId) boolean
   }
 
   class MemoRepository {
     <<interface>>
-    +save(memo: Memo): Promise<void>
-    +findById(id: MemoId): Promise<Memo | null>
-    +findAll(): Promise<Memo[]>
+    <!-- TODO: createメソッドの引数はオブジェクトに -->
+    +create(input: CreateMemoInput): Promise~Memo~
+    +findById(id: MemoId): Promise~Memo | null~
+    +findAll(): Promise~Memo[]~
   }
 
   class CreateMemoUseCase {

@@ -29,6 +29,25 @@
       "url": "http://localhost:8081",
       "webRoot": "${workspaceFolder}/apps/mobile",
       "preLaunchTask": "mobile:web"
+    },
+    {
+      "name": "Debug Desktop (Main)",
+      "type": "node",
+      "request": "attach",
+      "port": 5858,
+      "restart": true,
+      "cwd": "${workspaceFolder}/apps/desktop",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/apps/desktop/dist/main/**/*.js"],
+      "skipFiles": ["<node_internals>/**"]
+    },
+    {
+      "name": "Debug Desktop (Renderer)",
+      "type": "chrome",
+      "request": "attach",
+      "port": 9222,
+      "webRoot": "${workspaceFolder}/apps/desktop/src/renderer",
+      "sourceMaps": true
     }
   ],
   "compounds": [
@@ -39,6 +58,16 @@
     {
       "name": "Full Stack Debug (Mobile Web)",
       "configurations": ["Debug Mobile (Web)", "Debug API (NestJS)"]
+    },
+    {
+      "name": "Full Stack Debug (Desktop)",
+      "preLaunchTask": "desktop:dev",
+      "configurations": ["Debug Desktop (Main)", "Debug Desktop (Renderer)", "Debug API (NestJS)"]
+    },
+    {
+      "name": "Debug Desktop",
+      "preLaunchTask": "desktop:dev",
+      "configurations": ["Debug Desktop (Main)", "Debug Desktop (Renderer)"]
     }
   ]
 }

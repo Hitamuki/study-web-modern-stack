@@ -1,0 +1,29 @@
+{
+  "name": "desktop",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev -- --inspect=5858 --remote-debugging-port=9222",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "@types/react": "catalog:frontend",
+    "@types/react-dom": "catalog:frontend",
+    "@types/node": "catalog:default",
+    "@vitejs/plugin-react": "catalog:frontend",
+    "electron": "^36.0.0",
+    "electron-vite": "^3.1.0",
+    "typescript": "catalog:default",
+    "vite": "catalog:frontend"
+  },
+  "dependencies": {
+    "@apollo/client": "catalog:frontend",
+    "@repo/graphql": "workspace:*",
+    "graphql": "catalog:frontend",
+    "react": "catalog:frontend",
+    "react-dom": "catalog:frontend"
+  }
+}
