@@ -17,6 +17,7 @@
       "Bash(gh pr view*)",
       "Bash(gh pr list*)",
       "Bash(gh pr diff*)",
+      "Bash(gh pr merge*)",
       "Bash(gh stack view*)",
       "Bash(gh stack up*)",
       "Bash(gh stack down*)",
