@@ -5,6 +5,7 @@ terraform = "latest"
 tflint = "latest"
 terraform-docs = "latest"
 hasura-cli = "latest"
+github-cli = "latest"
 
 [tasks.install]
 run = "pnpm install"
@@ -29,3 +30,14 @@ description = "コードを整形します"
 [tasks.test]
 run = "pnpm test"
 description = "テストを実行します"
+
+# --- Stacked PRs (gh stack) -------------------------------------------------
+# 日々の操作は `gh stack <サブコマンド>` を直接叩きます（`gh stack alias` で `gs` に短縮可）。
+# ここには環境構築だけを置いています。使い方は .github/STACKED_PRS.md を参照してください。
+
+[tasks."stack:setup"]
+run = [
+  "gh extension install github/gh-stack || gh extension upgrade gh-stack",
+  "gh skill install github/gh-stack --agent claude-code --scope project --all --force",
+]
+description = "gh-stack 拡張と、エージェント向けスキルを導入します"

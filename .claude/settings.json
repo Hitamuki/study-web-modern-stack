@@ -10,7 +10,13 @@
       "Bash(pnpm build)",
       "Bash(pnpm test)",
       "Bash(pnpm exec vitest *)",
-      "Bash(docker compose *)"
+      "Bash(docker compose *)",
+      "Bash(gh stack view --json)",
+      "Bash(gh stack up*)",
+      "Bash(gh stack down*)",
+      "Bash(gh stack top)",
+      "Bash(gh stack bottom)",
+      "Bash(gh stack trunk)"
     ]
   }
 }
