@@ -30,7 +30,7 @@ PR 画面にスタック全体が表示され、レビュアーは階層を行�
 ### 制約
 
 - **スタックは直線のみ**。1 つの親に複数の子をぶら下げる分岐構造は作れません（分けたいときは別スタックにします）
-- **`gh pr merge` は使えません**。スタックのマージは `gh stack merge` を使います
+- **2 層以上のスタックで `gh pr merge` は使えません**。まとめて `gh stack merge` でマージします（1 層だけのスタックは GitHub 上に stack が作られないため `gh pr merge` を使います）
 - スタックのメタデータは `.git/gh-stack`（JSON）に保存されます。リポジトリにはコミットされないローカル情報です
 
 ## セットアップ
@@ -186,8 +186,16 @@ gh stack merge 42              # PR #42 までをマージ
 gh stack merge --yes --squash  # 確認なしで全部を squash マージ
 ```
 
-> `gh pr merge` や GitHub 画面の Merge ボタンによる個別マージは、スタックの整合性が崩れるため使わないでください。
+> 2 層以上のスタックでは、`gh pr merge` や GitHub 画面の Merge ボタンによる個別マージを使わないでください。スタックの整合性が崩れます。
 
+1 層だけのスタックは GitHub 上に stack が作られず、`gh stack merge` が `this stack has not been submitted to GitHub yet` で失敗します。この場合は `gh pr merge` を使います。
+
+```bash
+gh pr merge <PR番号> --rebase --delete-branch   # 単層のときのみ
+git remote prune origin
+```
+
+履歴を直線に保つため、マージ方式は `--rebase` に揃えます。
 マージ後は `gh stack sync --prune` でローカルを掃除します。
 
 ## コマンド早見表
@@ -203,7 +211,8 @@ gh stack merge --yes --squash  # 確認なしで全部を squash マージ
 | `gh stack submit` | push + PR 作成 + GitHub 上で Stack 化 |
 | `gh stack sync` | fetch → rebase → push → PR 同期（`--prune` で掃除） |
 | `gh stack rebase` | 明示的な rebase（`--upstack` / `--downstack` / `--continue` / `--abort`） |
-| `gh stack merge` | スタックをまとめてマージ |
+| `gh stack merge` | スタックをまとめてマージ（2 層以上） |
+| `gh pr merge <番号> --rebase --delete-branch` | 1 層だけのスタックのマージ |
 | `gh stack checkout <番号\|ブランチ>` | スタック番号・PR 番号・ブランチ名で切り替え |
 | `gh stack modify` | 対話的にスタックを再構成 |
 | `gh stack unstack` | Stack の紐付けを解除（PR やブランチは消えない） |

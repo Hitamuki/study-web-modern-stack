@@ -164,11 +164,22 @@ gh stack init feat/1-memo-usecase       # 1 層目を main から作成
 
 ### マージ
 
+**2 層以上**のスタックは `gh stack merge` でまとめてマージします。
+
 ```bash
 gh stack merge          # 下から順に all-or-nothing でマージ
 gh stack sync --prune   # マージ後の後片付け
 ```
 
+**1 層だけ**のスタックは GitHub 上に stack が作られず `gh stack merge` が使えないため、`gh pr merge` を使います。
+
+```bash
+gh pr merge <PR番号> --rebase --delete-branch
+git remote prune origin
+```
+
+- 履歴を直線に保つため、マージ方式は `--rebase` に揃える。
+- 2 層以上のスタックで `gh pr merge` や GitHub の Merge ボタンを使わない。整合性が崩れる。
 - マージ後は対応する Issue の DoD を確認し、**「まとめ」を記入してから** `Status` を `Done` にする。実施期間が予定とずれていたら実績に合わせて直す。
 
 ## コーディング規約

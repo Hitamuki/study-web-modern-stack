@@ -120,5 +120,6 @@ terraform test
 5. `main` が進んだら `gh stack sync` でスタック全体を追従させます。
 6. `gh stack merge` でスタックをまとめてマージし、`gh stack sync --prune` で後片付けします。
 
-GitHub の Merge ボタンや `gh pr merge` による個別マージはスタックの整合性が崩れるため使いません。
+2 層以上のスタックでは、GitHub の Merge ボタンや `gh pr merge` による個別マージはスタックの整合性が崩れるため使いません。
+1 層だけのスタックは `gh stack merge` が使えないため、`gh pr merge <番号> --rebase --delete-branch` でマージします。
 分割の粒度やコンフリクト時の対処など、詳しい手順は [Stacked PRs 運用ガイド](./STACKED_PRS.md) を参照してください。
