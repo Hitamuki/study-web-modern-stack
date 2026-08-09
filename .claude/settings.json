@@ -11,12 +11,26 @@
       "Bash(pnpm test)",
       "Bash(pnpm exec vitest *)",
       "Bash(docker compose *)",
-      "Bash(gh stack view --json)",
+      "Bash(gh issue *)",
+      "Bash(gh project *)",
+      "Bash(gh label list*)",
+      "Bash(gh pr view*)",
+      "Bash(gh pr list*)",
+      "Bash(gh pr diff*)",
+      "Bash(gh stack view*)",
       "Bash(gh stack up*)",
       "Bash(gh stack down*)",
       "Bash(gh stack top)",
       "Bash(gh stack bottom)",
-      "Bash(gh stack trunk)"
+      "Bash(gh stack trunk)",
+      "Bash(gh stack init*)",
+      "Bash(gh stack add*)",
+      "Bash(gh stack switch*)",
+      "Bash(gh stack checkout*)",
+      "Bash(gh stack rebase*)",
+      "Bash(gh stack sync*)",
+      "Bash(gh stack push*)",
+      "Bash(gh stack submit*)"
     ]
   }
 }
