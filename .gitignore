@@ -450,3 +450,8 @@ buck-out/
 .fakebuckversion
 
 # End of https://www.toptal.com/developers/gitignore/api/reactnative
+
+### AI Agents / Claude Code ###
+# 個人ローカル設定・一時物のみ無視する。
+.claude/settings.local.json
+.claude/**/*.local.json
