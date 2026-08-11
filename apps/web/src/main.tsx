@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import { ApolloProvider } from '@repo/graphql';
-import { MemosPage } from './pages/Memos';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { ApolloProvider } from "@repo/graphql";
+import { MemosPage } from "./pages/Memos";
 
 // Basic global resets
-const globalStyle = document.createElement('style');
+const globalStyle = document.createElement("style");
 globalStyle.innerHTML = `
   body {
     margin: 0;
@@ -16,10 +16,15 @@ globalStyle.innerHTML = `
 `;
 document.head.appendChild(globalStyle);
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById("root");
+if (!rootElement) {
+  throw new Error("マウント先の #root が index.html に見つかりません");
+}
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <ApolloProvider>
       <MemosPage />
     </ApolloProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

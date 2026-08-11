@@ -1,12 +1,12 @@
 import {
-  ExceptionFilter,
+  type ExceptionFilter,
   Catch,
-  ArgumentsHost,
+  type ArgumentsHost,
   HttpStatus,
   Logger,
   HttpException,
-} from '@nestjs/common';
-import { Response } from 'express';
+} from "@nestjs/common";
+import type { Response } from "express";
 
 /**
  * ドメインのバリデーションエラー（Error）を 400 Bad Request にマッピングするフィルター。
@@ -22,7 +22,7 @@ export class DomainValidationFilter implements ExceptionFilter {
       const res = ctx.getResponse<Response>();
       const status = exception.getStatus();
       const body = exception.getResponse();
-      res.status(status).json(typeof body === 'object' ? body : { message: body });
+      res.status(status).json(typeof body === "object" ? body : { message: body });
       return;
     }
 
@@ -30,8 +30,7 @@ export class DomainValidationFilter implements ExceptionFilter {
     const res = ctx.getResponse<Response>();
 
     const isDomainValidation =
-      exception.message.startsWith('Memo ') ||
-      exception.message.startsWith('MemoId ');
+      exception.message.startsWith("Memo ") || exception.message.startsWith("MemoId ");
 
     if (isDomainValidation) {
       this.logger.warn(exception.message);
@@ -45,7 +44,7 @@ export class DomainValidationFilter implements ExceptionFilter {
     this.logger.error(exception.message, exception.stack);
     res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
       statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-      message: 'Internal server error',
+      message: "Internal server error",
     });
   }
 }

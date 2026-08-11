@@ -1,12 +1,7 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
-import { CreateMemoUseCase } from '../../application/use-case/create-memo.use-case';
-import type { CreateMemoDto } from '../../application/dtos/create-memo.dto';
+import { Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+// biome-ignore lint/style/useImportType: Nest の DI は emitDecoratorMetadata が出力する design:paramtypes で解決するため、コンストラクタ引数の型は値として import する
+import { CreateMemoUseCase } from "../../application/use-case/create-memo.use-case";
+import type { CreateMemoDto } from "../../application/dtos/create-memo.dto";
 
 /** メモレスポンスのシリアライズ用 */
 interface MemoResponse {
@@ -19,7 +14,7 @@ interface MemoResponse {
 /**
  * メモに関する HTTP API を提供するコントローラー（外部公開用）
  */
-@Controller('memos')
+@Controller("memos")
 export class MemoController {
   constructor(private readonly createMemoUseCase: CreateMemoUseCase) {}
 

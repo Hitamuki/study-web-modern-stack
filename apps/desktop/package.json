@@ -6,10 +6,12 @@
   "scripts": {
     "dev": "electron-vite dev -- --inspect=5858 --remote-debugging-port=9222",
     "build": "electron-vite build",
+    "lint": "biome lint .",
     "preview": "electron-vite preview",
     "start": "electron ."
   },
   "devDependencies": {
+    "@biomejs/biome": "catalog:",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",
     "@types/node": "catalog:default",
