@@ -5,8 +5,8 @@ export class MemoId {
   private readonly _value: string;
 
   constructor(value: string) {
-    if (value == null || value.trim() === '') {
-      throw new Error('MemoId must not be empty');
+    if (value == null || value.trim() === "") {
+      throw new Error("MemoId must not be empty");
     }
     this._value = value.trim();
   }

@@ -1,5 +1,5 @@
-import type { Memo } from '../entities/memo.entity';
-import type { MemoId } from '../value-objects/memo-id.vo';
+import type { Memo } from "../entities/memo.entity";
+import type { MemoId } from "../value-objects/memo-id.vo";
 
 export interface CreateMemoInput {
   content: string;

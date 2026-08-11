@@ -1,7 +1,7 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { ApolloProvider } from '@repo/graphql';
-import { MemosPage } from './src/pages/Memos';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { ApolloProvider } from "@repo/graphql";
+import { MemosPage } from "./src/pages/Memos";
 
 export default function App() {
   return (

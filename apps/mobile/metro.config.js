@@ -1,13 +1,11 @@
 // モノレポ特有のモジュール解決のために必要な設定
 const { getDefaultConfig } = require("expo/metro-config");
-const path = require("path");
+const path = require("node:path");
 
 const config = getDefaultConfig(__dirname);
 
 // モノレポ対応
-config.watchFolders = [
-  path.resolve(__dirname, "../../"),
-];
+config.watchFolders = [path.resolve(__dirname, "../../")];
 
 // pnpm対応（超重要）
 config.resolver.unstable_enableSymlinks = true;

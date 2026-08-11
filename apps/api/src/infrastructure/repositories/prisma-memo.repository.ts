@@ -1,8 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { Memo } from '../../domain/entities/memo.entity';
-import type { CreateMemoInput, MemoRepository } from '../../domain/repositories/memo.repository';
-import { MemoId } from '../../domain/value-objects/memo-id.vo';
-import { PrismaService } from '../persistence/prisma.service';
+import { Injectable } from "@nestjs/common";
+import { Memo } from "../../domain/entities/memo.entity";
+import type { CreateMemoInput, MemoRepository } from "../../domain/repositories/memo.repository";
+import { MemoId } from "../../domain/value-objects/memo-id.vo";
+// biome-ignore lint/style/useImportType: Nest の DI は emitDecoratorMetadata が出力する design:paramtypes で解決するため、コンストラクタ引数の型は値として import する
+import { PrismaService } from "../persistence/prisma.service";
 
 @Injectable()
 export class PrismaMemoRepository implements MemoRepository {
@@ -24,7 +25,7 @@ export class PrismaMemoRepository implements MemoRepository {
 
   async findAll(): Promise<Memo[]> {
     const rows = await this.prisma.memo.findMany({
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
     });
     return rows.map((row) => this.toDomain(row));
   }
@@ -35,11 +36,6 @@ export class PrismaMemoRepository implements MemoRepository {
     createdAt: Date;
     updatedAt: Date;
   }): Memo {
-    return new Memo(
-      new MemoId(row.id),
-      row.content,
-      row.createdAt,
-      row.updatedAt,
-    );
+    return new Memo(new MemoId(row.id), row.content, row.createdAt, row.updatedAt);
   }
 }

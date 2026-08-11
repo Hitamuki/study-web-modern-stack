@@ -1,13 +1,7 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Res,
-} from '@nestjs/common';
-import type { Response } from 'express';
-import { CreateMemoUseCase } from '../../application/use-case/create-memo.use-case';
+import { Body, Controller, HttpCode, HttpStatus, Post, Res } from "@nestjs/common";
+import type { Response } from "express";
+// biome-ignore lint/style/useImportType: Nest の DI は emitDecoratorMetadata が出力する design:paramtypes で解決するため、コンストラクタ引数の型は値として import する
+import { CreateMemoUseCase } from "../../application/use-case/create-memo.use-case";
 
 /**
  * Hasura から送られる Action リクエストのボディ形式
@@ -34,20 +28,17 @@ interface CreateMemoActionResponse {
  * Hasura Actions 用 Webhook コントローラー。
  * 「Hasura（受付）→ NestJS（ロジック）→ DB（Prisma 経由）」のデータフローで呼ばれる。
  */
-@Controller('hasura/actions')
+@Controller("hasura/actions")
 export class HasuraActionController {
   constructor(private readonly createMemoUseCase: CreateMemoUseCase) {}
 
-  @Post('createMemo')
+  @Post("createMemo")
   @HttpCode(HttpStatus.CREATED)
-  async createMemo(
-    @Body() payload: HasuraActionPayload,
-    @Res() res: Response,
-  ): Promise<void> {
+  async createMemo(@Body() payload: HasuraActionPayload, @Res() res: Response): Promise<void> {
     const input = payload?.input;
-    if (!input || typeof input.content !== 'string') {
+    if (!input || typeof input.content !== "string") {
       res.status(400).json({
-        message: 'Invalid input: content (string) is required',
+        message: "Invalid input: content (string) is required",
       });
       return;
     }
@@ -64,8 +55,7 @@ export class HasuraActionController {
       };
       res.status(HttpStatus.CREATED).json(body);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : 'Failed to create memo';
+      const message = err instanceof Error ? err.message : "Failed to create memo";
       res.status(422).json({ message });
     }
   }
