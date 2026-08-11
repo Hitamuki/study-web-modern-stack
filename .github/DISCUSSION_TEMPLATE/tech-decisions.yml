@@ -1,0 +1,92 @@
+body:
+  - type: markdown
+    attributes:
+      value: |
+        技術選定の議論と証跡を残すためのテンプレートです。
+        書き方の詳細は [TECH_DECISIONS.md](https://github.com/Hitamuki/study-web-modern-stack/blob/main/.github/guides/TECH_DECISIONS.md) を参照してください。
+
+        **結論は本文を書き換えずに、コメントとして投稿して Answer にマークしてください。**
+
+  - type: textarea
+    id: background
+    attributes:
+      label: 背景・目的
+      description: なぜ今これを決める必要があるのか。決めないと何が進まないのか
+    validations:
+      required: true
+
+  - type: input
+    id: decision
+    attributes:
+      label: 決めること
+      description: 一文で書く
+      placeholder: "apps/web のクライアント状態管理に使うライブラリ"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: 領域
+      description: 影響する主な領域
+      multiple: true
+      options:
+        - apps/web
+        - apps/mobile
+        - apps/desktop
+        - apps/api
+        - packages
+        - hasura
+        - infra
+        - 開発ツール・CI
+        - 全体
+    validations:
+      required: true
+
+  - type: textarea
+    id: criteria
+    attributes:
+      label: 評価軸
+      description: 候補を並べる前に決める。このプロジェクトで重視する順に 3〜5 個
+      value: |
+        | 軸 | なぜ重視するか |
+        | :- | :- |
+        |  |  |
+    validations:
+      required: true
+
+  - type: textarea
+    id: candidates
+    attributes:
+      label: 候補の比較
+      description: 却下する候補も消さずに残す
+      value: |
+        | 候補 | 軸1 | 軸2 | 軸3 | 総評 |
+        | :- | :- | :- | :- | :- |
+        |  |  |  |  |  |
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: 検証したこと
+      description: PoC のブランチ、計測結果、試して分かったこと。していなければ「なし」
+    validations:
+      required: false
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: 影響範囲
+      description: 影響するパッケージ・レイヤーと、後から乗り換える場合のコスト
+    validations:
+      required: true
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考
+      description: 公式ドキュメント、比較記事、関連 Issue / PR
+    validations:
+      required: false

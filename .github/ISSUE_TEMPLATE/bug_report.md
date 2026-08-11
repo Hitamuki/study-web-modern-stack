@@ -50,7 +50,7 @@ assignees: ''
 
 - [ ] AC をすべて満たしている
 - [ ] 再発防止のテストを追加した（不要な場合は「まとめ」に理由を書く）
-- [ ] `mise run lint` / `mise run format` / `mise run test` が通る
+- [ ] `make check`（lint / format / test）が通る
 - [ ] PR がマージされている
 - [ ] 「まとめ」を記入した
 

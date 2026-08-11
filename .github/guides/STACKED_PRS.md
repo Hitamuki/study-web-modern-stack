@@ -38,7 +38,7 @@ PR 画面にスタック全体が表示され、レビュアーは階層を行�
 ### 1. gh 拡張とスキルの導入
 
 ```bash
-mise run stack:setup
+make stack-setup
 ```
 
 以下の 2 つが入ります。
@@ -217,7 +217,7 @@ git remote prune origin
 | `gh stack modify` | 対話的にスタックを再構成 |
 | `gh stack unstack` | Stack の紐付けを解除（PR やブランチは消えない） |
 
-`mise run stack:setup` は環境構築専用です。日々の操作は上記の `gh stack` を直接使ってください。
+`make stack-setup` は環境構築専用です。日々の操作は上記の `gh stack` を直接使ってください。
 
 ## よくある操作
 
