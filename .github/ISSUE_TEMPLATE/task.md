@@ -28,7 +28,7 @@ assignees: ''
 ## DoD（完了の定義）
 
 - [ ] AC をすべて満たしている
-- [ ] `make check`（lint / format / test）が通る
+- [ ] `make check`（lint / format-check / test）が通る
 - [ ] PR がマージされている
 - [ ] 必要なドキュメント（README / docs / AGENTS.md）を更新した
 - [ ] 技術の追加・削除・入れ替えがあれば Wiki を更新した（不要な場合は「まとめ」に理由を書く）

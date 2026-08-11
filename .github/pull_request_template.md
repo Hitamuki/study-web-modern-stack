@@ -16,8 +16,8 @@
 
 ## チェックリスト
 
-- [ ] `make lint` / `make format` が通る
-- [ ] `make test` が通る
+- [ ] `make check`（lint / format-check / test）が通る
+- [ ] 整形が必要な変更を含む場合、`make format` を実行済み
 - [ ] スタックの一部の場合、この層に属する変更だけが入っている
 
 ## 関連
