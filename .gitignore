@@ -455,6 +455,8 @@ buck-out/
 # 個人ローカル設定・一時物のみ無視する。
 .claude/settings.local.json
 .claude/**/*.local.json
+# `make stack-setup` が入れるスキル（クローンごとに入れ直すローカル環境用）
+.claude/skills/
 
 ### GitHub Wiki ###
 # `make wiki-sync` が clone する Wiki（別リポジトリ）の作業コピー
