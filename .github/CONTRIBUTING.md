@@ -69,7 +69,7 @@ make dev
 | `gh stack view`       | スタックの状態を表示                        |
 | `gh stack submit`     | push + PR 作成 + GitHub 上で Stack 化       |
 | `gh stack sync`       | `main` の変更を取り込みスタック全体を同期   |
-| `gh stack merge`      | スタックをまとめてマージ                    |
+| `gh stack merge --merge` | スタックをまとめてマージ                 |
 
 詳細は [Stacked PRs 運用ガイド](./guides/STACKED_PRS.md) を参照してください。
 
@@ -135,10 +135,12 @@ terraform test
 3. `gh stack view` でスタック構造を確認します。
 4. `gh stack submit` で全 PR をまとめて作成し、GitHub 上で Stack として紐付けます。
 5. `main` が進んだら `gh stack sync` でスタック全体を追従させます。
-6. `gh stack merge` でスタックをまとめてマージし、`gh stack sync --prune` で後片付けします。
+6. `gh stack merge --merge` でスタックをまとめてマージし、`gh stack sync --prune` で後片付けします。
+
+マージ方式は `--merge`（マージコミット）に統一します。理由は [Discussion #32](https://github.com/Hitamuki/study-web-modern-stack/discussions/32) を参照してください。
 
 2 層以上のスタックでは、GitHub の Merge ボタンや `gh pr merge` による個別マージはスタックの整合性が崩れるため使いません。
-1 層だけのスタックは `gh stack merge` が使えないため、`gh pr merge <番号> --rebase --delete-branch` でマージします。
+1 層だけのスタックは `gh stack merge` が使えないため、`gh pr merge <番号> --merge` でマージします。
 分割の粒度やコンフリクト時の対処など、詳しい手順は [Stacked PRs 運用ガイド](./guides/STACKED_PRS.md) を参照してください。
 
 ## コードレビュー
