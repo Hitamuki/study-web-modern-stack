@@ -11,7 +11,7 @@
 | **mise & CONTRIBUTING.md の整備**                          | ランタイム・貢献フロー管理  | `mise` を活用し Node.js (v24) や pnpm のバージョンをプロジェクト単位で固定。                                      |
 | **pnpm Workspace (Catalogs) の導入**                       | 依存関係の一元管理          | `pnpm-workspace.yaml` の `catalogs` 機能を活用し、複数パッケージ間で共通ライブラリのバージョンを同期。            |
 | **Turborepo による実行パイプライン定義**                   | ビルド・タスクの効率化      | `turbo.json` に `build`, `lint`, `dev`, `test` を定義。パッケージ間の依存関係を考慮した高速なタスク実行を可能に。 |
-| **Biome による静的解析の統合**                             | 高速な Lint/Format          | `biome.json` により Linter と Formatter を統合。ESLint/Prettier よりも高速な解析を実現。                          |
+| **Biome による静的解析の統合**                             | 高速な Lint/Format          | `biome.jsonc` により Linter と Formatter を統合。ESLint/Prettier よりも高速な解析を実現。                          |
 | **Terraform によるインフラ構成管理**                       | AWS リソースのコード化      | `main.tf` で VPC, Subnet, RDS 等のインフラを定義。`main.tftest.hcl` で設定検証テストを実装。                      |
 | **GraphQL の 3 要素概念把握**                              | GraphQL 基礎理解            | Query（取得）、Mutation（変更）、Subscription（リアルタイム）の役割を学習。REST API との違いを把握。              |
 | **Docker Compose による PostgreSQL / Hasura の起動**       | ローカル開発環境構築        | `docker-compose.yml` で PostgreSQL と Hasura を定義。ポートマッピングと環境変数設定によりローカル起動を実現。     |

@@ -1,0 +1,39 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  // 走査範囲は .gitignore を正本にします。生成物（dist / out / .turbo / node_modules など）は
+  // すべて .gitignore に載っているため、除外リストをこのファイルに二重管理しません。
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    // Git 管理下にあるため .gitignore では除外できない生成物だけを個別に指定します。
+    // - src/generated: GraphQL Code Generator の出力
+    // - hasura/metadata: Hasura CLI（metadata export）が書き出すファイル
+    // turbo lint は各パッケージのディレクトリで biome を起動するため、パターンは
+    // リポジトリルートからの相対パスで書かず `**/` 始まりにします。
+    "ignore": ["**/src/generated/**", "**/hasura/metadata/**"]
+  },
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "lineWidth": 100
+  },
+  "javascript": {
+    // NestJS のコントローラは @Body() などのパラメータデコレータを使います。Biome 1.x は
+    // 標準ではパースできず format / lint がエラーになるため、明示的に有効化します。
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  }
+}

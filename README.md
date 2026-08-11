@@ -40,7 +40,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
   - ✅mise,CONTRIBUTING.mdの整備
   - ✅`pnpm init` および `pnpm-workspace.yaml` (Catalogs) の作成（pnpm workspace）
   - ✅`turbo.json` の定義（build, lint, dev のパイプライン設定）
-  - ✅`biome.json` による全プロジェクト共通の静的解析設定
+  - ✅`biome.jsonc` による全プロジェクト共通の静的解析設定
 
 ### インフラ準備
 
