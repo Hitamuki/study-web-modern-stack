@@ -2,6 +2,17 @@
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
+      "Bash(make)",
+      "Bash(make install)",
+      "Bash(make dev)",
+      "Bash(make build)",
+      "Bash(make lint)",
+      "Bash(make format)",
+      "Bash(make format-check)",
+      "Bash(make test)",
+      "Bash(make check)",
+      "Bash(make wiki-sync)",
+      "Bash(make wiki-push *)",
       "Bash(turbo *)",
       "Bash(pnpm exec biome *)",
       "Bash(pnpm --filter *)",
