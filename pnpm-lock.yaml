@@ -44,8 +44,8 @@ catalogs:
       specifier: ^2.0.0
       version: 2.8.16
     typescript:
-      specifier: ^5.5.0
-      version: 5.9.3
+      specifier: ^6.0.0
+      version: 6.0.3
   frontend:
     '@apollo/client':
       specifier: ^4.1.6
@@ -102,7 +102,7 @@ importers:
         version: 10.4.22(@nestjs/common@10.4.22(reflect-metadata@0.2.2)(rxjs@7.8.2))(@nestjs/core@10.4.22)
       '@prisma/client':
         specifier: catalog:backend
-        version: 6.19.2(prisma@6.19.2(typescript@5.9.3))(typescript@5.9.3)
+        version: 6.19.2(prisma@6.19.2(typescript@6.0.3))(typescript@6.0.3)
       reflect-metadata:
         specifier: catalog:backend
         version: 0.2.2
@@ -124,10 +124,10 @@ importers:
         version: 24.12.0
       prisma:
         specifier: catalog:backend
-        version: 6.19.2(typescript@5.9.3)
+        version: 6.19.2(typescript@6.0.3)
       typescript:
         specifier: 'catalog:'
-        version: 5.9.3
+        version: 6.0.3
 
   apps/desktop:
     dependencies:
@@ -170,7 +170,7 @@ importers:
         version: 3.1.0(vite@5.4.21(@types/node@24.12.0)(lightningcss@1.32.0)(terser@5.46.0))
       typescript:
         specifier: catalog:default
-        version: 5.9.3
+        version: 6.0.3
       vite:
         specifier: catalog:frontend
         version: 5.4.21(@types/node@24.12.0)(lightningcss@1.32.0)(terser@5.46.0)
@@ -231,7 +231,7 @@ importers:
         version: 54.0.10(@babel/core@7.29.0)(@babel/runtime@7.28.6)(expo@54.0.33(@babel/core@7.29.0)(@expo/metro-runtime@6.1.2)(graphql@16.13.1)(react-native@0.81.5(@babel/core@7.29.0)(@types/react@19.1.10)(react@19.1.0))(react@19.1.0))(react-refresh@0.14.2)
       typescript:
         specifier: 'catalog:'
-        version: 5.9.3
+        version: 6.0.3
 
   apps/web:
     dependencies:
@@ -268,7 +268,7 @@ importers:
         version: 4.7.0(vite@5.4.21(@types/node@25.4.0)(lightningcss@1.32.0)(terser@5.46.0))
       typescript:
         specifier: 'catalog:'
-        version: 5.9.3
+        version: 6.0.3
       vite:
         specifier: catalog:frontend
         version: 5.4.21(@types/node@25.4.0)(lightningcss@1.32.0)(terser@5.46.0)
@@ -293,7 +293,7 @@ importers:
         version: 1.9.4
       '@graphql-codegen/cli':
         specifier: catalog:frontend
-        version: 5.0.7(@types/node@25.4.0)(graphql@16.13.1)(typescript@5.9.3)
+        version: 5.0.7(@types/node@25.4.0)(graphql@16.13.1)(typescript@6.0.3)
       '@graphql-codegen/client-preset':
         specifier: catalog:frontend
         version: 4.8.3(graphql@16.13.1)
@@ -302,7 +302,7 @@ importers:
         version: 19.1.10
       typescript:
         specifier: catalog:default
-        version: 5.9.3
+        version: 6.0.3
 
 packages:
 
@@ -5158,8 +5158,8 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  typescript@5.9.3:
-    resolution: {integrity: sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==}
+  typescript@6.0.3:
+    resolution: {integrity: sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -6674,7 +6674,7 @@ snapshots:
       graphql: 16.13.1
       tslib: 2.6.3
 
-  '@graphql-codegen/cli@5.0.7(@types/node@25.4.0)(graphql@16.13.1)(typescript@5.9.3)':
+  '@graphql-codegen/cli@5.0.7(@types/node@25.4.0)(graphql@16.13.1)(typescript@6.0.3)':
     dependencies:
       '@babel/generator': 7.29.1
       '@babel/template': 7.28.6
@@ -6694,11 +6694,11 @@ snapshots:
       '@graphql-tools/utils': 10.11.0(graphql@16.13.1)
       '@whatwg-node/fetch': 0.10.13
       chalk: 4.1.2
-      cosmiconfig: 8.3.6(typescript@5.9.3)
+      cosmiconfig: 8.3.6(typescript@6.0.3)
       debounce: 1.2.1
       detect-indent: 6.1.0
       graphql: 16.13.1
-      graphql-config: 5.1.6(@types/node@25.4.0)(graphql@16.13.1)(typescript@5.9.3)
+      graphql-config: 5.1.6(@types/node@25.4.0)(graphql@16.13.1)(typescript@6.0.3)
       inquirer: 8.2.6
       is-glob: 4.0.3
       jiti: 1.21.7
@@ -7402,10 +7402,10 @@ snapshots:
   '@pkgjs/parseargs@0.11.0':
     optional: true
 
-  '@prisma/client@6.19.2(prisma@6.19.2(typescript@5.9.3))(typescript@5.9.3)':
+  '@prisma/client@6.19.2(prisma@6.19.2(typescript@6.0.3))(typescript@6.0.3)':
     optionalDependencies:
-      prisma: 6.19.2(typescript@5.9.3)
-      typescript: 5.9.3
+      prisma: 6.19.2(typescript@6.0.3)
+      typescript: 6.0.3
 
   '@prisma/config@6.19.2':
     dependencies:
@@ -8618,14 +8618,14 @@ snapshots:
     optionalDependencies:
       typescript: 5.7.2
 
-  cosmiconfig@8.3.6(typescript@5.9.3):
+  cosmiconfig@8.3.6(typescript@6.0.3):
     dependencies:
       import-fresh: 3.3.1
       js-yaml: 4.1.1
       parse-json: 5.2.0
       path-type: 4.0.0
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
 
   cross-fetch@3.2.0:
     dependencies:
@@ -9322,7 +9322,7 @@ snapshots:
 
   graceful-fs@4.2.11: {}
 
-  graphql-config@5.1.6(@types/node@25.4.0)(graphql@16.13.1)(typescript@5.9.3):
+  graphql-config@5.1.6(@types/node@25.4.0)(graphql@16.13.1)(typescript@6.0.3):
     dependencies:
       '@graphql-tools/graphql-file-loader': 8.1.12(graphql@16.13.1)
       '@graphql-tools/json-file-loader': 8.0.26(graphql@16.13.1)
@@ -9330,7 +9330,7 @@ snapshots:
       '@graphql-tools/merge': 9.1.7(graphql@16.13.1)
       '@graphql-tools/url-loader': 9.0.6(@types/node@25.4.0)(graphql@16.13.1)
       '@graphql-tools/utils': 11.0.0(graphql@16.13.1)
-      cosmiconfig: 8.3.6(typescript@5.9.3)
+      cosmiconfig: 8.3.6(typescript@6.0.3)
       graphql: 16.13.1
       jiti: 2.6.1
       minimatch: 10.2.4
@@ -10439,12 +10439,12 @@ snapshots:
       ansi-styles: 5.2.0
       react-is: 18.3.1
 
-  prisma@6.19.2(typescript@5.9.3):
+  prisma@6.19.2(typescript@6.0.3):
     dependencies:
       '@prisma/config': 6.19.2
       '@prisma/engines': 6.19.2
     optionalDependencies:
-      typescript: 5.9.3
+      typescript: 6.0.3
     transitivePeerDependencies:
       - magicast
 
@@ -11218,7 +11218,7 @@ snapshots:
 
   typescript@5.7.2: {}
 
-  typescript@5.9.3: {}
+  typescript@6.0.3: {}
 
   ua-parser-js@1.0.41: {}
 

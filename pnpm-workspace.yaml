@@ -6,7 +6,7 @@ packages:
 catalogs:
   # 全体で共通するバージョン
   default:
-    typescript: ^5.5.0
+    typescript: ^6.0.0
     "@biomejs/biome": ^1.8.3
     vitest: ^2.0.0
     turbo: ^2.0.0
