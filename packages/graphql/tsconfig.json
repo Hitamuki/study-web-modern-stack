@@ -7,12 +7,11 @@
     "jsx": "react-jsx",
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true
   },
-  "include": ["src", "electron.vite.config.ts"],
-  "exclude": ["dist", "out", "node_modules"]
+  "include": ["src", "codegen.ts"]
 }
