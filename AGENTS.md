@@ -20,6 +20,17 @@ pnpm Catalogs + Turborepo のモノレポで、インフラからフロント（
 | `infra/` | Terraform |
 | `docs/` | 設計ドキュメント |
 
+### コマンドの実行
+
+タスクは **`Makefile` に集約**しています。`pnpm` や `gh` を直接叩く前に `make` でタスク一覧を確認してください。
+
+| ファイル | 役割 |
+| :- | :- |
+| `Makefile` | タスクの実行（`make install` / `make dev` / `make check` / `make wiki-sync` など） |
+| `mise.toml` | ツール（Node / pnpm / terraform など）のバージョン管理。タスクは定義しない |
+
+新しい定型作業を足すときは `Makefile` に `##` 付きのターゲットとして追加します（`make` のヘルプに自動で載ります）。
+
 ## タスク管理（GitHub Projects）
 
 作業は**すべて GitHub Issue 起点**で進めます。Issue のない変更をコミットしません。
@@ -76,12 +87,94 @@ Issue 本文のテンプレートは `.github/ISSUE_TEMPLATE/` 配下が正本
 `Done` に移す前に、次の順で Issue 本文を仕上げます。
 
 1. **AC のチェックボックスを埋める。** 1 項目ずつ実際に確認してから `- [x]` にする。眺めただけでチェックしない。
-2. **DoD のチェックボックスを埋める。** コマンド（`mise run lint` など）は実行して結果を確認する。
-3. **満たせなかった項目はチェックしない。** `- [ ]` のまま残し、行末に理由を書く（例: `（@memo-app/api の既存エラーで失敗。本 Issue の対象外）`）。満たせない項目があるまま閉じてよいが、無言で閉じない。
-4. **「まとめ」を記入する。**
+2. **DoD のチェックボックスを埋める。** コマンド（`make check` など）は実行して結果を確認する。
+3. **技術の追加・削除・入れ替えがあれば Wiki を更新する。** 選定 Discussion が決着していれば `Tech-Decisions` ページにも 1 行追加する。
+4. **満たせなかった項目はチェックしない。** `- [ ]` のまま残し、行末に理由を書く（例: `（@memo-app/api の既存エラーで失敗。本 Issue の対象外）`）。満たせない項目があるまま閉じてよいが、無言で閉じない。
+5. **「まとめ」を記入する。** 関連する Discussion / Wiki ページへのリンクを含める。
 
-「まとめ」はここが後から読み返す唯一の記録になります。
+「まとめ」は Issue 単位の実績記録です。
 書くのは「やったこと」の羅列ではなく、**決定した内容とその理由、実際に反映した成果物**です。
+技術選定の経緯は Discussions、採用技術の現状は Wiki に残すため、「まとめ」からはそれらにリンクします。
+
+## ドキュメントの置き場所
+
+情報の性質で置き場所を分けます。同じ内容を二重に書かず、リンクで参照します。
+
+| 置き場所 | 性質 | 役割 | 更新タイミング |
+| :- | :- | :- | :- |
+| GitHub Issue | 作業単位 | やることと完了の記録（AC / DoD / まとめ） | 起票時と完了時 |
+| GitHub Discussions | フロー（追記のみ） | 技術選定の議論と証跡（比較した候補・却下の理由）。決定後も残す | 選定の開始〜決定 |
+| GitHub Wiki | ストック（最新のみ） | 採用技術の一覧・概要・**1 行の採用理由**。経緯は Discussion へリンク | 導入 PR のマージ後 |
+| `docs/` | コードと同期 | 設計図（コンテキストマップ / ドメインモデル / ER 図） | 実装 PR と同時 |
+| `README.md` / `.github/` | 手順 | セットアップ・開発フロー・レビュー・運用ルール | 手順が変わったとき |
+
+迷ったら「後から読み返すのは**経緯**か**現状**か」で決めます。経緯なら Discussions、現状なら Wiki です。
+
+### ツールが場所を決めているファイル
+
+次のファイルは置き場所を選べません。ツールが読む場所が決まっているため、動かすと機能しなくなります。
+
+| パス | 読むもの | 役割 |
+| :- | :- | :- |
+| `AGENTS.md` | エージェント全般（Claude Code は `.claude/CLAUDE.md` の `@` import 経由） | このリポジトリの共通ルール |
+| `.github/CONTRIBUTING.md` | GitHub | 開発者ガイド。Issue / PR 作成時に導線が表示される |
+| `.github/ISSUE_TEMPLATE/` `.github/DISCUSSION_TEMPLATE/` `.github/pull_request_template.md` | GitHub | Issue / Discussion / PR のテンプレート |
+| `.claude/settings.json` | Claude Code | 権限・フックなどのツール設定 |
+
+GitHub が特別扱いしないドキュメント（Stacked PRs / 技術選定 / Wiki の運用ガイド）は `.github/guides/` に置き、`.github/` 直下は上表のファイルだけに保ちます。
+
+Claude Code の `REVIEW.md` は採用していません。読むのは GitHub App 版の Code Review だけで、
+有効化に Team / Enterprise の Owner 権限が要るため本リポジトリでは機能しないためです。レビューは `/code-review` で行います。
+
+## 技術選定（GitHub Discussions）
+
+複数の候補から技術を選ぶときは、**先に Discussion を立てて比較の過程を残します**。
+結論だけをコミットに残さず、「なぜ他を選ばなかったか」を後から人間が読める形にするためです。
+カテゴリは `Tech Decisions`。詳しい手順とテンプレートは [.github/guides/TECH_DECISIONS.md](./.github/guides/TECH_DECISIONS.md) を参照してください。
+
+### 対象
+
+乗り換えコストが高いものだけを対象にします。すべての依存追加で Discussion を立てません。
+
+| 立てる | 立てない |
+| :- | :- |
+| フレームワーク・ランタイム（React / NestJS など） | 単発の devDependency |
+| データアクセス・スキーマ基盤（Hasura / ORM など） | 明確な代替がないユーティリティ |
+| 状態管理・データ取得・UI 基盤 | 破壊的変更を伴わないバージョン更新 |
+| 認証・課金などの外部サービス依存 | 既存の選定の枠内での追加 |
+| CI / IaC / モノレポ基盤 | |
+
+判断に迷う場合は立てます。立てない場合は、採用理由を Issue 本文か PR に 1 行残します。
+
+### 原則
+
+- **1 選定 = 1 Discussion**。タイトルは `<領域>: <決めること>`（例: `apps/web: 状態管理ライブラリの選定`）。
+- 本文には**必ず比較表**を入れる。**評価軸を先に決めてから**候補を並べる。却下した候補も消さずに残す。
+- 結論は**コメントとして投稿し、Answer にマークする**。本文を書き換えて結論だけ残さない（経緯が消える）。
+- 決定後に方針を変える場合は、元の Discussion にコメントで追記したうえで**新しい Discussion を立て、相互にリンクする**。決定を上書きしない。
+- 選定を伴う Issue は、**DoR に「Discussion #\<番号\> が決着している」を入れる**。着手前に決着させる。
+- 議論が Issue のコメントで始まってしまったら、Discussion に移して Issue からリンクする。
+
+## 技術スタックの記録（GitHub Wiki）
+
+Wiki には 2 種類のページを置きます。ページ構成と書式は [.github/guides/WIKI.md](./.github/guides/WIKI.md) を参照してください。
+
+| 種類 | 答える問い | ページ |
+| :- | :- | :- |
+| スタックページ | 今このプロジェクトは何を使っているか（＋なぜ 1 行） | `Home` / `Web` / `Mobile` / `Desktop` / `Backend` / `Data` / `Infra` / `Tooling` |
+| ナレッジページ（ビジネス） | 事業の観点 | `Business` / `Monetization` / `Marketing` / `Business-Glossary` |
+| ナレッジページ（プロセス・設計） | 開発の方法論 | `Git-Strategy` / `Domain-Driven-Design` / `Feature-Sliced-Design` |
+| ナレッジページ（AI） | エージェント活用 | `AI-Development` / `AI-Glossary` |
+| ナレッジページ（IT 基礎） | 技術領域の知識 | `Authentication-Authorization` / `GraphQL` / `Encryption` / `Observability` |
+
+- **ルールの正本はリポジトリ側**（この AGENTS.md / `CONTRIBUTING.md` / `.github/`）。Wiki はそれを解説する側で、**手順やルールをコピーしない**。要点＋リンクにする。
+- スタックページの一覧表には**「なぜ」列を必ず置く**。1 行で書ききれない内容は Discussion に寄せる。
+- **理由を推測で埋めない。** 記録が無いものは `理由未記録` と書き、`Tech-Decisions` ページに積んで後追いで Discussion を立てる。
+- ナレッジページは**一般論と本プロジェクトでの適用を節で分ける**。未適用・未達は隠さずそう書く。
+- Wiki はコードと別リポジトリで **PR レビューを通らない**ため、**更新を DoD の一項目として扱う**。技術の追加・削除・入れ替えを伴う PR をマージしたら、同じ Issue の中で Wiki を更新する。
+- **Wiki に長い解説を書かない**。1 技術あたり数行に収め、掘り下げる内容は `docs/` に置いてリンクする。
+- 手元では `make wiki-sync` で `.wiki/`（Git 管理外）に clone / pull し、`make wiki-push m="<コミットメッセージ>"` で反映する。
+- Wiki のコミットメッセージも下記の規約に従い、scope は `wiki` にする（例: `docs(wiki): 状態管理に Zustand を追加 #14`）。
 
 ## コミットメッセージ規約
 
@@ -119,7 +212,9 @@ Issue 本文のテンプレートは `.github/ISSUE_TEMPLATE/` 配下が正本
 
 変更対象を表す短い識別子。モノレポのパッケージ名かトップレベルディレクトリ名を基本とします。
 
-`api` / `web` / `mobile` / `desktop` / `graphql` / `hasura` / `infra` / `docs` / `vscode` / `mise` / `deps` / `claude`
+`api` / `web` / `mobile` / `desktop` / `graphql` / `hasura` / `infra` / `docs` / `wiki` / `vscode` / `make` / `mise` / `deps` / `claude`
+
+`wiki` は Wiki リポジトリ側のコミットで使います（本リポジトリでは使いません）。
 
 複数箇所にまたがり適切な scope が選べない場合は省略できます（例: `chore: pnpm を 10 系へ更新 #9`）。
 
@@ -131,7 +226,7 @@ Issue を自動でクローズしたい場合は、PR 本文の「関連」セ�
 
 本リポジトリは GitHub の **Stacked PRs**（`gh stack`）で開発します。
 `git checkout -b` / `git push` / `gh pr create` を直接使わず、**ブランチ操作はすべて `gh stack` 経由**で行ってください。
-コマンドの詳細は [.github/STACKED_PRS.md](./.github/STACKED_PRS.md) を参照してください。
+コマンドの詳細は [.github/guides/STACKED_PRS.md](./.github/guides/STACKED_PRS.md) を参照してください。
 
 ### 基本原則
 
@@ -162,6 +257,16 @@ gh stack init feat/1-memo-usecase       # 1 層目を main から作成
 ### 下の層を修正する（レビュー対応・不具合修正）
 
 **上の層で直さない**こと。必ずその層まで降りて修正し、上へ波及させます。
+
+### レビュー
+
+レビューは `/code-review` で行います。観点・プレフィックス・出さない指摘は
+[CONTRIBUTING.md](./.github/CONTRIBUTING.md) の「コードレビュー」が正本です。
+
+- **出力する指摘には必ずプレフィックス**（`MUST` / `IMO` / `NITS` / `Q` / `FYI` / `GOOD`）を付ける。
+- 見るのは**その層の差分だけ**。スコープ外の既存コードは `FYI` で別 Issue を提案する。
+- 断定できないものは `MUST` にせず `Q` にする。憶測で必須修正を要求しない。
+- 振る舞いに関する指摘は `ファイル:行` を根拠として引用する。命名からの推測で指摘しない。
 
 ### PR の作成と同期
 

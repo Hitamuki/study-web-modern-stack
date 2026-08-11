@@ -16,8 +16,8 @@
 
 ## チェックリスト
 
-- [ ] `mise run lint` / `mise run format` が通る
-- [ ] `mise run test` が通る
+- [ ] `make lint` / `make format` が通る
+- [ ] `make test` が通る
 - [ ] スタックの一部の場合、この層に属する変更だけが入っている
 
 ## 関連
@@ -27,5 +27,5 @@
 <!--
 スタックの構造は GitHub が PR 画面に自動表示するので、ここに書く必要はありません。
 スタックのマージは GitHub の Merge ボタンではなく `gh stack merge` を使ってください。
-詳細: .github/STACKED_PRS.md
+詳細: .github/guides/STACKED_PRS.md
 -->
