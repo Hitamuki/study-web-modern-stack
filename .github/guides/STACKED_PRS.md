@@ -181,9 +181,9 @@ gh stack rebase --abort
 スタックは下から順に、**all-or-nothing** でまとめてマージされます（1 つでも失敗すれば全部マージされません）。
 
 ```bash
-gh stack merge                 # 対話ウィザードでマージ範囲と方式を選ぶ
-gh stack merge 42              # PR #42 までをマージ
-gh stack merge --yes --squash  # 確認なしで全部を squash マージ
+gh stack merge --merge         # 対話ウィザードでマージ範囲を選ぶ（方式は --merge で固定）
+gh stack merge 42 --merge      # PR #42 までをマージ
+gh stack merge --yes --merge   # 確認なしで全部をマージコミットでマージ
 ```
 
 > 2 層以上のスタックでは、`gh pr merge` や GitHub 画面の Merge ボタンによる個別マージを使わないでください。スタックの整合性が崩れます。
@@ -191,11 +191,18 @@ gh stack merge --yes --squash  # 確認なしで全部を squash マージ
 1 層だけのスタックは GitHub 上に stack が作られず、`gh stack merge` が `this stack has not been submitted to GitHub yet` で失敗します。この場合は `gh pr merge` を使います。
 
 ```bash
-gh pr merge <PR番号> --rebase --delete-branch   # 単層のときのみ
+gh pr merge <PR番号> --merge   # 単層のときのみ
 git remote prune origin
 ```
 
-履歴を直線に保つため、マージ方式は `--rebase` に揃えます。
+マージ方式は **`--merge`（マージコミット）に統一**します。`--squash` / `--rebase` は使わず、PR のサイズで方式を変えません。
+承認の単位を履歴に残すためで、理由は [Discussion #32](https://github.com/Hitamuki/study-web-modern-stack/discussions/32) にあります。
+
+- PR 単位で履歴を読む: `git log --first-parent --oneline`
+- コミット単位で読む: `git log --oneline`
+- PR 単位で巻き戻す: `git revert -m 1 <マージコミット>`
+
+リモートブランチはリポジトリ設定（`deleteBranchOnMerge`）でマージ時に自動削除されるため、`--delete-branch` は不要です。
 マージ後は `gh stack sync --prune` でローカルを掃除します。
 
 ## コマンド早見表
@@ -211,8 +218,8 @@ git remote prune origin
 | `gh stack submit` | push + PR 作成 + GitHub 上で Stack 化 |
 | `gh stack sync` | fetch → rebase → push → PR 同期（`--prune` で掃除） |
 | `gh stack rebase` | 明示的な rebase（`--upstack` / `--downstack` / `--continue` / `--abort`） |
-| `gh stack merge` | スタックをまとめてマージ（2 層以上） |
-| `gh pr merge <番号> --rebase --delete-branch` | 1 層だけのスタックのマージ |
+| `gh stack merge --merge` | スタックをまとめてマージ（2 層以上） |
+| `gh pr merge <番号> --merge` | 1 層だけのスタックのマージ |
 | `gh stack checkout <番号\|ブランチ>` | スタック番号・PR 番号・ブランチ名で切り替え |
 | `gh stack modify` | 対話的にスタックを再構成 |
 | `gh stack unstack` | Stack の紐付けを解除（PR やブランチは消えない） |

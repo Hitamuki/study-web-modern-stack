@@ -276,21 +276,26 @@ gh stack init feat/1-memo-usecase       # 1 層目を main から作成
 
 ### マージ
 
+マージ方式は **`--merge`（マージコミット）に統一**します。`main` のコミット列は「AI の出力を人間が承認した記録」であり、
+承認の単位（＝どこまでが一度に承認された塊か）を履歴に残すためです（[Discussion #32](https://github.com/Hitamuki/study-web-modern-stack/discussions/32)）。
+
 **2 層以上**のスタックは `gh stack merge` でまとめてマージします。
 
 ```bash
-gh stack merge          # 下から順に all-or-nothing でマージ
-gh stack sync --prune   # マージ後の後片付け
+gh stack merge --merge   # 下から順に all-or-nothing でマージ
+gh stack sync --prune    # マージ後の後片付け
 ```
 
 **1 層だけ**のスタックは GitHub 上に stack が作られず `gh stack merge` が使えないため、`gh pr merge` を使います。
 
 ```bash
-gh pr merge <PR番号> --rebase --delete-branch
+gh pr merge <PR番号> --merge
 git remote prune origin
 ```
 
-- 履歴を直線に保つため、マージ方式は `--rebase` に揃える。
+- マージ方式は `--merge` に揃える。`--squash` / `--rebase` は使わない。PR のサイズで方式を変えない。
+- 履歴は PR 単位なら `git log --first-parent`、コミット単位なら素の `git log` で読む。
+- PR 単位で巻き戻すときは `git revert -m 1 <マージコミット>` を使う。
 - 2 層以上のスタックで `gh pr merge` や GitHub の Merge ボタンを使わない。整合性が崩れる。
 - マージ後は対応する Issue の **AC / DoD をチェックし、「まとめ」を記入してから** `Status` を `Done` にする（「完了時の手順」を参照）。実施期間が予定とずれていたら実績に合わせて直す。
 
