@@ -5,5 +5,16 @@
     "paths": {
       "@/*": ["./src/*"]
     }
-  }
+  },
+  // exclude は継承元とマージされず上書きになるため、expo/tsconfig.base の指定を引き継いだうえで
+  // expo export の出力先 dist を足している（base は noEmit で outDir が無く、自動除外されないため）
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js",
+    "android",
+    "ios",
+    "dist"
+  ]
 }
