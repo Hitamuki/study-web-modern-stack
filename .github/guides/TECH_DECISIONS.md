@@ -62,7 +62,7 @@ gh discussion view <番号> --comments --order oldest
 gh discussion comment <番号> --body-file /tmp/conclusion.md
 
 # 投稿したコメントを Answer にマークする（node ID が必要）
-gh discussion view <番号> --json comments --jq '.comments[] | "\(.id)\t\(.body[0:40])"'
+gh discussion view <番号> --json comments --jq '.comments.nodes[] | "\(.id)\t\(.body[0:40])"'
 gh api graphql -f query='
   mutation($id: ID!) {
     markDiscussionCommentAsAnswer(input: { id: $id }) {
