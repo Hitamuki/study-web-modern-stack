@@ -1,0 +1,848 @@
+{
+  "version": "2.17",
+  "children": [
+    {
+      "type": "frame",
+      "id": "h30OQg",
+      "x": 0,
+      "y": 0,
+      "name": "CMP/ボタン（主）",
+      "reusable": true,
+      "fill": "$accent",
+      "cornerRadius": "$radius-md",
+      "gap": 8,
+      "padding": [
+        10,
+        16
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "o9k4In",
+          "name": "ラベル",
+          "fill": "$accent-text",
+          "content": "保存",
+          "fontFamily": "$font-body",
+          "fontSize": 14,
+          "fontWeight": "600"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "HCztE",
+      "x": 160,
+      "y": 0,
+      "name": "CMP/ボタン（副）",
+      "reusable": true,
+      "fill": "$surface",
+      "cornerRadius": "$radius-md",
+      "stroke": "$border",
+      "strokeWidth": 1,
+      "gap": 8,
+      "padding": [
+        10,
+        16
+      ],
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "text",
+          "id": "H0NKuJ",
+          "name": "ラベル",
+          "fill": "$text-primary",
+          "content": "キャンセル",
+          "fontFamily": "$font-body",
+          "fontSize": 14,
+          "fontWeight": "500"
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "lPQJP",
+      "x": 0,
+      "y": 100,
+      "name": "CMP/メモ行",
+      "reusable": true,
+      "width": 600,
+      "fill": "$surface",
+      "cornerRadius": "$radius-md",
+      "stroke": "$border",
+      "strokeWidth": 1,
+      "gap": 12,
+      "padding": 12,
+      "alignItems": "center",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Q5F0dB",
+          "name": "本文ブロック",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 4,
+          "children": [
+            {
+              "type": "text",
+              "id": "nrSyz",
+              "name": "本文抜粋",
+              "fill": "$text-primary",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "買い物リスト: 牛乳、卵、パン",
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "amQgG",
+              "name": "更新日時",
+              "fill": "$text-secondary",
+              "content": "2026-08-15 09:12 更新",
+              "fontFamily": "$font-body",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "WDjXq",
+          "name": "操作",
+          "gap": 8,
+          "alignItems": "center",
+          "children": [
+            {
+              "id": "M6KWGl",
+              "type": "ref",
+              "ref": "HCztE",
+              "name": "編集",
+              "descendants": {
+                "H0NKuJ": {
+                  "content": "編集"
+                }
+              }
+            },
+            {
+              "id": "thxzu",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "削除",
+              "fill": "$danger",
+              "descendants": {
+                "o9k4In": {
+                  "content": "削除"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "jsuJj",
+      "x": 700,
+      "y": 100,
+      "name": "CMP/削除確認ダイアログ",
+      "reusable": true,
+      "width": 420,
+      "fill": "$surface",
+      "cornerRadius": 12,
+      "stroke": "$border",
+      "strokeWidth": 1,
+      "effect": {
+        "type": "shadow",
+        "shadowType": "outer",
+        "color": "#0000001F",
+        "offset": {
+          "x": 0,
+          "y": 8
+        },
+        "blur": 24
+      },
+      "layout": "vertical",
+      "gap": 16,
+      "padding": 24,
+      "children": [
+        {
+          "type": "text",
+          "id": "b89wa",
+          "name": "タイトル",
+          "fill": "$text-primary",
+          "content": "このメモを削除しますか？",
+          "fontFamily": "$font-body",
+          "fontSize": 18,
+          "fontWeight": "600"
+        },
+        {
+          "type": "text",
+          "id": "BlR1M",
+          "name": "説明",
+          "fill": "$text-secondary",
+          "textGrowth": "fixed-width",
+          "width": "fill_container",
+          "content": "削除したメモは元に戻せません。",
+          "fontFamily": "$font-body",
+          "fontSize": 14,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "A2O0r",
+          "name": "操作",
+          "width": "fill_container",
+          "gap": 8,
+          "justifyContent": "end",
+          "children": [
+            {
+              "id": "RB6xb",
+              "type": "ref",
+              "ref": "HCztE",
+              "name": "キャンセル"
+            },
+            {
+              "id": "UvhfA",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "削除する",
+              "fill": "$danger",
+              "descendants": {
+                "o9k4In": {
+                  "content": "削除する"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "e9B59",
+      "x": 0,
+      "y": 600,
+      "name": "SCR-001-PC ダミー画面",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "GPGT0",
+          "name": "ヘッダー",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            16,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "O28Pt",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "bU5Cz",
+              "name": "ヘッダー操作",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "id": "hubB1",
+                  "type": "ref",
+                  "ref": "h30OQg",
+                  "name": "新規作成",
+                  "descendants": {
+                    "o9k4In": {
+                      "content": "新規作成"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "S9KPTV",
+          "name": "本体",
+          "width": "fill_container",
+          "height": "fill_container",
+          "gap": 24,
+          "padding": 24,
+          "children": [
+            {
+              "type": "frame",
+              "id": "BgXO2",
+              "name": "一覧ペイン",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$surface",
+              "cornerRadius": 12,
+              "stroke": "$border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "e5voF",
+                  "name": "一覧ヘッダー",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "Z2oH0",
+                      "name": "見出し",
+                      "fill": "$text-primary",
+                      "content": "メモ一覧",
+                      "fontFamily": "$font-body",
+                      "fontSize": 16,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "RshC7",
+                      "name": "件数",
+                      "fill": "$text-secondary",
+                      "content": "4 件",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "hHigR",
+                  "name": "リスト",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "id": "n8ru3",
+                      "type": "ref",
+                      "ref": "lPQJP",
+                      "name": "メモ行",
+                      "width": "fill_container",
+                      "stroke": "$accent",
+                      "descendants": {
+                        "nrSyz": {
+                          "content": "買い物リスト: 牛乳、卵、パン、コーヒー豆"
+                        },
+                        "amQgG": {
+                          "content": "2026-08-15 09:12 更新"
+                        }
+                      }
+                    },
+                    {
+                      "id": "YEAnz",
+                      "type": "ref",
+                      "ref": "lPQJP",
+                      "name": "メモ行",
+                      "width": "fill_container",
+                      "descendants": {
+                        "nrSyz": {
+                          "content": "会議メモ: 次回スプリントのゴールを再確認する"
+                        },
+                        "amQgG": {
+                          "content": "2026-08-14 18:40 更新"
+                        }
+                      }
+                    },
+                    {
+                      "id": "McC9z",
+                      "type": "ref",
+                      "ref": "lPQJP",
+                      "name": "メモ行",
+                      "width": "fill_container",
+                      "descendants": {
+                        "nrSyz": {
+                          "content": "Pencil 検証: 画面 ID とフレーム名の運用ルールを決める"
+                        },
+                        "amQgG": {
+                          "content": "2026-08-13 11:05 更新"
+                        }
+                      }
+                    },
+                    {
+                      "id": "L2EbK8",
+                      "type": "ref",
+                      "ref": "lPQJP",
+                      "name": "メモ行",
+                      "width": "fill_container",
+                      "descendants": {
+                        "nrSyz": {
+                          "content": "読書メモ: DDD の集約境界の切り方について"
+                        },
+                        "amQgG": {
+                          "content": "2026-08-12 21:30 更新"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "GWsJ2",
+              "name": "編集フォーム",
+              "width": 420,
+              "height": "fill_container",
+              "fill": "$surface",
+              "cornerRadius": 12,
+              "stroke": "$border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 16,
+              "padding": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "oekFV",
+                  "name": "フォーム見出し",
+                  "fill": "$text-primary",
+                  "content": "メモを編集",
+                  "fontFamily": "$font-body",
+                  "fontSize": 16,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "rO6Ht",
+                  "name": "本文フィールド",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "ueCLz",
+                      "name": "項目ラベル",
+                      "fill": "$text-secondary",
+                      "content": "本文",
+                      "fontFamily": "$font-body",
+                      "fontSize": 13,
+                      "fontWeight": "500"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "P1P9K",
+                      "name": "入力欄",
+                      "width": "fill_container",
+                      "height": 240,
+                      "fill": "$surface",
+                      "cornerRadius": "$radius-md",
+                      "stroke": "$border",
+                      "strokeWidth": 1,
+                      "padding": 12,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "KDGRs",
+                          "name": "入力テキスト",
+                          "fill": "$text-primary",
+                          "textGrowth": "fixed-width",
+                          "width": "fill_container",
+                          "content": "買い物リスト: 牛乳、卵、パン、コーヒー豆",
+                          "lineHeight": 1.6,
+                          "fontFamily": "$font-body",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "L8OlEW",
+                  "name": "メタ情報",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "QGN2o",
+                      "name": "作成日時",
+                      "fill": "$text-secondary",
+                      "content": "作成: 2026-08-10 08:00",
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "text",
+                      "id": "eXDRm",
+                      "name": "更新日時",
+                      "fill": "$text-secondary",
+                      "content": "更新: 2026-08-15 09:12",
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "QNIKD",
+                  "name": "スペーサー",
+                  "width": "fill_container",
+                  "height": "fill_container"
+                },
+                {
+                  "type": "frame",
+                  "id": "q4VMbz",
+                  "name": "操作",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "id": "ZgS5M",
+                      "type": "ref",
+                      "ref": "HCztE",
+                      "name": "キャンセル"
+                    },
+                    {
+                      "id": "lBEwk",
+                      "type": "ref",
+                      "ref": "h30OQg",
+                      "name": "保存",
+                      "descendants": {
+                        "o9k4In": {
+                          "content": "保存"
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "K0XQk",
+      "x": 1600,
+      "y": 600,
+      "name": "SCR-001-SP ダミー画面",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "JUoug",
+          "name": "ヘッダー",
+          "width": "fill_container",
+          "fill": "$surface",
+          "stroke": "$border",
+          "strokeWidth": {
+            "bottom": 1
+          },
+          "padding": [
+            12,
+            16
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "vvBlp",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 17,
+              "fontWeight": "600"
+            },
+            {
+              "id": "GRbdc",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "新規作成",
+              "padding": [
+                8,
+                12
+              ],
+              "descendants": {
+                "o9k4In": {
+                  "content": "新規作成",
+                  "fontSize": 13
+                }
+              }
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "y5727h",
+          "name": "本体",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 16,
+          "children": [
+            {
+              "type": "frame",
+              "id": "juSOi",
+              "name": "編集フォーム",
+              "width": "fill_container",
+              "fill": "$surface",
+              "cornerRadius": 12,
+              "stroke": "$border",
+              "strokeWidth": 1,
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "z6tkC",
+                  "name": "フォーム見出し",
+                  "fill": "$text-primary",
+                  "content": "メモを編集",
+                  "fontFamily": "$font-body",
+                  "fontSize": 15,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "frame",
+                  "id": "B9I5Qi",
+                  "name": "入力欄",
+                  "width": "fill_container",
+                  "height": 120,
+                  "fill": "$surface",
+                  "cornerRadius": "$radius-md",
+                  "stroke": "$border",
+                  "strokeWidth": 1,
+                  "padding": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "M2aUR",
+                      "name": "入力テキスト",
+                      "fill": "$text-primary",
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container",
+                      "content": "買い物リスト: 牛乳、卵、パン、コーヒー豆",
+                      "lineHeight": 1.6,
+                      "fontFamily": "$font-body",
+                      "fontSize": 14,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "q9pbq",
+                  "name": "操作",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "justifyContent": "end",
+                  "children": [
+                    {
+                      "id": "lxUqv",
+                      "type": "ref",
+                      "ref": "HCztE",
+                      "name": "キャンセル"
+                    },
+                    {
+                      "id": "BZMQ9",
+                      "type": "ref",
+                      "ref": "h30OQg",
+                      "name": "保存"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "f36cI",
+              "name": "一覧",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "lqxha",
+                  "name": "一覧ヘッダー",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "U4MUW",
+                      "name": "見出し",
+                      "fill": "$text-primary",
+                      "content": "メモ一覧",
+                      "fontFamily": "$font-body",
+                      "fontSize": 15,
+                      "fontWeight": "600"
+                    },
+                    {
+                      "type": "text",
+                      "id": "Y5jO0J",
+                      "name": "件数",
+                      "fill": "$text-secondary",
+                      "content": "4 件",
+                      "fontFamily": "$font-body",
+                      "fontSize": 12,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "id": "U8wvj",
+                  "type": "ref",
+                  "ref": "lPQJP",
+                  "name": "メモ行",
+                  "width": "fill_container",
+                  "stroke": "$accent",
+                  "descendants": {
+                    "nrSyz": {
+                      "content": "買い物リスト: 牛乳、卵、パン、コーヒー豆"
+                    },
+                    "amQgG": {
+                      "content": "2026-08-15 09:12 更新"
+                    }
+                  }
+                },
+                {
+                  "id": "e6jDe",
+                  "type": "ref",
+                  "ref": "lPQJP",
+                  "name": "メモ行",
+                  "width": "fill_container",
+                  "descendants": {
+                    "nrSyz": {
+                      "content": "会議メモ: 次回スプリントのゴールを再確認する"
+                    },
+                    "amQgG": {
+                      "content": "2026-08-14 18:40 更新"
+                    }
+                  }
+                },
+                {
+                  "id": "a3SOl",
+                  "type": "ref",
+                  "ref": "lPQJP",
+                  "name": "メモ行",
+                  "width": "fill_container",
+                  "descendants": {
+                    "nrSyz": {
+                      "content": "Pencil 検証: 画面 ID とフレーム名の運用ルールを決める"
+                    },
+                    "amQgG": {
+                      "content": "2026-08-13 11:05 更新"
+                    }
+                  }
+                },
+                {
+                  "id": "TBjIg",
+                  "type": "ref",
+                  "ref": "lPQJP",
+                  "name": "メモ行",
+                  "width": "fill_container",
+                  "descendants": {
+                    "nrSyz": {
+                      "content": "読書メモ: DDD の集約境界の切り方について"
+                    },
+                    "amQgG": {
+                      "content": "2026-08-12 21:30 更新"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "bg": {
+      "type": "color",
+      "value": "#F4F5F7"
+    },
+    "surface": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "border": {
+      "type": "color",
+      "value": "#E3E6EB"
+    },
+    "text-primary": {
+      "type": "color",
+      "value": "#171A1F"
+    },
+    "text-secondary": {
+      "type": "color",
+      "value": "#6C7480"
+    },
+    "accent": {
+      "type": "color",
+      "value": "#2F6FED"
+    },
+    "accent-text": {
+      "type": "color",
+      "value": "#FFFFFF"
+    },
+    "danger": {
+      "type": "color",
+      "value": "#D64545"
+    },
+    "font-body": {
+      "type": "string",
+      "value": "Inter"
+    },
+    "radius-md": {
+      "type": "number",
+      "value": 8
+    },
+    "gap-sm": {
+      "type": "number",
+      "value": 8
+    },
+    "gap-md": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "fileToken": "82dd72bb-dada-43ca-8bcb-3c5de1713c42"
+}
