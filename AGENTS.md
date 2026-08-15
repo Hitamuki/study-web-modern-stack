@@ -19,6 +19,7 @@ pnpm Catalogs + Turborepo のモノレポで、インフラからフロント（
 | `hasura/` | Hasura のメタデータ・マイグレーション |
 | `infra/` | Terraform |
 | `docs/` | 設計ドキュメント |
+| `design/` | UI デザイン（Pencil の `.pen`） |
 
 ### コマンドの実行
 
@@ -303,3 +304,9 @@ git remote prune origin
 
 - コメント・ドキュメント・Issue・PR は日本語で書く。識別子は英語。
 - 既存ファイルを編集するときは、周囲のコードのスタイル・命名・コメント量に合わせる。
+
+## 領域別の詳細ルール
+
+領域固有の規約は `.claude/rules/` 配下に置き、このファイルから読み込みます。
+
+@.claude/rules/design/pencil.md
