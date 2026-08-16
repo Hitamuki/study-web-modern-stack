@@ -35,11 +35,25 @@ make install    # 依存関係をインストール
 
 mise を使わない場合は、必要なツールを各自で用意したうえで `pnpm install` を実行してください。
 
-### 3. 開発サーバーの起動
+### 3. バックエンドの初期化
+
+初回、または DB を作り直したいときに 1 度だけ実行します。
+コンテナの起動 → Prisma スキーマの反映 → Hasura メタデータの適用 → 動作確認用データの投入までを行います。
 
 ```bash
-make dev
+make backend-init
 ```
+
+### 4. 開発サーバーの起動
+
+バックエンド（PostgreSQL / Hasura / NestJS）と、触りたいフロントエンドを別々のターミナルで起動します。
+
+```bash
+make backend-start    # PostgreSQL + Hasura + NestJS
+make web-start        # Web だけ
+```
+
+すべてまとめて起動する場合は `make dev` を使います。
 
 ## 主要なコマンド
 
@@ -49,13 +63,30 @@ make dev
 | :-------------- | :-------------------------------- |
 | `make`          | タスク一覧の表示                  |
 | `make install`  | 依存関係のインストール            |
-| `make dev`      | 開発サーバーの起動                |
+| `make dev`      | バックエンドと全フロントエンドの起動 |
 | `make build`    | プロジェクトのビルド              |
 | `make lint`     | 静的解析 (Biome) の実行           |
 | `make format`   | コードの自動整形                  |
 | `make format-check` | 整形崩れの確認（書き換えない）  |
 | `make test`     | テストの実行                      |
 | `make check`    | lint / format-check / test をまとめて実行 |
+
+### 起動系コマンド
+
+フロントエンドは Hasura に接続するため、先に `make backend-start`（または `make dev`）が必要です。
+
+| コマンド             | 起動するもの                                   | ポート |
+| :------------------- | :--------------------------------------------- | :----- |
+| `make backend-init`  | DB / Hasura の初期化・マイグレーション（起動はしない） | -      |
+| `make backend-start` | PostgreSQL + Hasura + NestJS                    | 5433 / 8080 / 3001（inspector 9229） |
+| `make backend-stop`  | コンテナの停止                                  | -      |
+| `make frontend-start`| Web + Mobile + Desktop                          | 下記すべて |
+| `make web-start`     | Web (Vite)                                      | 5173   |
+| `make mobile-start`  | Mobile (Expo / Metro)                           | 8081   |
+| `make desktop-start` | Desktop (Electron)                              | 5174（inspector 5858 / DevTools 9222） |
+
+NestJS の待ち受けポートは `PORT` で変更できます（例: `PORT=3100 make backend-start`）。
+変更した場合は `hasura/metadata/actions.yaml` の handler URL も合わせて直してください。
 
 ### Stacked PRs 関連コマンド
 
