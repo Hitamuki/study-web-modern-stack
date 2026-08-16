@@ -28,14 +28,14 @@
 
 ### 通信設定（Handler URL）
 Hasura は Docker コンテナ内で動作するため、ホストマシンで動く NestJS を参照するには以下の URL を使用します。
-- **Action Handler URL**: `http://host.docker.internal:3000/hasura/actions/[Action名]`
+- **Action Handler URL**: `http://host.docker.internal:3001/hasura/actions/[Action名]`
 
 ### 新しい Action を追加する手順
 1. **NestJS で Webhook を実装する**:
    - `apps/api` 内に新しいエンドポイントを作成し、処理を実装します。
 2. **Hasura で Action を定義する**:
    - `hasura console --project hasura` でコンソールを起動。
-   - **Actions** タブで、GraphQL の型定義と `Handler URL` (例: `http://host.docker.internal:3000/hasura/actions/[新規Action名]`) を入力して作成。
+   - **Actions** タブで、GraphQL の型定義と `Handler URL` (例: `http://host.docker.internal:3001/hasura/actions/[新規Action名]`) を入力して作成。
 3. **メタデータを保存する**:
    - ターミナルで `hasura metadata export --project hasura` を実行し、定義をファイルに書き出します。
 4. **型定義を生成する**:
