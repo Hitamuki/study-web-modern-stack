@@ -15,6 +15,7 @@
       "Bash(make wiki-push *)",
       "Bash(turbo *)",
       "Bash(pnpm exec biome *)",
+      "Bash(pnpm exec eslint *)",
       "Bash(pnpm --filter *)",
       "Bash(pnpm format)",
       "Bash(pnpm format:check)",

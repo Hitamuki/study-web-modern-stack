@@ -6,7 +6,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 ## 【目的】
 
-- モダンなモノレポ開発（pnpm / Turborepo / Biome / pnpm Catalogs）のワークフローを習得する。
+- モダンなモノレポ開発（pnpm / Turborepo / ESLint / Biome / pnpm Catalogs）のワークフローを習得する。
 - Terraform のローカル品質管理（fmt, lint, plan, test）を実践する。
 - 各レイヤー（フロント・バック・インフラ）の接続性を GraphQL を通じて理解する。
 - アジャイル開発（スクラム）を体感する。
@@ -17,7 +17,8 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
   - **開発フロー**: GitHub Stacked PRs (`gh stack`)
 - **パッケージ管理**: pnpm (Workspace / Catalogs)
 - **ビルドツール**: Turborepo
-- **静的解析/整形**: Biome (Linter / Formatter)
+- **静的解析**: ESLint (typescript-eslint の型認識ルール)
+- **整形**: Biome (Formatter)
 - **インフラ**: AWS / Terraform (tffmt, tflint, terraform plan, terraform test)
 - **ミドルウェア**: Hasura (GraphQL Engine)
 - **データベース**: PostgreSQL
@@ -40,7 +41,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
   - ✅mise,CONTRIBUTING.mdの整備
   - ✅`pnpm init` および `pnpm-workspace.yaml` (Catalogs) の作成（pnpm workspace）
   - ✅`turbo.json` の定義（build, lint, dev のパイプライン設定）
-  - ✅`biome.jsonc` による全プロジェクト共通の静的解析設定
+  - ✅`eslint.config.mjs`（lint）と `biome.jsonc`（整形）による全プロジェクト共通の設定
 
 ### インフラ準備
 
@@ -99,7 +100,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 ### 最終統合
 
 - `turbo dev` を利用した全サービスの一括起動確認
-- Biome によるプロジェクト全体の静的解析パスの確認
+- ESLint によるプロジェクト全体の静的解析パスの確認
 - Vitestによる単体テストコードの実装
 - スプリントレビュー（技術的負債と学びの整理）
 
@@ -127,7 +128,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 ## 【成功の定義（Doneの定義）】
 
-1. GitHub にコードが管理され、Biome の解析をパスしていること
+1. GitHub にコードが管理され、ESLint の解析をパスしていること
 2. Terraform で `plan` が通り、`test` が成功すること
 3. Hasura Actions を経由して NestJS のドメインロジックが実行されること
 4. フロントエンド（Web、モバイル、デスクトップ）から、同一の GraphQL API を通じてメモが表示・投稿できること
