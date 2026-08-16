@@ -15,7 +15,12 @@
     "noEmit": true,
     "jsx": "react-jsx",
     // CSS の副作用 import（import "./styles.css"）を解決するために必要
-    "types": ["vite/client"]
+    "types": ["vite/client"],
+    // shadcn/ui のコードは @/ 始まりで import する。vite.config.ts の alias と揃えること。
+    // baseUrl は TypeScript 6 で非推奨のため置かない（paths はこのファイルからの相対で解決される）
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
