@@ -124,7 +124,7 @@ export const DummyPage = () => {
             <Button
               label={saving ? "保存中..." : "保存"}
               disabled={saving}
-              onPress={handleSubmit}
+              onPress={() => void handleSubmit()}
             />
           </View>
         </View>
@@ -182,7 +182,7 @@ export const DummyPage = () => {
                 label={deleteState.loading ? "削除中..." : "削除する"}
                 variant="danger"
                 disabled={deleteState.loading}
-                onPress={handleConfirmDelete}
+                onPress={() => void handleConfirmDelete()}
               />
             </View>
           </View>

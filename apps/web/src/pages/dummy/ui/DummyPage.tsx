@@ -7,15 +7,15 @@ import {
   UPDATE_DUMMY,
 } from "@repo/graphql";
 import { useState } from "react";
-import { DummyRow } from "../../../entities/dummy/ui/DummyRow";
-import { DeleteDummyDialog } from "../../../features/dummy-delete/ui/DeleteDummyDialog";
-import { DummyForm } from "../../../features/dummy-form/ui/DummyForm";
-import { Button } from "../../../shared/ui/Button";
+import { DummyRow } from "@/entities/dummy/ui/DummyRow";
+import { DeleteDummyDialog } from "@/features/dummy-delete/ui/DeleteDummyDialog";
+import { DummyForm } from "@/features/dummy-form/ui/DummyForm";
+import { Button } from "@/shared/ui/button";
 
 /**
  * SCR-001 ダミー画面。
  * PC は 2 ペイン（左が一覧・右がフォーム）、SP は 1 カラム（上がフォーム・下が一覧）。
- * 切り替えは styles.css のメディアクエリが担当する。
+ * 切り替えは Tailwind の max-md: バリアントが担当する。
  */
 export const DummyPage = () => {
   const { data, loading, error, refetch } = useQuery(DUMMY_LIST);
@@ -77,28 +77,37 @@ export const DummyPage = () => {
     await refetch();
   };
 
-  if (loading) return <p className="state">読み込み中...</p>;
-  if (error) return <p className="state state--error">エラーが発生しました: {error.message}</p>;
+  if (loading) return <p className="p-12 text-center text-muted-foreground">読み込み中...</p>;
+  if (error) {
+    return (
+      <p className="p-12 text-center text-destructive">エラーが発生しました: {error.message}</p>
+    );
+  }
 
   return (
-    <div className="screen">
-      <header className="header">
-        <h1 className="header__title">メモ</h1>
-        <Button variant="primary" onClick={resetForm}>
+    <div className="flex h-full flex-col">
+      <header className="flex flex-none items-center justify-between border-b border-border bg-card px-6 py-4 max-md:px-4 max-md:py-3">
+        <h1 className="text-lg font-semibold max-md:text-[17px]">メモ</h1>
+        <Button onClick={resetForm} className="max-md:h-8 max-md:px-3">
           新規作成
         </Button>
       </header>
 
-      <main className="body">
-        <section className="pane pane--list">
-          <div className="pane__header">
-            <h2 className="pane__heading">メモ一覧</h2>
-            <span className="pane__count">{items.length} 件</span>
+      <main className="flex min-h-0 flex-1 gap-6 p-6 max-md:flex-col max-md:gap-md max-md:p-md">
+        {/* SP では一覧をカードにせず、行を背景の上に直接並べる（SCR-001-SP の「一覧」に合わせる） */}
+        <section className="flex min-w-0 flex-1 flex-col gap-md rounded-lg border border-border bg-card p-5 max-md:gap-sm max-md:rounded-none max-md:border-none max-md:bg-transparent max-md:p-0">
+          <div className="flex items-center justify-between">
+            <h2 className="text-base font-semibold max-md:text-[15px]">メモ一覧</h2>
+            <span className="text-[13px] text-muted-foreground max-md:text-xs">
+              {items.length} 件
+            </span>
           </div>
           {items.length === 0 ? (
-            <p className="list__empty">メモがまだありません。右のフォームから作成してください。</p>
+            <p className="py-6 text-center text-sm text-muted-foreground">
+              メモがまだありません。右のフォームから作成してください。
+            </p>
           ) : (
-            <ul className="list">
+            <ul className="flex min-h-0 flex-col gap-sm overflow-y-auto max-md:overflow-y-visible">
               {items.map((item) => (
                 <DummyRow
                   key={item.id}
@@ -118,7 +127,7 @@ export const DummyPage = () => {
           pending={createState.loading || updateState.loading}
           errorMessage={formError}
           onContentChange={setContent}
-          onSubmit={handleSubmit}
+          onSubmit={() => void handleSubmit()}
           onCancel={resetForm}
         />
       </main>
@@ -126,7 +135,7 @@ export const DummyPage = () => {
       {deleteTarget && (
         <DeleteDummyDialog
           pending={deleteState.loading}
-          onConfirm={handleConfirmDelete}
+          onConfirm={() => void handleConfirmDelete()}
           onCancel={() => setDeleteTarget(null)}
         />
       )}

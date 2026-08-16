@@ -8,7 +8,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "biome lint .",
+    "lint": "eslint .",
     "build": "expo export",
     "dev": "expo start"
   },
@@ -29,9 +29,9 @@
     "@types/react": "catalog:frontend",
     "typescript": "catalog:",
     "@repo/graphql": "workspace:*",
-    "@biomejs/biome": "catalog:",
     "@babel/core": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "babel-preset-expo": "~54.0.0"
+    "babel-preset-expo": "~54.0.0",
+    "eslint": "catalog:"
   }
 }

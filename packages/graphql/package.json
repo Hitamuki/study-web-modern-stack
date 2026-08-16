@@ -5,7 +5,7 @@
   "types": "./src/index.ts",
   "scripts": {
     "codegen": "graphql-codegen",
-    "lint": "biome lint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "react": "catalog:frontend",
@@ -14,10 +14,10 @@
     "@graphql-typed-document-node/core": "^3.2.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
     "@graphql-codegen/cli": "catalog:frontend",
     "@graphql-codegen/client-preset": "catalog:frontend",
     "typescript": "catalog:default",
-    "@types/react": "catalog:frontend"
+    "@types/react": "catalog:frontend",
+    "eslint": "catalog:"
   }
 }

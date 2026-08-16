@@ -2,24 +2,36 @@
   "name": "@memo-app/web",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "biome lint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@apollo/client": "catalog:frontend",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "graphql": "catalog:frontend",
+    "lucide-react": "catalog:frontend",
+    "radix-ui": "^1.6.7",
     "react": "catalog:frontend",
-    "react-dom": "catalog:frontend"
+    "react-dom": "catalog:frontend",
+    "tailwind-merge": "^3.4.1",
+    "tw-animate-css": "catalog:frontend"
   },
   "devDependencies": {
-    "@repo/graphql": "workspace:*",
-    "@biomejs/biome": "catalog:",
     "@graphql-typed-document-node/core": "^3.2.0",
+    "@repo/graphql": "workspace:*",
+    "@tailwindcss/vite": "catalog:frontend",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",
     "@vitejs/plugin-react": "catalog:frontend",
+    "eslint": "catalog:",
+    "eslint-plugin-better-tailwindcss": "catalog:frontend",
+    "eslint-plugin-react-hooks": "catalog:frontend",
+    "eslint-plugin-react-refresh": "catalog:frontend",
+    "tailwindcss": "catalog:frontend",
     "typescript": "catalog:",
     "vite": "catalog:frontend"
   }

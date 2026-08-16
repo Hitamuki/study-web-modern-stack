@@ -31,6 +31,9 @@ pnpm 9.5+ から導入された Catalogs 機能を利用することで、モノ
 
 Linter と Formatter を Biome に一本化することで、設定ファイルの簡素化と、Prettier 等に比べて劇的な速度向上を確認しました。
 
+> **追記（2026-08-16）**: その後 lint のみ ESLint（typescript-eslint）へ移しました。型情報を使うルールが必要になったためです。
+> Biome は整形専用として残しています。経緯は [Discussion #40](https://github.com/Hitamuki/study-web-modern-stack/discussions/40) を参照してください。
+
 ### 4. Turborepo のパイプライン設計
 
 `dependsOn: ["^build"]` などの定義により、依存するパッケージがビルド済みでないと実行されない等の依存関係を正しく表現しました。

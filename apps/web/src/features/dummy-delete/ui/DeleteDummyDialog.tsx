@@ -1,5 +1,12 @@
-import { useEffect, useRef } from "react";
-import { Button } from "../../../shared/ui/Button";
+import { Button } from "@/shared/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/shared/ui/dialog";
 
 export interface DeleteDummyDialogProps {
   pending: boolean;
@@ -10,39 +17,31 @@ export interface DeleteDummyDialogProps {
 /**
  * design/app.pen の CMP/削除確認ダイアログ。
  * 画面 ID は振らず、SCR-001 に属するダイアログとして扱う。
+ *
+ * フォーカストラップ・Esc・スクロールロック・aria 属性は shadcn/ui（Radix）が持つ。
+ * 呼び出し側が条件付きでマウントするため open は常に true で、閉じる操作は
+ * onOpenChange 経由で onCancel に流す。
  */
-export const DeleteDummyDialog = ({ pending, onConfirm, onCancel }: DeleteDummyDialogProps) => {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  // showModal でのみ ::backdrop と Esc が有効になるため、open 属性ではなく命令的に開く
-  useEffect(() => {
-    dialogRef.current?.showModal();
-  }, []);
-
-  return (
-    <dialog
-      ref={dialogRef}
-      className="dialog"
-      aria-labelledby="delete-dialog-title"
-      onCancel={(event) => {
-        event.preventDefault();
-        onCancel();
-      }}
-    >
-      <div className="dialog__inner">
-        <h2 id="delete-dialog-title" className="dialog__title">
-          このメモを削除しますか？
-        </h2>
-        <p className="dialog__description">削除したメモは元に戻せません。</p>
-        <div className="actions">
-          <Button variant="secondary" onClick={onCancel} disabled={pending}>
-            キャンセル
-          </Button>
-          <Button variant="danger" onClick={onConfirm} disabled={pending}>
-            {pending ? "削除中..." : "削除する"}
-          </Button>
-        </div>
-      </div>
-    </dialog>
-  );
-};
+export const DeleteDummyDialog = ({ pending, onConfirm, onCancel }: DeleteDummyDialogProps) => (
+  <Dialog
+    open
+    onOpenChange={(open) => {
+      if (!open) onCancel();
+    }}
+  >
+    <DialogContent showCloseButton={false}>
+      <DialogHeader>
+        <DialogTitle>このメモを削除しますか？</DialogTitle>
+        <DialogDescription>削除したメモは元に戻せません。</DialogDescription>
+      </DialogHeader>
+      <DialogFooter>
+        <Button variant="outline" onClick={onCancel} disabled={pending}>
+          キャンセル
+        </Button>
+        <Button variant="destructive" onClick={onConfirm} disabled={pending}>
+          {pending ? "削除中..." : "削除する"}
+        </Button>
+      </DialogFooter>
+    </DialogContent>
+  </Dialog>
+);

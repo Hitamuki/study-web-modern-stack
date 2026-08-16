@@ -6,12 +6,11 @@
   "scripts": {
     "dev": "electron-vite dev -- --inspect=5858 --remote-debugging-port=9222",
     "build": "electron-vite build",
-    "lint": "biome lint .",
+    "lint": "eslint .",
     "preview": "electron-vite preview",
     "start": "electron ."
   },
   "devDependencies": {
-    "@biomejs/biome": "catalog:",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",
     "@types/node": "catalog:default",
@@ -19,7 +18,10 @@
     "electron": "^36.0.0",
     "electron-vite": "^3.1.0",
     "typescript": "catalog:default",
-    "vite": "catalog:frontend"
+    "vite": "catalog:frontend",
+    "eslint": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:frontend",
+    "eslint-plugin-react-refresh": "catalog:frontend"
   },
   "dependencies": {
     "@apollo/client": "catalog:frontend",
