@@ -1,62 +1,96 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Res } from "@nestjs/common";
-import type { Response } from "express";
+import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
 // biome-ignore lint/style/useImportType: Nest の DI は emitDecoratorMetadata が出力する design:paramtypes で解決するため、コンストラクタ引数の型は値として import する
-import { CreateMemoUseCase } from "../../application/use-case/create-memo.use-case";
+import { CreateDummyUseCase } from "../../application/use-case/create-dummy.use-case";
+// biome-ignore lint/style/useImportType: 同上
+import { DeleteDummyUseCase } from "../../application/use-case/delete-dummy.use-case";
+// biome-ignore lint/style/useImportType: 同上
+import { UpdateDummyUseCase } from "../../application/use-case/update-dummy.use-case";
+import type { Dummy } from "../../domain/entities/dummy.entity";
 
 /**
  * Hasura から送られる Action リクエストのボディ形式
  * @see https://hasura.io/docs/2.0/actions/action-handlers/
  */
-interface HasuraActionPayload {
-  action: { name: string };
-  input: { content: string };
+interface HasuraActionPayload<TInput> {
+  action?: { name: string };
+  input?: Partial<TInput>;
   session_variables?: Record<string, string>;
   request_query?: string;
 }
 
-/**
- * createMemo Action のレスポンス型（Hasura の Action 出力型と一致させる）
- */
-interface CreateMemoActionResponse {
+/** Action の出力型 DummyPayload（hasura/metadata/actions.graphql と一致させる） */
+interface DummyPayload {
   id: string;
   content: string;
   createdAt: string;
   updatedAt: string;
 }
 
+/** Action の出力型 DeleteDummyPayload */
+interface DeleteDummyPayload {
+  id: string;
+}
+
 /**
  * Hasura Actions 用 Webhook コントローラー。
  * 「Hasura（受付）→ NestJS（ロジック）→ DB（Prisma 経由）」のデータフローで呼ばれる。
+ *
+ * 一覧・単体の参照は Hasura が自動生成するクエリを使うため、ここには書き込み系だけを置く。
  */
 @Controller("hasura/actions")
 export class HasuraActionController {
-  constructor(private readonly createMemoUseCase: CreateMemoUseCase) {}
+  constructor(
+    private readonly createDummyUseCase: CreateDummyUseCase,
+    private readonly updateDummyUseCase: UpdateDummyUseCase,
+    private readonly deleteDummyUseCase: DeleteDummyUseCase,
+  ) {}
 
-  @Post("createMemo")
-  @HttpCode(HttpStatus.CREATED)
-  async createMemo(@Body() payload: HasuraActionPayload, @Res() res: Response): Promise<void> {
-    const input = payload?.input;
-    if (!input || typeof input.content !== "string") {
-      res.status(400).json({
-        message: "Invalid input: content (string) is required",
-      });
-      return;
-    }
-
-    try {
-      const memo = await this.createMemoUseCase.execute({
-        content: input.content.trim(),
-      });
-      const body: CreateMemoActionResponse = {
-        id: memo.id.value,
-        content: memo.content,
-        createdAt: memo.createdAt.toISOString(),
-        updatedAt: memo.updatedAt.toISOString(),
-      };
-      res.status(HttpStatus.CREATED).json(body);
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to create memo";
-      res.status(422).json({ message });
-    }
+  @Post("createDummy")
+  @HttpCode(HttpStatus.OK)
+  async createDummy(
+    @Body() payload: HasuraActionPayload<{ content: string }>,
+  ): Promise<DummyPayload> {
+    const content = requireString(payload?.input?.content, "content");
+    return toDummyPayload(await this.createDummyUseCase.execute({ content }));
   }
+
+  @Post("updateDummy")
+  @HttpCode(HttpStatus.OK)
+  async updateDummy(
+    @Body() payload: HasuraActionPayload<{ id: string; content: string }>,
+  ): Promise<DummyPayload> {
+    const id = requireString(payload?.input?.id, "id");
+    const content = requireString(payload?.input?.content, "content");
+    return toDummyPayload(await this.updateDummyUseCase.execute({ id, content }));
+  }
+
+  @Post("deleteDummy")
+  @HttpCode(HttpStatus.OK)
+  async deleteDummy(
+    @Body() payload: HasuraActionPayload<{ id: string }>,
+  ): Promise<DeleteDummyPayload> {
+    const id = requireString(payload?.input?.id, "id");
+    const deletedId = await this.deleteDummyUseCase.execute({ id });
+    return { id: deletedId.value };
+  }
+}
+
+/**
+ * Action の入力が文字列であることを保証する。
+ * ドメインの不変条件ではなく「Hasura から来たペイロードの形」の検証なので、ここで弾く。
+ */
+function requireString(value: unknown, field: string): string {
+  if (typeof value !== "string") {
+    throw new BadRequestException(`${field} は文字列で指定してください`);
+  }
+  return value.trim();
+}
+
+function toDummyPayload(dummy: Dummy): DummyPayload {
+  return {
+    id: dummy.id.value,
+    content: dummy.content.value,
+    createdAt: dummy.createdAt.toISOString(),
+    updatedAt: dummy.updatedAt.toISOString(),
+  };
 }
