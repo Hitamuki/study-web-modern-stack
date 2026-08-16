@@ -1,0 +1,389 @@
+/*
+ * SCR-001 ダミー画面のスタイル。
+ *
+ * カスタムプロパティ名は design/app.pen のデザイントークンと 1:1 で対応させています。
+ * CSS フレームワークは未選定のため（.claude/rules/design/pencil.md「未決定」参照）、
+ * 素の CSS で書いています。フレームワークを入れるときはここを差し替えます。
+ */
+
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --border: #e3e6eb;
+  --text-primary: #171a1f;
+  --text-secondary: #6c7480;
+  --accent: #2f6fed;
+  --accent-text: #ffffff;
+  --danger: #d64545;
+  --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP",
+    sans-serif;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --gap-sm: 8px;
+  --gap-md: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+}
+
+/* ── 画面全体（SCR-001-PC / SCR-001-SP） ───────────────────────────── */
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ── ヘッダー ────────────────────────────────────────────────────── */
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.header__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+/* ── 本体（PC は 2 ペイン、SP は 1 カラム） ──────────────────────── */
+
+.body {
+  display: flex;
+  flex: 1;
+  gap: 24px;
+  padding: 24px;
+  min-height: 0;
+}
+
+.pane {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+  padding: 20px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.pane--list {
+  flex: 1;
+  min-width: 0;
+}
+
+.pane--form {
+  width: 420px;
+  flex: none;
+}
+
+/* ── 一覧 ────────────────────────────────────────────────────────── */
+
+.pane__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pane__heading {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pane__count {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  overflow-y: auto;
+  min-height: 0;
+}
+
+.list__empty {
+  margin: 0;
+  padding: 24px 0;
+  color: var(--text-secondary);
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ── メモ行（CMP/メモ行） ────────────────────────────────────────── */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.row--selected {
+  border-color: var(--accent);
+}
+
+.row__body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+
+.row__excerpt {
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.row__timestamp {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.row__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  flex: none;
+}
+
+/* ── フォーム ────────────────────────────────────────────────────── */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+}
+
+.field__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.field__input {
+  height: 240px;
+  padding: 12px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: none;
+}
+
+.field__input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* PC ではフォームの操作ボタンを下端に寄せる（デザインの「スペーサー」に相当） */
+.spacer {
+  flex: 1;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--gap-sm);
+}
+
+.error {
+  margin: 0;
+  font-size: 13px;
+  color: var(--danger);
+}
+
+/* ── ボタン（CMP/ボタン（主）・（副）） ──────────────────────────── */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-sm);
+  padding: 10px 16px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.button--primary {
+  background-color: var(--accent);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+.button--secondary {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.button--danger {
+  background-color: var(--danger);
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* ── 削除確認ダイアログ（CMP/削除確認ダイアログ） ────────────────── */
+
+.dialog {
+  width: 420px;
+  max-width: calc(100vw - 32px);
+  padding: 24px;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.dialog::backdrop {
+  background-color: rgb(23 26 31 / 45%);
+}
+
+.dialog__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.dialog__title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.dialog__description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ── 状態表示 ────────────────────────────────────────────────────── */
+
+.state {
+  padding: 48px;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.state--error {
+  color: var(--danger);
+}
+
+/* ── SP（SCR-001-SP、390px 想定） ────────────────────────────────── */
+
+@media (max-width: 767px) {
+  .header {
+    padding: 12px 16px;
+  }
+
+  .header__title {
+    font-size: 17px;
+  }
+
+  .header .button {
+    padding: 8px 12px;
+  }
+
+  .body {
+    flex-direction: column;
+    gap: var(--gap-md);
+    padding: var(--gap-md);
+  }
+
+  /* デザインでは SP のみフォームが一覧の上に来る */
+  .pane--form {
+    order: -1;
+    width: auto;
+  }
+
+  .pane {
+    padding: var(--gap-md);
+    gap: 12px;
+  }
+
+  /* SP では一覧をカードにせず、行を背景の上に直接並べる（SCR-001-SP の「一覧」に合わせる） */
+  .pane--list {
+    padding: 0;
+    gap: var(--gap-sm);
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+  }
+
+  .pane__heading {
+    font-size: 15px;
+  }
+
+  .pane__count {
+    font-size: 12px;
+  }
+
+  .field__input {
+    height: 120px;
+  }
+
+  /* SP は縦に伸ばさず内容の高さに収める */
+  .spacer {
+    display: none;
+  }
+
+  .list {
+    overflow-y: visible;
+  }
+
+  /* 幅が狭いぶん 2 行までは折り返し、それ以降は省略する */
+  .row__excerpt {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    white-space: normal;
+  }
+}

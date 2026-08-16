@@ -11,7 +11,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true
+    "noEmit": true,
+    // CSS の副作用 import（import "./styles.css"）を解決するために必要
+    "types": ["vite/client"]
   },
   "include": ["src", "electron.vite.config.ts"],
   "exclude": ["dist", "out", "node_modules"]
