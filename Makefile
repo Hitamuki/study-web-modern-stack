@@ -30,6 +30,19 @@ dev: ## 開発サーバーを起動します
 build: ## プロジェクトをビルドします
 	pnpm build
 
+##@ データベース
+
+# DB の構造は Prisma が正本です（hasura/README.md の役割分担を参照）。
+# Hasura 側はメタデータのみを管理するため、テーブル定義の変更は必ず Prisma から流します。
+
+.PHONY: db-push
+db-push: ## Prisma スキーマを DB に反映します
+	pnpm --filter @memo-app/api exec prisma db push
+
+.PHONY: db-seed
+db-seed: ## SCR-001 の動作確認用データを投入します（既存の dummy を全削除します）
+	docker compose exec -T postgres psql -U user -d memo -q < apps/api/prisma/seed.sql
+
 ##@ 品質
 
 .PHONY: lint
