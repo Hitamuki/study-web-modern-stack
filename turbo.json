@@ -3,17 +3,23 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", ".next/**"]
+      "outputs": ["dist/**"]
     },
     "lint": {
       "dependsOn": ["^lint"]
+    },
+    "test": {
+      "dependsOn": ["^build"]
     },
     "dev": {
       "cache": false,
       "persistent": true
     },
-    "test": {
-      "dependsOn": ["^build"]
+    "codegen": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
     }
   }
 }
