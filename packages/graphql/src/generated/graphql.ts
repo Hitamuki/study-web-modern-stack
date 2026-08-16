@@ -14,28 +14,21 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
-  timestamp: { input: any; output: any; }
+  timestamptz: { input: any; output: any; }
+  uuid: { input: any; output: any; }
 };
 
-export type CreateMemoResponse = {
-  __typename?: 'CreateMemoResponse';
+export type DeleteDummyPayload = {
+  __typename?: 'DeleteDummyPayload';
+  id: Scalars['String']['output'];
+};
+
+export type DummyPayload = {
+  __typename?: 'DummyPayload';
   content: Scalars['String']['output'];
   createdAt: Scalars['String']['output'];
   id: Scalars['String']['output'];
   updatedAt: Scalars['String']['output'];
-};
-
-/** Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'. */
-export type Int_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['Int']['input']>;
-  _gt?: InputMaybe<Scalars['Int']['input']>;
-  _gte?: InputMaybe<Scalars['Int']['input']>;
-  _in?: InputMaybe<Array<Scalars['Int']['input']>>;
-  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['Int']['input']>;
-  _lte?: InputMaybe<Scalars['Int']['input']>;
-  _neq?: InputMaybe<Scalars['Int']['input']>;
-  _nin?: InputMaybe<Array<Scalars['Int']['input']>>;
 };
 
 /** Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'. */
@@ -79,130 +72,111 @@ export enum Cursor_Ordering {
   Desc = 'DESC'
 }
 
-/** columns and relationships of "memos" */
-export type Memos = {
-  __typename?: 'memos';
+/** columns and relationships of "dummy" */
+export type Dummy = {
+  __typename?: 'dummy';
   content: Scalars['String']['output'];
-  created_at: Scalars['timestamp']['output'];
-  id: Scalars['Int']['output'];
-  updated_at: Scalars['timestamp']['output'];
+  created_at: Scalars['timestamptz']['output'];
+  id: Scalars['uuid']['output'];
+  updated_at: Scalars['timestamptz']['output'];
 };
 
-/** aggregated selection of "memos" */
-export type Memos_Aggregate = {
-  __typename?: 'memos_aggregate';
-  aggregate?: Maybe<Memos_Aggregate_Fields>;
-  nodes: Array<Memos>;
+/** aggregated selection of "dummy" */
+export type Dummy_Aggregate = {
+  __typename?: 'dummy_aggregate';
+  aggregate?: Maybe<Dummy_Aggregate_Fields>;
+  nodes: Array<Dummy>;
 };
 
-/** aggregate fields of "memos" */
-export type Memos_Aggregate_Fields = {
-  __typename?: 'memos_aggregate_fields';
-  avg?: Maybe<Memos_Avg_Fields>;
+/** aggregate fields of "dummy" */
+export type Dummy_Aggregate_Fields = {
+  __typename?: 'dummy_aggregate_fields';
   count: Scalars['Int']['output'];
-  max?: Maybe<Memos_Max_Fields>;
-  min?: Maybe<Memos_Min_Fields>;
-  stddev?: Maybe<Memos_Stddev_Fields>;
-  stddev_pop?: Maybe<Memos_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Memos_Stddev_Samp_Fields>;
-  sum?: Maybe<Memos_Sum_Fields>;
-  var_pop?: Maybe<Memos_Var_Pop_Fields>;
-  var_samp?: Maybe<Memos_Var_Samp_Fields>;
-  variance?: Maybe<Memos_Variance_Fields>;
+  max?: Maybe<Dummy_Max_Fields>;
+  min?: Maybe<Dummy_Min_Fields>;
 };
 
 
-/** aggregate fields of "memos" */
-export type Memos_Aggregate_FieldsCountArgs = {
-  columns?: InputMaybe<Array<Memos_Select_Column>>;
+/** aggregate fields of "dummy" */
+export type Dummy_Aggregate_FieldsCountArgs = {
+  columns?: InputMaybe<Array<Dummy_Select_Column>>;
   distinct?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-/** aggregate avg on columns */
-export type Memos_Avg_Fields = {
-  __typename?: 'memos_avg_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Boolean expression to filter rows from the table "memos". All fields are combined with a logical 'AND'. */
-export type Memos_Bool_Exp = {
-  _and?: InputMaybe<Array<Memos_Bool_Exp>>;
-  _not?: InputMaybe<Memos_Bool_Exp>;
-  _or?: InputMaybe<Array<Memos_Bool_Exp>>;
+/** Boolean expression to filter rows from the table "dummy". All fields are combined with a logical 'AND'. */
+export type Dummy_Bool_Exp = {
+  _and?: InputMaybe<Array<Dummy_Bool_Exp>>;
+  _not?: InputMaybe<Dummy_Bool_Exp>;
+  _or?: InputMaybe<Array<Dummy_Bool_Exp>>;
   content?: InputMaybe<String_Comparison_Exp>;
-  created_at?: InputMaybe<Timestamp_Comparison_Exp>;
-  id?: InputMaybe<Int_Comparison_Exp>;
-  updated_at?: InputMaybe<Timestamp_Comparison_Exp>;
+  created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
+  id?: InputMaybe<Uuid_Comparison_Exp>;
+  updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
-/** unique or primary key constraints on table "memos" */
-export enum Memos_Constraint {
+/** unique or primary key constraints on table "dummy" */
+export enum Dummy_Constraint {
   /** unique or primary key constraint on columns "id" */
-  MemosPkey = 'memos_pkey'
+  DummyPkey = 'dummy_pkey'
 }
 
-/** input type for incrementing numeric columns in table "memos" */
-export type Memos_Inc_Input = {
-  id?: InputMaybe<Scalars['Int']['input']>;
-};
-
-/** input type for inserting data into table "memos" */
-export type Memos_Insert_Input = {
+/** input type for inserting data into table "dummy" */
+export type Dummy_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
 /** aggregate max on columns */
-export type Memos_Max_Fields = {
-  __typename?: 'memos_max_fields';
+export type Dummy_Max_Fields = {
+  __typename?: 'dummy_max_fields';
   content?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
 /** aggregate min on columns */
-export type Memos_Min_Fields = {
-  __typename?: 'memos_min_fields';
+export type Dummy_Min_Fields = {
+  __typename?: 'dummy_min_fields';
   content?: Maybe<Scalars['String']['output']>;
-  created_at?: Maybe<Scalars['timestamp']['output']>;
-  id?: Maybe<Scalars['Int']['output']>;
-  updated_at?: Maybe<Scalars['timestamp']['output']>;
+  created_at?: Maybe<Scalars['timestamptz']['output']>;
+  id?: Maybe<Scalars['uuid']['output']>;
+  updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
-/** response of any mutation on the table "memos" */
-export type Memos_Mutation_Response = {
-  __typename?: 'memos_mutation_response';
+/** response of any mutation on the table "dummy" */
+export type Dummy_Mutation_Response = {
+  __typename?: 'dummy_mutation_response';
   /** number of rows affected by the mutation */
   affected_rows: Scalars['Int']['output'];
   /** data from the rows affected by the mutation */
-  returning: Array<Memos>;
+  returning: Array<Dummy>;
 };
 
-/** on_conflict condition type for table "memos" */
-export type Memos_On_Conflict = {
-  constraint: Memos_Constraint;
-  update_columns?: Array<Memos_Update_Column>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+/** on_conflict condition type for table "dummy" */
+export type Dummy_On_Conflict = {
+  constraint: Dummy_Constraint;
+  update_columns?: Array<Dummy_Update_Column>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
-/** Ordering options when selecting data from "memos". */
-export type Memos_Order_By = {
+/** Ordering options when selecting data from "dummy". */
+export type Dummy_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
-/** primary key columns input for table: memos */
-export type Memos_Pk_Columns_Input = {
-  id: Scalars['Int']['input'];
+/** primary key columns input for table: dummy */
+export type Dummy_Pk_Columns_Input = {
+  id: Scalars['uuid']['input'];
 };
 
-/** select columns of table "memos" */
-export enum Memos_Select_Column {
+/** select columns of table "dummy" */
+export enum Dummy_Select_Column {
   /** column name */
   Content = 'content',
   /** column name */
@@ -213,56 +187,32 @@ export enum Memos_Select_Column {
   UpdatedAt = 'updated_at'
 }
 
-/** input type for updating data in table "memos" */
-export type Memos_Set_Input = {
+/** input type for updating data in table "dummy" */
+export type Dummy_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
-/** aggregate stddev on columns */
-export type Memos_Stddev_Fields = {
-  __typename?: 'memos_stddev_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Memos_Stddev_Pop_Fields = {
-  __typename?: 'memos_stddev_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Memos_Stddev_Samp_Fields = {
-  __typename?: 'memos_stddev_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** Streaming cursor of the table "memos" */
-export type Memos_Stream_Cursor_Input = {
+/** Streaming cursor of the table "dummy" */
+export type Dummy_Stream_Cursor_Input = {
   /** Stream column input with initial value */
-  initial_value: Memos_Stream_Cursor_Value_Input;
+  initial_value: Dummy_Stream_Cursor_Value_Input;
   /** cursor ordering */
   ordering?: InputMaybe<Cursor_Ordering>;
 };
 
 /** Initial value of the column from where the streaming should start */
-export type Memos_Stream_Cursor_Value_Input = {
+export type Dummy_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
-  created_at?: InputMaybe<Scalars['timestamp']['input']>;
-  id?: InputMaybe<Scalars['Int']['input']>;
-  updated_at?: InputMaybe<Scalars['timestamp']['input']>;
+  created_at?: InputMaybe<Scalars['timestamptz']['input']>;
+  id?: InputMaybe<Scalars['uuid']['input']>;
+  updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
-/** aggregate sum on columns */
-export type Memos_Sum_Fields = {
-  __typename?: 'memos_sum_fields';
-  id?: Maybe<Scalars['Int']['output']>;
-};
-
-/** update columns of table "memos" */
-export enum Memos_Update_Column {
+/** update columns of table "dummy" */
+export enum Dummy_Update_Column {
   /** column name */
   Content = 'content',
   /** column name */
@@ -273,106 +223,101 @@ export enum Memos_Update_Column {
   UpdatedAt = 'updated_at'
 }
 
-export type Memos_Updates = {
-  /** increments the numeric columns with given value of the filtered values */
-  _inc?: InputMaybe<Memos_Inc_Input>;
+export type Dummy_Updates = {
   /** sets the columns of the filtered rows to the given values */
-  _set?: InputMaybe<Memos_Set_Input>;
+  _set?: InputMaybe<Dummy_Set_Input>;
   /** filter the rows which have to be updated */
-  where: Memos_Bool_Exp;
-};
-
-/** aggregate var_pop on columns */
-export type Memos_Var_Pop_Fields = {
-  __typename?: 'memos_var_pop_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate var_samp on columns */
-export type Memos_Var_Samp_Fields = {
-  __typename?: 'memos_var_samp_fields';
-  id?: Maybe<Scalars['Float']['output']>;
-};
-
-/** aggregate variance on columns */
-export type Memos_Variance_Fields = {
-  __typename?: 'memos_variance_fields';
-  id?: Maybe<Scalars['Float']['output']>;
+  where: Dummy_Bool_Exp;
 };
 
 /** mutation root */
 export type Mutation_Root = {
   __typename?: 'mutation_root';
-  /** Create memo via NestJS domain logic (Hasura Actions) */
-  createMemo?: Maybe<CreateMemoResponse>;
-  /** delete data from the table: "memos" */
-  delete_memos?: Maybe<Memos_Mutation_Response>;
-  /** delete single row from the table: "memos" */
-  delete_memos_by_pk?: Maybe<Memos>;
-  /** insert data into the table: "memos" */
-  insert_memos?: Maybe<Memos_Mutation_Response>;
-  /** insert a single row into the table: "memos" */
-  insert_memos_one?: Maybe<Memos>;
-  /** update data of the table: "memos" */
-  update_memos?: Maybe<Memos_Mutation_Response>;
-  /** update single row of the table: "memos" */
-  update_memos_by_pk?: Maybe<Memos>;
-  /** update multiples rows of table: "memos" */
-  update_memos_many?: Maybe<Array<Maybe<Memos_Mutation_Response>>>;
+  /** Create dummy record via NestJS domain logic (Hasura Actions) */
+  createDummy?: Maybe<DummyPayload>;
+  /** Delete dummy record via NestJS domain logic (Hasura Actions) */
+  deleteDummy?: Maybe<DeleteDummyPayload>;
+  /** delete data from the table: "dummy" */
+  delete_dummy?: Maybe<Dummy_Mutation_Response>;
+  /** delete single row from the table: "dummy" */
+  delete_dummy_by_pk?: Maybe<Dummy>;
+  /** insert data into the table: "dummy" */
+  insert_dummy?: Maybe<Dummy_Mutation_Response>;
+  /** insert a single row into the table: "dummy" */
+  insert_dummy_one?: Maybe<Dummy>;
+  /** Update dummy record via NestJS domain logic (Hasura Actions) */
+  updateDummy?: Maybe<DummyPayload>;
+  /** update data of the table: "dummy" */
+  update_dummy?: Maybe<Dummy_Mutation_Response>;
+  /** update single row of the table: "dummy" */
+  update_dummy_by_pk?: Maybe<Dummy>;
+  /** update multiples rows of table: "dummy" */
+  update_dummy_many?: Maybe<Array<Maybe<Dummy_Mutation_Response>>>;
 };
 
 
 /** mutation root */
-export type Mutation_RootCreateMemoArgs = {
+export type Mutation_RootCreateDummyArgs = {
   content: Scalars['String']['input'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_MemosArgs = {
-  where: Memos_Bool_Exp;
+export type Mutation_RootDeleteDummyArgs = {
+  id: Scalars['String']['input'];
 };
 
 
 /** mutation root */
-export type Mutation_RootDelete_Memos_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type Mutation_RootDelete_DummyArgs = {
+  where: Dummy_Bool_Exp;
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_MemosArgs = {
-  objects: Array<Memos_Insert_Input>;
-  on_conflict?: InputMaybe<Memos_On_Conflict>;
+export type Mutation_RootDelete_Dummy_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
 /** mutation root */
-export type Mutation_RootInsert_Memos_OneArgs = {
-  object: Memos_Insert_Input;
-  on_conflict?: InputMaybe<Memos_On_Conflict>;
+export type Mutation_RootInsert_DummyArgs = {
+  objects: Array<Dummy_Insert_Input>;
+  on_conflict?: InputMaybe<Dummy_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_MemosArgs = {
-  _inc?: InputMaybe<Memos_Inc_Input>;
-  _set?: InputMaybe<Memos_Set_Input>;
-  where: Memos_Bool_Exp;
+export type Mutation_RootInsert_Dummy_OneArgs = {
+  object: Dummy_Insert_Input;
+  on_conflict?: InputMaybe<Dummy_On_Conflict>;
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Memos_By_PkArgs = {
-  _inc?: InputMaybe<Memos_Inc_Input>;
-  _set?: InputMaybe<Memos_Set_Input>;
-  pk_columns: Memos_Pk_Columns_Input;
+export type Mutation_RootUpdateDummyArgs = {
+  content: Scalars['String']['input'];
+  id: Scalars['String']['input'];
 };
 
 
 /** mutation root */
-export type Mutation_RootUpdate_Memos_ManyArgs = {
-  updates: Array<Memos_Updates>;
+export type Mutation_RootUpdate_DummyArgs = {
+  _set?: InputMaybe<Dummy_Set_Input>;
+  where: Dummy_Bool_Exp;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Dummy_By_PkArgs = {
+  _set?: InputMaybe<Dummy_Set_Input>;
+  pk_columns: Dummy_Pk_Columns_Input;
+};
+
+
+/** mutation root */
+export type Mutation_RootUpdate_Dummy_ManyArgs = {
+  updates: Array<Dummy_Updates>;
 };
 
 /** column ordering options */
@@ -393,96 +338,134 @@ export enum Order_By {
 
 export type Query_Root = {
   __typename?: 'query_root';
-  /** fetch data from the table: "memos" */
-  memos: Array<Memos>;
-  /** fetch aggregated fields from the table: "memos" */
-  memos_aggregate: Memos_Aggregate;
-  /** fetch data from the table: "memos" using primary key columns */
-  memos_by_pk?: Maybe<Memos>;
+  /** fetch data from the table: "dummy" */
+  dummy: Array<Dummy>;
+  /** fetch aggregated fields from the table: "dummy" */
+  dummy_aggregate: Dummy_Aggregate;
+  /** fetch data from the table: "dummy" using primary key columns */
+  dummy_by_pk?: Maybe<Dummy>;
 };
 
 
-export type Query_RootMemosArgs = {
-  distinct_on?: InputMaybe<Array<Memos_Select_Column>>;
+export type Query_RootDummyArgs = {
+  distinct_on?: InputMaybe<Array<Dummy_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Memos_Order_By>>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+  order_by?: InputMaybe<Array<Dummy_Order_By>>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
 
-export type Query_RootMemos_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Memos_Select_Column>>;
+export type Query_RootDummy_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Dummy_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Memos_Order_By>>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+  order_by?: InputMaybe<Array<Dummy_Order_By>>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
 
-export type Query_RootMemos_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type Query_RootDummy_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 export type Subscription_Root = {
   __typename?: 'subscription_root';
-  /** fetch data from the table: "memos" */
-  memos: Array<Memos>;
-  /** fetch aggregated fields from the table: "memos" */
-  memos_aggregate: Memos_Aggregate;
-  /** fetch data from the table: "memos" using primary key columns */
-  memos_by_pk?: Maybe<Memos>;
-  /** fetch data from the table in a streaming manner: "memos" */
-  memos_stream: Array<Memos>;
+  /** fetch data from the table: "dummy" */
+  dummy: Array<Dummy>;
+  /** fetch aggregated fields from the table: "dummy" */
+  dummy_aggregate: Dummy_Aggregate;
+  /** fetch data from the table: "dummy" using primary key columns */
+  dummy_by_pk?: Maybe<Dummy>;
+  /** fetch data from the table in a streaming manner: "dummy" */
+  dummy_stream: Array<Dummy>;
 };
 
 
-export type Subscription_RootMemosArgs = {
-  distinct_on?: InputMaybe<Array<Memos_Select_Column>>;
+export type Subscription_RootDummyArgs = {
+  distinct_on?: InputMaybe<Array<Dummy_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Memos_Order_By>>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+  order_by?: InputMaybe<Array<Dummy_Order_By>>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
 
-export type Subscription_RootMemos_AggregateArgs = {
-  distinct_on?: InputMaybe<Array<Memos_Select_Column>>;
+export type Subscription_RootDummy_AggregateArgs = {
+  distinct_on?: InputMaybe<Array<Dummy_Select_Column>>;
   limit?: InputMaybe<Scalars['Int']['input']>;
   offset?: InputMaybe<Scalars['Int']['input']>;
-  order_by?: InputMaybe<Array<Memos_Order_By>>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+  order_by?: InputMaybe<Array<Dummy_Order_By>>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
 
-export type Subscription_RootMemos_By_PkArgs = {
-  id: Scalars['Int']['input'];
+export type Subscription_RootDummy_By_PkArgs = {
+  id: Scalars['uuid']['input'];
 };
 
 
-export type Subscription_RootMemos_StreamArgs = {
+export type Subscription_RootDummy_StreamArgs = {
   batch_size: Scalars['Int']['input'];
-  cursor: Array<InputMaybe<Memos_Stream_Cursor_Input>>;
-  where?: InputMaybe<Memos_Bool_Exp>;
+  cursor: Array<InputMaybe<Dummy_Stream_Cursor_Input>>;
+  where?: InputMaybe<Dummy_Bool_Exp>;
 };
 
-/** Boolean expression to compare columns of type "timestamp". All fields are combined with logical 'AND'. */
-export type Timestamp_Comparison_Exp = {
-  _eq?: InputMaybe<Scalars['timestamp']['input']>;
-  _gt?: InputMaybe<Scalars['timestamp']['input']>;
-  _gte?: InputMaybe<Scalars['timestamp']['input']>;
-  _in?: InputMaybe<Array<Scalars['timestamp']['input']>>;
+/** Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'. */
+export type Timestamptz_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _gte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _in?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
   _is_null?: InputMaybe<Scalars['Boolean']['input']>;
-  _lt?: InputMaybe<Scalars['timestamp']['input']>;
-  _lte?: InputMaybe<Scalars['timestamp']['input']>;
-  _neq?: InputMaybe<Scalars['timestamp']['input']>;
-  _nin?: InputMaybe<Array<Scalars['timestamp']['input']>>;
+  _lt?: InputMaybe<Scalars['timestamptz']['input']>;
+  _lte?: InputMaybe<Scalars['timestamptz']['input']>;
+  _neq?: InputMaybe<Scalars['timestamptz']['input']>;
+  _nin?: InputMaybe<Array<Scalars['timestamptz']['input']>>;
 };
 
-export type GetMemosQueryVariables = Exact<{ [key: string]: never; }>;
+/** Boolean expression to compare columns of type "uuid". All fields are combined with logical 'AND'. */
+export type Uuid_Comparison_Exp = {
+  _eq?: InputMaybe<Scalars['uuid']['input']>;
+  _gt?: InputMaybe<Scalars['uuid']['input']>;
+  _gte?: InputMaybe<Scalars['uuid']['input']>;
+  _in?: InputMaybe<Array<Scalars['uuid']['input']>>;
+  _is_null?: InputMaybe<Scalars['Boolean']['input']>;
+  _lt?: InputMaybe<Scalars['uuid']['input']>;
+  _lte?: InputMaybe<Scalars['uuid']['input']>;
+  _neq?: InputMaybe<Scalars['uuid']['input']>;
+  _nin?: InputMaybe<Array<Scalars['uuid']['input']>>;
+};
+
+export type DummyListQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMemosQuery = { __typename?: 'query_root', memos: Array<{ __typename?: 'memos', id: number, content: string, created_at: any, updated_at: any }> };
+export type DummyListQuery = { __typename?: 'query_root', dummy: Array<{ __typename?: 'dummy', id: any, content: string, created_at: any, updated_at: any }> };
+
+export type CreateDummyMutationVariables = Exact<{
+  content: Scalars['String']['input'];
+}>;
 
 
-export const GetMemosDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMemos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"memos"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"created_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<GetMemosQuery, GetMemosQueryVariables>;
+export type CreateDummyMutation = { __typename?: 'mutation_root', createDummy?: { __typename?: 'DummyPayload', id: string, content: string, createdAt: string, updatedAt: string } | null };
+
+export type UpdateDummyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  content: Scalars['String']['input'];
+}>;
+
+
+export type UpdateDummyMutation = { __typename?: 'mutation_root', updateDummy?: { __typename?: 'DummyPayload', id: string, content: string, createdAt: string, updatedAt: string } | null };
+
+export type DeleteDummyMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteDummyMutation = { __typename?: 'mutation_root', deleteDummy?: { __typename?: 'DeleteDummyPayload', id: string } | null };
+
+
+export const DummyListDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"DummyList"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"dummy"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"order_by"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"updated_at"},"value":{"kind":"EnumValue","value":"desc"}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"created_at"}},{"kind":"Field","name":{"kind":"Name","value":"updated_at"}}]}}]}}]} as unknown as DocumentNode<DummyListQuery, DummyListQueryVariables>;
+export const CreateDummyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateDummy"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createDummy"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<CreateDummyMutation, CreateDummyMutationVariables>;
+export const UpdateDummyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateDummy"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateDummy"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}},{"kind":"Argument","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"updatedAt"}}]}}]}}]} as unknown as DocumentNode<UpdateDummyMutation, UpdateDummyMutationVariables>;
+export const DeleteDummyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteDummy"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"id"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteDummy"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"id"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteDummyMutation, DeleteDummyMutationVariables>;
