@@ -27,6 +27,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 - **フロントエンド**: TypeScript / React / Vite / GraphQL (Apollo Client)
   - **Web**: React
     - **アーキテクチャ**: FSD (Feature-Sliced Design)
+    - **スタイリング**: Tailwind CSS v4 + shadcn/ui (Radix)
   - **モバイル**: React Native (Expo)
   - **デスクトップ**: Electron
 - **開発スタイル**: アジャイル / セルフスクラム
@@ -118,8 +119,8 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 - GitHub ActionsでCI/CD
 - VitestでTDD
 - PlaywrightでE2Eテスト
-- shadcn/ui、TailwindCSSによるスタイリング
-  - スタイリングの共通化（Web, デスクトップ）
+- スタイリングの共通化（Web, デスクトップ）
+  - Web 側は導入済み（Discussion #47 / Issue #61）。デスクトップは開発再開時に同じ構成を持ち込む
 - FigmaでUI設計
 - docsにmdファイルで設計書を生成
 - ロギングのtrace_idを活用した分散トレーシングで、運用時追跡可能にする

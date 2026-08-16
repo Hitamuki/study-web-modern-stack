@@ -85,6 +85,15 @@ SCR-<番号>-<PC|SP> <画面名>
 - 変数を追加するときは先に `Print(GetVariables())` で既存を確認する。`SetVariables` は既定でマージだが、既存の定義を上書きしないよう名前を確認する。
 - 定義済みの変数は `docs/screen-list.md` に一覧を載せる。
 
+### 実装への反映（`apps/web`）
+
+CSS 手法は **Tailwind CSS v4 + shadcn/ui** に決着した（[Discussion #47](https://github.com/Hitamuki/study-web-modern-stack/discussions/47) / Issue #61）。
+`.pen` の変数は `apps/web/src/app/styles.css` に `--pen-*` として 1:1 で写し、`@theme inline` で Tailwind のユーティリティ名へ割り当てる。
+
+- **実装側に色・寸法を直接書かない。** 必ず `--pen-*` を経由させる。`@theme inline` を使っているため、生成される CSS は `.bg-card{background-color:var(--pen-surface)}` のように `.pen` のトークンを直接参照する。
+- `.pen` のトークンを変えたら `styles.css` の `--pen-*` も同じ PR で直す。
+- `Export`（`html-tailwind` / `html-css`）の出力は**実装へ流し込まない**。トークンが 16 進値に解決され、要素も `<div>` のみでセマンティクスを持たないため、寸法と色を読み取る参考資料として扱う。
+
 ## 設計書とのマッピング
 
 対応表の正本は `docs/screen-list.md`。
@@ -116,5 +125,4 @@ SCR-<番号>-<PC|SP> <画面名>
 
 ## 未決定（着手前に決着させる）
 
-- **CSS 手法**: `apps/web` に CSS フレームワークは未導入（`apps/web/package.json` に Tailwind なし）。`Export` の `html-tailwind` を使うと Tailwind の採用を暗黙に決めてしまうため、決着までは `html-css` を**参考資料**として使い、実装へ機械的に流し込まない。UI 基盤は AGENTS.md の Discussion 対象。
 - **ノードのカスタムメタデータ**: スキーマ上 `metadata?: { type: string; [key: string]: any }` を持てることは確認済み。フレーム名より堅い形で画面 ID を保持できるが、HTML に出るのは `data-layer-name` / `data-layer-id` なので実装への貫通は名前経由が必要。二重管理になるため採用は保留。
