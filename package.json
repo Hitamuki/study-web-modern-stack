@@ -13,7 +13,12 @@
   },
   "devDependencies": {
     "turbo": "catalog:",
-    "@biomejs/biome": "catalog:"
+    "@biomejs/biome": "catalog:",
+    "eslint": "catalog:",
+    "@eslint/js": "catalog:",
+    "typescript-eslint": "catalog:",
+    "globals": "catalog:",
+    "@eslint/compat": "^2.1.0"
   },
   "packageManager": "pnpm@9.5.0"
 }

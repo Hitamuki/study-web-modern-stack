@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "biome lint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@apollo/client": "catalog:frontend",
@@ -15,12 +15,14 @@
   },
   "devDependencies": {
     "@repo/graphql": "workspace:*",
-    "@biomejs/biome": "catalog:",
     "@graphql-typed-document-node/core": "^3.2.0",
     "@types/react": "catalog:frontend",
     "@types/react-dom": "catalog:frontend",
     "@vitejs/plugin-react": "catalog:frontend",
     "typescript": "catalog:",
-    "vite": "catalog:frontend"
+    "vite": "catalog:frontend",
+    "eslint": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:frontend",
+    "eslint-plugin-react-refresh": "catalog:frontend"
   }
 }
