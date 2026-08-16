@@ -1,20 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { ApolloProvider } from "@repo/graphql";
-import { MemosPage } from "./pages/Memos";
-
-// Basic global resets
-const globalStyle = document.createElement("style");
-globalStyle.innerHTML = `
-  body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
-  * {
-    box-sizing: border-box;
-  }
-`;
-document.head.appendChild(globalStyle);
+import { App } from "./app/App";
 
 const rootElement = document.getElementById("root");
 if (!rootElement) {
@@ -23,8 +9,6 @@ if (!rootElement) {
 
 ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
-    <ApolloProvider>
-      <MemosPage />
-    </ApolloProvider>
+    <App />
   </React.StrictMode>,
 );

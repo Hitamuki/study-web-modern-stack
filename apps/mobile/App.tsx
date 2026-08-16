@@ -1,13 +1,15 @@
-import { StatusBar } from "expo-status-bar";
-import React from "react";
 import { ApolloProvider } from "@repo/graphql";
-import { MemosPage } from "./src/pages/Memos";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { DummyPage } from "./src/pages/Dummy";
 
 export default function App() {
   return (
-    <ApolloProvider>
-      <MemosPage />
-      <StatusBar style="light" />
-    </ApolloProvider>
+    <SafeAreaProvider>
+      <ApolloProvider>
+        <DummyPage />
+        <StatusBar style="dark" />
+      </ApolloProvider>
+    </SafeAreaProvider>
   );
 }

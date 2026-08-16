@@ -1,4 +1,4 @@
-// docs/er-diagram.md に合わせた memos テーブル定義
+// docs/er-diagram.md に合わせた dummy テーブル定義
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,11 +8,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Memo {
+// SCR-001 ダミー画面の検証用テーブル。実際のドメインが固まるまでの仮置き。
+model Dummy {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   content   String   @db.Text
-  createdAt DateTime @map("created_at")
-  updatedAt DateTime @map("updated_at")
+  // 日時はドメイン層（UseCase）が明示的に決める。default はコンソールなどからの直接 INSERT 用の保険。
+  // Hasura がオフセット付きで返すよう timestamptz を使う（timestamp だとクライアントがローカル時刻と誤読する）。
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
 
-  @@map("memos")
+  @@map("dummy")
 }

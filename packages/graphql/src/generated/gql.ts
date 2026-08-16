@@ -14,10 +14,16 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Learn more about it here: https://the-guild.dev/graphql/codegen/plugins/presets/preset-client#reducing-bundle-size
  */
 type Documents = {
-    "\n  query GetMemos {\n    memos(order_by: { created_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n": typeof types.GetMemosDocument,
+    "\n  query DummyList {\n    dummy(order_by: { updated_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n": typeof types.DummyListDocument,
+    "\n  mutation CreateDummy($content: String!) {\n    createDummy(content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.CreateDummyDocument,
+    "\n  mutation UpdateDummy($id: String!, $content: String!) {\n    updateDummy(id: $id, content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n": typeof types.UpdateDummyDocument,
+    "\n  mutation DeleteDummy($id: String!) {\n    deleteDummy(id: $id) {\n      id\n    }\n  }\n": typeof types.DeleteDummyDocument,
 };
 const documents: Documents = {
-    "\n  query GetMemos {\n    memos(order_by: { created_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n": types.GetMemosDocument,
+    "\n  query DummyList {\n    dummy(order_by: { updated_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n": types.DummyListDocument,
+    "\n  mutation CreateDummy($content: String!) {\n    createDummy(content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n": types.CreateDummyDocument,
+    "\n  mutation UpdateDummy($id: String!, $content: String!) {\n    updateDummy(id: $id, content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n": types.UpdateDummyDocument,
+    "\n  mutation DeleteDummy($id: String!) {\n    deleteDummy(id: $id) {\n      id\n    }\n  }\n": types.DeleteDummyDocument,
 };
 
 /**
@@ -37,7 +43,19 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetMemos {\n    memos(order_by: { created_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n"): (typeof documents)["\n  query GetMemos {\n    memos(order_by: { created_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n"];
+export function gql(source: "\n  query DummyList {\n    dummy(order_by: { updated_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n"): (typeof documents)["\n  query DummyList {\n    dummy(order_by: { updated_at: desc }) {\n      id\n      content\n      created_at\n      updated_at\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation CreateDummy($content: String!) {\n    createDummy(content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation CreateDummy($content: String!) {\n    createDummy(content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UpdateDummy($id: String!, $content: String!) {\n    updateDummy(id: $id, content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateDummy($id: String!, $content: String!) {\n    updateDummy(id: $id, content: $content) {\n      id\n      content\n      createdAt\n      updatedAt\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation DeleteDummy($id: String!) {\n    deleteDummy(id: $id) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteDummy($id: String!) {\n    deleteDummy(id: $id) {\n      id\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

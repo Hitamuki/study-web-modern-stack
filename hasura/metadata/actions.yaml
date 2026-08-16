@@ -1,13 +1,26 @@
 actions:
-  - name: createMemo
+  - name: createDummy
     definition:
       kind: synchronous
-      handler: http://host.docker.internal:3000/hasura/actions/createMemo
+      handler: http://host.docker.internal:3001/hasura/actions/createDummy
       timeout: 60
-    comment: Create memo via NestJS domain logic (Hasura Actions)
+    comment: Create dummy record via NestJS domain logic (Hasura Actions)
+  - name: updateDummy
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3001/hasura/actions/updateDummy
+      timeout: 60
+    comment: Update dummy record via NestJS domain logic (Hasura Actions)
+  - name: deleteDummy
+    definition:
+      kind: synchronous
+      handler: http://host.docker.internal:3001/hasura/actions/deleteDummy
+      timeout: 60
+    comment: Delete dummy record via NestJS domain logic (Hasura Actions)
 custom_types:
   enums: []
   input_objects: []
   objects:
-    - name: CreateMemoResponse
+    - name: DummyPayload
+    - name: DeleteDummyPayload
   scalars: []

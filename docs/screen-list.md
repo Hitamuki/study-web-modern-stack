@@ -7,7 +7,7 @@
 
 | 画面ID | 画面名 | フレーム | 関連 Issue | 実装 |
 | :- | :- | :- | :- | :- |
-| SCR-001 | ダミー画面 | `SCR-001-PC` / `SCR-001-SP` | - | 未着手 |
+| SCR-001 | ダミー画面 | `SCR-001-PC` / `SCR-001-SP` | - | `apps/web/src/pages/dummy/` / `apps/mobile/src/pages/Dummy.tsx` / `apps/desktop/src/renderer/pages/Dummy.tsx` |
 
 - 画面 ID は `SCR-` + 3 桁ゼロ埋めの連番。廃止しても再利用せず、欠番のまま残す。
 - PC 版 / SP 版は同一画面として ID を共有し、フレーム名のサフィックスで区別する。
@@ -17,8 +17,11 @@
 CRUD 一式を 1 画面に集約した検証用の画面です。デザイントークンとコンポーネントの当たりを取るのが目的で、
 実際のアプリの画面構成を決めるものではありません。
 
-対象ドメインは `Memo`（[domain-model.md](./domain-model.md)）。フィールドは `id` / `content` / `createdAt` / `updatedAt` で、
-タイトルを持たないため一覧は本文の冒頭と更新日時で表示します。
+対象ドメインは `Dummy`（[domain-model.md](./domain-model.md)）で、永続化先は `dummy` テーブル（[er-diagram.md](./er-diagram.md)）です。
+フィールドは `id` / `content` / `createdAt` / `updatedAt` で、タイトルを持たないため一覧は本文の冒頭と更新日時で表示します。
+
+画面の日本語ラベル（「メモ」「メモ一覧」など）はデザインの表記をそのまま使っています。
+コード側の識別子だけが `Dummy` で、これは検証用の仮テーブルであることを示すためです。
 
 ### この画面が持つ操作
 

@@ -13,7 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    // CSS の副作用 import（import "./styles.css"）を解決するために必要
+    "types": ["vite/client"]
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

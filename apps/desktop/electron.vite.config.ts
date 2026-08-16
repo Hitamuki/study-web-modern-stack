@@ -14,6 +14,9 @@ export default defineConfig({
   renderer: {
     root: resolve("src/renderer"),
     build: { outDir: "dist/renderer" },
+    // apps/web の Vite が既定の 5173 を使うため、ずらして固定します。
+    // make frontend-start で両方を同時に起動しても取り合いになりません。
+    server: { port: 5174 },
     plugins: [react()],
   },
 });

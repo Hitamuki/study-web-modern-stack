@@ -3,9 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "nest start --watch",
+    "dev": "nest start --debug --watch",
     "build": "nest build",
-    "start:debug": "nest start --debug",
     "lint": "biome lint .",
     "postinstall": "prisma generate",
     "db:push": "prisma db push",

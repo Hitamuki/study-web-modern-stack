@@ -1,18 +1,20 @@
 # ER図
 
-以下はメモアプリで想定される主要テーブルとリレーションの概要です。
+以下は SCR-001 ダミー画面が使う主要テーブルとリレーションの概要です。
 
 ```mermaid
 erDiagram
-  memos {
+  dummy {
     uuid id PK
     text content
-    timestamp created_at
-    timestamp updated_at
+    timestamptz created_at
+    timestamptz updated_at
   }
 ```
 
-### 補足
+## 補足
 
-- 現時点の実装では `memos` テーブルのみを使用します。
-- 将来的にユーザー情報を持たせる場合は `USER` テーブルを追加し、`memos` との関連を定義します。
+- 現時点の実装では `dummy` テーブルのみを使用します。SCR-001 ダミー画面の検証用で、実際のドメインが固まるまでの仮置きです。
+- 日時は `timestamptz` です。`timestamp` だとオフセットが付かず、クライアントがローカル時刻と誤読するためです。
+- テーブル定義の正本は [apps/api/prisma/schema.prisma](../apps/api/prisma/schema.prisma) です（Hasura はメタデータのみを管理します）。
+- 将来的にユーザー情報を持たせる場合は `USER` テーブルを追加し、`dummy` の後継テーブルとの関連を定義します。
