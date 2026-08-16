@@ -11,4 +11,5 @@ async function bootstrap() {
   // 変更する場合は Hasura 側の handler URL も合わせて直すこと。
   await app.listen(Number(process.env.PORT ?? 3001));
 }
-bootstrap();
+// 起動失敗はプロセスごと落ちるべきなので、ここでは捕捉せず未処理のまま流す
+void bootstrap();

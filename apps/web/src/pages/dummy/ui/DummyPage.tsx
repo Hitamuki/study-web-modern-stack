@@ -118,7 +118,7 @@ export const DummyPage = () => {
           pending={createState.loading || updateState.loading}
           errorMessage={formError}
           onContentChange={setContent}
-          onSubmit={handleSubmit}
+          onSubmit={() => void handleSubmit()}
           onCancel={resetForm}
         />
       </main>
@@ -126,7 +126,7 @@ export const DummyPage = () => {
       {deleteTarget && (
         <DeleteDummyDialog
           pending={deleteState.loading}
-          onConfirm={handleConfirmDelete}
+          onConfirm={() => void handleConfirmDelete()}
           onCancel={() => setDeleteTarget(null)}
         />
       )}

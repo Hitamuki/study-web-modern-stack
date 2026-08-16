@@ -11,14 +11,15 @@ function createWindow(): void {
     },
   });
 
+  // 読み込みの完了は待たない（ウィンドウは先に表示される）
   if (process.env.ELECTRON_RENDERER_URL) {
-    win.loadURL(process.env.ELECTRON_RENDERER_URL);
+    void win.loadURL(process.env.ELECTRON_RENDERER_URL);
   } else {
-    win.loadFile(join(__dirname, "../renderer/index.html"));
+    void win.loadFile(join(__dirname, "../renderer/index.html"));
   }
 }
 
-app.whenReady().then(() => {
+void app.whenReady().then(() => {
   createWindow();
   app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
