@@ -2,6 +2,7 @@
 import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
 import js from "@eslint/js";
+import betterTailwindcss from "eslint-plugin-better-tailwindcss";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import globals from "globals";
@@ -112,6 +113,40 @@ export default tseslint.config(
     files: ["apps/api/**/*.ts"],
     rules: {
       "@typescript-eslint/no-extraneous-class": "off",
+    },
+  },
+
+  // Tailwind のクラス順・未知クラスの検出（apps/web のみ。Discussion #47）。
+  // entryPoint に CSS を渡すことで @theme で定義した .pen 由来のトークン
+  // （bg-card / gap-sm など）も既知のクラスとして解決されます。
+  // Biome の useSortedClasses は Tailwind の設定を読む手段が無く、ここが賄えないため
+  // リンターを ESLint に寄せる判断の根拠になりました（Discussion #40）。
+  {
+    name: "repo/tailwind",
+    files: ["apps/web/src/**/*.tsx"],
+    extends: [betterTailwindcss.configs["recommended-error"]],
+    settings: {
+      "better-tailwindcss": {
+        // turbo lint は各パッケージのディレクトリで eslint を起動し、このオプションは
+        // cwd 基準で解決されるため、相対パスではなく絶対パスを渡します
+        entryPoint: fileURLToPath(new URL("apps/web/src/app/styles.css", import.meta.url)),
+      },
+    },
+    rules: {
+      // クラスの改行整形は Biome のフォーマッタと衝突するため使いません。
+      // 整形は Biome、クラスの並びと正しさは ESLint、と担当を分けます。
+      "better-tailwindcss/enforce-consistent-line-wrapping": "off",
+    },
+  },
+
+  // shadcn/ui が生成したコンポーネント。中身は自リポジトリの資産として編集しますが、
+  // 構造は上流に合わせておくため、上流と衝突するルールだけ緩めます。
+  {
+    name: "repo/shadcn-ui",
+    files: ["apps/web/src/shared/ui/**/*.tsx"],
+    rules: {
+      // buttonVariants（cva）をコンポーネントと同居させるのが shadcn/ui の構成です
+      "react-refresh/only-export-components": "off",
     },
   },
 );
