@@ -1,5 +1,7 @@
 {
   "recommendations": [
+    // lint は ESLint、整形は Biome（Discussion #40）。両方入れる必要があります
+    "dbaeumer.vscode-eslint",
     "biomejs.biome",
     "vercel.turborepo",
     "hashicorp.terraform",
