@@ -223,8 +223,8 @@
       "type": "frame",
       "id": "e9B59",
       "x": 0,
-      "y": 600,
-      "name": "SCR-001-PC ダミー画面",
+      "y": 5400,
+      "name": "SCR-005-PC ダミー画面",
       "clip": true,
       "width": 1440,
       "height": 1024,
@@ -551,8 +551,8 @@
       "type": "frame",
       "id": "K0XQk",
       "x": 1600,
-      "y": 600,
-      "name": "SCR-001-SP ダミー画面",
+      "y": 5400,
+      "name": "SCR-005-SP ダミー画面",
       "clip": true,
       "width": 390,
       "height": 844,
@@ -792,6 +792,1332 @@
           ]
         }
       ]
+    },
+    {
+      "type": "frame",
+      "id": "if7gM",
+      "x": 0,
+      "y": 300,
+      "name": "CMP/入力フィールド",
+      "reusable": true,
+      "width": 360,
+      "layout": "vertical",
+      "gap": "$gap-sm",
+      "children": [
+        {
+          "type": "text",
+          "id": "TrTbT",
+          "name": "ラベル",
+          "fill": "$text-secondary",
+          "content": "メールアドレス",
+          "fontFamily": "$font-body",
+          "fontSize": 13,
+          "fontWeight": "500"
+        },
+        {
+          "type": "frame",
+          "id": "SZ2rB",
+          "name": "入力欄",
+          "width": "fill_container",
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "padding": [
+            10,
+            12
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "LaWzc",
+              "name": "入力テキスト",
+              "fill": "$text-secondary",
+              "content": "you@example.com",
+              "fontFamily": "$font-body",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "edmv0",
+      "x": 0,
+      "y": 600,
+      "name": "SCR-001-PC ログイン",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nr68L",
+          "x": 500,
+          "y": 232,
+          "name": "カード",
+          "width": 440,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": 40,
+          "children": [
+            {
+              "type": "text",
+              "id": "s0yNF",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "YcZFg",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "JQXYq",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "ログイン",
+                  "fontFamily": "$font-body",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "Atc6Q",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールアドレスとパスワードでサインインします。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "pzITj",
+              "name": "エラー表示",
+              "width": "fill_container",
+              "fill": "$danger-bg",
+              "cornerRadius": "$radius-md",
+              "padding": [
+                10,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "qc9SP",
+                  "name": "エラーメッセージ",
+                  "fill": "$danger",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールアドレスまたはパスワードが正しくありません",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rfOnF",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "Z2SY60",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "jVGdq",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード"
+                    },
+                    "LaWzc": {
+                      "content": "••••••••",
+                      "fill": "$text-primary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "XA95K",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "ログイン",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "ログイン"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "vbHYc",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "jfAoa",
+                  "name": "パスワードをお忘れですか？",
+                  "fill": "$accent",
+                  "content": "パスワードをお忘れですか？",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "Kutvp",
+                  "name": "アカウントを作成",
+                  "fill": "$accent",
+                  "content": "アカウントを作成",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "hBNF9",
+      "x": 0,
+      "y": 1800,
+      "name": "SCR-002-PC アカウント作成",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "p5QrS",
+          "x": 500,
+          "y": 224,
+          "name": "カード",
+          "width": 440,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": 40,
+          "children": [
+            {
+              "type": "text",
+              "id": "jFjYU",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "jJ9S2",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "NXGjK",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "アカウント作成",
+                  "fontFamily": "$font-body",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "BS03D",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "登録すると確認メールが届きます。リンクを開くと登録が完了します。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "yDhyG",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "CXB81",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "NUdUk",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード"
+                    },
+                    "LaWzc": {
+                      "content": "8 文字以上",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "h2ZyQ",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード（確認）",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード（確認）"
+                    },
+                    "LaWzc": {
+                      "content": "もう一度入力",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "idUOw",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "アカウントを作成",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "アカウントを作成"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "FpKEx",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "OWENe",
+                  "name": "すでにアカウントをお持ちの方はログイン",
+                  "fill": "$accent",
+                  "content": "すでにアカウントをお持ちの方はログイン",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "fUTkC",
+      "x": 0,
+      "y": 3000,
+      "name": "SCR-003-PC パスワードリセット申請",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "G8b647",
+          "x": 500,
+          "y": 307,
+          "name": "カード",
+          "width": 440,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": 40,
+          "children": [
+            {
+              "type": "text",
+              "id": "Oyx7Q",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "r8Pwq",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "IiHvD",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "パスワードをリセット",
+                  "fontFamily": "$font-body",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "bvBXN",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "登録済みのメールアドレスに、再設定用のリンクを送ります。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "k1Cn58",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "k1Zi4",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "RQxyE",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "再設定リンクを送る",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "再設定リンクを送る"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "iTdFq",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "J9oFmo",
+                  "name": "ログインに戻る",
+                  "fill": "$accent",
+                  "content": "ログインに戻る",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "iKQM8",
+      "x": 0,
+      "y": 4200,
+      "name": "SCR-004-PC 新しいパスワードの設定",
+      "clip": true,
+      "width": 1440,
+      "height": 1024,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "gxjHz",
+          "x": 500,
+          "y": 264,
+          "name": "カード",
+          "width": 440,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": 40,
+          "children": [
+            {
+              "type": "text",
+              "id": "QQSbv",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "S0LipS",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "tQv9C",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "新しいパスワードを設定",
+                  "fontFamily": "$font-body",
+                  "fontSize": 24,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "MXGlD",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールのリンクから開いています。新しいパスワードを入力してください。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mLKTT",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "Ky2Jy",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "新しいパスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "新しいパスワード"
+                    },
+                    "LaWzc": {
+                      "content": "8 文字以上",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "mm8Tx",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "新しいパスワード（確認）",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "新しいパスワード（確認）"
+                    },
+                    "LaWzc": {
+                      "content": "もう一度入力",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "k77aku",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "パスワードを更新",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "パスワードを更新"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "PMbuq",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "RS0yf",
+                  "name": "ログインに戻る",
+                  "fill": "$accent",
+                  "content": "ログインに戻る",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "QkFB3",
+      "x": 1600,
+      "y": 600,
+      "name": "SCR-001-SP ログイン",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "UMeTa",
+          "x": 24,
+          "y": 139,
+          "name": "カード",
+          "width": 342,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": "$gap-lg",
+          "children": [
+            {
+              "type": "text",
+              "id": "qD4mS",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "BQ9bK",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "cxoF4",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "ログイン",
+                  "fontFamily": "$font-body",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "A2Acy",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールアドレスとパスワードでサインインします。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "R3Y9N",
+              "name": "エラー表示",
+              "width": "fill_container",
+              "fill": "$danger-bg",
+              "cornerRadius": "$radius-md",
+              "padding": [
+                10,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "zRafw",
+                  "name": "エラーメッセージ",
+                  "fill": "$danger",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールアドレスまたはパスワードが正しくありません",
+                  "lineHeight": 1.5,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ekxYW",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "Pjln1",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "atcAR",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード"
+                    },
+                    "LaWzc": {
+                      "content": "••••••••",
+                      "fill": "$text-primary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "rZa68",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "ログイン",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "ログイン"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "S8iw8",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "epm6i",
+                  "name": "パスワードをお忘れですか？",
+                  "fill": "$accent",
+                  "content": "パスワードをお忘れですか？",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "f3DAM",
+                  "name": "アカウントを作成",
+                  "fill": "$accent",
+                  "content": "アカウントを作成",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "X6ANs",
+      "x": 1600,
+      "y": 1800,
+      "name": "SCR-002-SP アカウント作成",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "FcCQh",
+          "x": 24,
+          "y": 152,
+          "name": "カード",
+          "width": 342,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": "$gap-lg",
+          "children": [
+            {
+              "type": "text",
+              "id": "xRcMz",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "gHx7A",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "FKyCl",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "アカウント作成",
+                  "fontFamily": "$font-body",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "r2pbur",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "登録すると確認メールが届きます。リンクを開くと登録が完了します。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "ef4hx",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "mpM4I",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "Hhnp1",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード"
+                    },
+                    "LaWzc": {
+                      "content": "8 文字以上",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "xNN0V",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "パスワード（確認）",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "パスワード（確認）"
+                    },
+                    "LaWzc": {
+                      "content": "もう一度入力",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "TqkUv",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "アカウントを作成",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "アカウントを作成"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "c2dHe",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "xZvZm",
+                  "name": "すでにアカウントをお持ちの方はログイン",
+                  "fill": "$accent",
+                  "content": "すでにアカウントをお持ちの方はログイン",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "pwHGm",
+      "x": 1600,
+      "y": 3000,
+      "name": "SCR-003-SP パスワードリセット申請",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "djQx7",
+          "x": 24,
+          "y": 235,
+          "name": "カード",
+          "width": 342,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": "$gap-lg",
+          "children": [
+            {
+              "type": "text",
+              "id": "d0lfK",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "Q3as7f",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "vXYw4",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "パスワードをリセット",
+                  "fontFamily": "$font-body",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "F9iejt",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "登録済みのメールアドレスに、再設定用のリンクを送ります。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "E5K43J",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "NvQN9",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "メールアドレス",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "メールアドレス"
+                    },
+                    "LaWzc": {
+                      "content": "you@example.com",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "rX8ds",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "再設定リンクを送る",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "再設定リンクを送る"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "KNFcY",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "ufbRd",
+                  "name": "ログインに戻る",
+                  "fill": "$accent",
+                  "content": "ログインに戻る",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "Sg6Tz",
+      "x": 1600,
+      "y": 4200,
+      "name": "SCR-004-SP 新しいパスワードの設定",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$bg",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "Mfvhu",
+          "x": 24,
+          "y": 192,
+          "name": "カード",
+          "width": 342,
+          "fill": "$surface",
+          "cornerRadius": "$radius-md",
+          "stroke": "$border",
+          "strokeWidth": 1,
+          "layout": "vertical",
+          "gap": "$gap-lg",
+          "padding": "$gap-lg",
+          "children": [
+            {
+              "type": "text",
+              "id": "M0JbDV",
+              "name": "アプリ名",
+              "fill": "$text-primary",
+              "content": "メモ",
+              "fontFamily": "$font-body",
+              "fontSize": 18,
+              "fontWeight": "600"
+            },
+            {
+              "type": "frame",
+              "id": "zSfCg",
+              "name": "見出し群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "o2scg",
+                  "name": "見出し",
+                  "fill": "$text-primary",
+                  "content": "新しいパスワードを設定",
+                  "fontFamily": "$font-body",
+                  "fontSize": 22,
+                  "fontWeight": "600"
+                },
+                {
+                  "type": "text",
+                  "id": "HmE51",
+                  "name": "説明",
+                  "fill": "$text-secondary",
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container",
+                  "content": "メールのリンクから開いています。新しいパスワードを入力してください。",
+                  "lineHeight": 1.6,
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "hgPTK",
+              "name": "フィールド群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-md",
+              "children": [
+                {
+                  "id": "UpRcR",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "新しいパスワード",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "新しいパスワード"
+                    },
+                    "LaWzc": {
+                      "content": "8 文字以上",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                },
+                {
+                  "id": "O6O0xn",
+                  "type": "ref",
+                  "ref": "if7gM",
+                  "name": "新しいパスワード（確認）",
+                  "width": "fill_container",
+                  "descendants": {
+                    "TrTbT": {
+                      "content": "新しいパスワード（確認）"
+                    },
+                    "LaWzc": {
+                      "content": "もう一度入力",
+                      "fill": "$text-secondary"
+                    }
+                  }
+                }
+              ]
+            },
+            {
+              "id": "ug1MW",
+              "type": "ref",
+              "ref": "h30OQg",
+              "name": "パスワードを更新",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "descendants": {
+                "o9k4In": {
+                  "content": "パスワードを更新"
+                }
+              }
+            },
+            {
+              "type": "frame",
+              "id": "bDVGV",
+              "name": "リンク群",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": "$gap-sm",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "Mt3EW",
+                  "name": "ログインに戻る",
+                  "fill": "$accent",
+                  "content": "ログインに戻る",
+                  "fontFamily": "$font-body",
+                  "fontSize": 13,
+                  "fontWeight": "500"
+                }
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "variables": {
@@ -842,6 +2168,14 @@
     "gap-md": {
       "type": "number",
       "value": 16
+    },
+    "danger-bg": {
+      "type": "color",
+      "value": "#FCEAEA"
+    },
+    "gap-lg": {
+      "type": "number",
+      "value": 24
     }
   },
   "fileToken": "82dd72bb-dada-43ca-8bcb-3c5de1713c42"
