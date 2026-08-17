@@ -104,12 +104,24 @@ Issue 本文のテンプレートは `.github/ISSUE_TEMPLATE/` 配下が正本
 | 置き場所 | 性質 | 役割 | 更新タイミング |
 | :- | :- | :- | :- |
 | GitHub Issue | 作業単位 | やることと完了の記録（AC / DoD / まとめ） | 起票時と完了時 |
+| `project/plan/` | 作業計画（横断） | **複数 Issue にまたがる順序と依存関係**。層の積み順、ブロッカー、判断待ちの項目 | 着手前と、方針が変わったとき |
 | GitHub Discussions | フロー（追記のみ） | 技術選定の議論と証跡（比較した候補・却下の理由）。決定後も残す | 選定の開始〜決定 |
 | GitHub Wiki | ストック（最新のみ） | 採用技術の一覧・概要・**1 行の採用理由**。経緯は Discussion へリンク | 導入 PR のマージ後 |
 | `docs/` | コードと同期 | 設計図（コンテキストマップ / ドメインモデル / ER 図） | 実装 PR と同時 |
 | `README.md` / `.github/` | 手順 | セットアップ・開発フロー・レビュー・運用ルール | 手順が変わったとき |
 
 迷ったら「後から読み返すのは**経緯**か**現状**か」で決めます。経緯なら Discussions、現状なら Wiki です。
+
+### `project/plan/` の使い分け
+
+1 つの Issue に収まる作業に計画書は要りません。**Issue をまたぐ順序と依存が生じたときだけ**作ります。
+
+- 書くのは「どの順で何をやるか」「何が何をブロックしているか」だけ。
+  **完了条件は Issue、選定理由は Discussions、現状は Wiki、設計は `docs/`** にあるものをリンクし、内容をコピーしない。
+- 形式は [OKF（Open Knowledge Format）v0.2](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md)。
+  YAML frontmatter 付き Markdown のディレクトリで、必須は `type` のみ。`index.md` と `log.md` は予約名。
+- `status` と `stale_after` を必ず入れます。**期限を過ぎた計画は現状とずれている前提**で読みます。
+- 計画が実行され終わったら `status: deprecated` にし、消さずに残します。
 
 ### ツールが場所を決めているファイル
 
