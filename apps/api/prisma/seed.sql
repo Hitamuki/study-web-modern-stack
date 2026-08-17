@@ -1,4 +1,4 @@
--- SCR-001 ダミー画面の動作確認用シード。design/app.pen のサンプル 4 件と対応します。
+-- SCR-005 ダミー画面の動作確認用シード。design/app.pen のサンプル 4 件と対応します。
 -- 実行: make db-seed
 --
 -- owner_id はローカル検証用の固定 UUID です。Supabase Auth の実ユーザーとは対応しません。

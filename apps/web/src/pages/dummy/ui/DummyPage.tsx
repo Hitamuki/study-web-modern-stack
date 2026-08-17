@@ -13,7 +13,7 @@ import { DummyForm } from "@/features/dummy-form/ui/DummyForm";
 import { Button } from "@/shared/ui/button";
 
 /**
- * SCR-001 ダミー画面。
+ * SCR-005 ダミー画面。
  * PC は 2 ペイン（左が一覧・右がフォーム）、SP は 1 カラム（上がフォーム・下が一覧）。
  * 切り替えは Tailwind の max-md: バリアントが担当する。
  */
@@ -94,7 +94,7 @@ export const DummyPage = () => {
       </header>
 
       <main className="flex min-h-0 flex-1 gap-6 p-6 max-md:flex-col max-md:gap-md max-md:p-md">
-        {/* SP では一覧をカードにせず、行を背景の上に直接並べる（SCR-001-SP の「一覧」に合わせる） */}
+        {/* SP では一覧をカードにせず、行を背景の上に直接並べる（SCR-005-SP の「一覧」に合わせる） */}
         <section className="flex min-w-0 flex-1 flex-col gap-md rounded-lg border border-border bg-card p-5 max-md:gap-sm max-md:rounded-none max-md:border-none max-md:bg-transparent max-md:p-0">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-semibold max-md:text-[15px]">メモ一覧</h2>

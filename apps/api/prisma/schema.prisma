@@ -8,7 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// SCR-001 ダミー画面の検証用テーブル。実際のドメインが固まるまでの仮置き。
+// SCR-005 ダミー画面の検証用テーブル。実際のドメインが固まるまでの仮置き。
 model Dummy {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   // 所有者は Supabase Auth のユーザー ID（auth.users.id、JWT の sub クレーム）。形式は UUID。

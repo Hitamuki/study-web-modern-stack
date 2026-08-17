@@ -4,7 +4,7 @@
 @import "tw-animate-css";
 
 /*
- * SCR-001 ダミー画面のスタイル基盤。
+ * SCR-005 ダミー画面のスタイル基盤。
  *
  * 意匠の正本は design/app.pen です（docs/screen-list.md）。実装側が .pen に合わせます。
  * .pen のトークンは --pen-* として 1:1 で持ち、shadcn/ui が参照する名前へは下の
