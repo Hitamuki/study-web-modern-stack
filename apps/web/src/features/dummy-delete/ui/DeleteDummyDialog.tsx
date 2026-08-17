@@ -16,7 +16,7 @@ export interface DeleteDummyDialogProps {
 
 /**
  * design/app.pen の CMP/削除確認ダイアログ。
- * 画面 ID は振らず、SCR-001 に属するダイアログとして扱う。
+ * 画面 ID は振らず、SCR-005 に属するダイアログとして扱う。
  *
  * フォーカストラップ・Esc・スクロールロック・aria 属性は shadcn/ui（Radix）が持つ。
  * 呼び出し側が条件付きでマウントするため open は常に true で、閉じる操作は

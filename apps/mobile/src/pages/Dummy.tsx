@@ -14,8 +14,8 @@ import { tokens } from "../shared/tokens";
 import { Button } from "../shared/ui/Button";
 
 /**
- * SCR-001 ダミー画面（モバイル）。
- * design/app.pen の SCR-001-SP に合わせ、上にフォーム・下に一覧の 1 カラム構成。
+ * SCR-005 ダミー画面（モバイル）。
+ * design/app.pen の SCR-005-SP に合わせ、上にフォーム・下に一覧の 1 カラム構成。
  */
 export const DummyPage = () => {
   const { data, loading, error, refetch } = useQuery(DUMMY_LIST);

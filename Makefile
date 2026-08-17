@@ -119,7 +119,7 @@ db-push: ## Prisma スキーマを DB に反映します
 	$(TURBO) run db:push --filter=$(API_PKG)
 
 .PHONY: db-seed
-db-seed: ## SCR-001 の動作確認用データを投入します（既存の dummy を全削除します）
+db-seed: ## SCR-005 の動作確認用データを投入します（既存の dummy を全削除します）
 	docker compose exec -T postgres psql -U user -d memo -q < apps/api/prisma/seed.sql
 
 .PHONY: codegen

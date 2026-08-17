@@ -4,7 +4,7 @@ import type { DummyId } from "../value-objects/dummy-id.vo";
 
 /**
  * ダミーレコードのドメインエンティティ（集約ルート）。
- * SCR-001 ダミー画面が扱う本文つきレコードを表す。
+ * SCR-005 ダミー画面が扱う本文つきレコードを表す。
  */
 export class Dummy {
   constructor(

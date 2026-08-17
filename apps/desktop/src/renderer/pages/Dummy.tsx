@@ -13,7 +13,7 @@ import { DummyForm } from "../components/DummyForm";
 import { DummyRow } from "../components/DummyRow";
 
 /**
- * SCR-001 ダミー画面（デスクトップ）。
+ * SCR-005 ダミー画面（デスクトップ）。
  * ウィンドウ幅が広いため PC 版の 2 ペインを既定とし、
  * 幅を絞ったときは styles.css のメディアクエリで 1 カラムに落ちる。
  */

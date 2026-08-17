@@ -1,7 +1,7 @@
 import { gql } from "../generated";
 
 /**
- * SCR-001 ダミー画面が使う GraphQL オペレーション。
+ * SCR-005 ダミー画面が使う GraphQL オペレーション。
  *
  * Web / Mobile / Desktop の 3 アプリが同じ定義を読むため、ここに 1 か所だけ置く。
  * 参照は Hasura が自動生成するクエリ、書き込みは NestJS のドメインロジックを通す
