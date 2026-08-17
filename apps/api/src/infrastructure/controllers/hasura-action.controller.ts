@@ -50,8 +50,9 @@ export class HasuraActionController {
   async createDummy(
     @Body() payload: HasuraActionPayload<{ content: string }>,
   ): Promise<DummyPayload> {
+    const ownerId = requireSessionUserId(payload);
     const content = requireString(payload?.input?.content, "content");
-    return toDummyPayload(await this.createDummyUseCase.execute({ content }));
+    return toDummyPayload(await this.createDummyUseCase.execute({ ownerId, content }));
   }
 
   @Post("updateDummy")
@@ -73,6 +74,21 @@ export class HasuraActionController {
     const deletedId = await this.deleteDummyUseCase.execute({ id });
     return { id: deletedId.value };
   }
+}
+
+/**
+ * 所有者を `session_variables` から取り出す。
+ *
+ * **`input` から受け取ってはいけない。** 入力に含めると、クライアントが任意の ID を指定して
+ * 他人になりすましたレコードを作れてしまう。`session_variables` は Hasura が JWT の
+ * カスタムクレームから組み立てて付与するもので、クライアントは書き換えられない。
+ */
+function requireSessionUserId(payload: HasuraActionPayload<unknown>): string {
+  const userId = payload?.session_variables?.["x-hasura-user-id"];
+  if (typeof userId !== "string" || userId.trim() === "") {
+    throw new BadRequestException("セッション変数 x-hasura-user-id がありません");
+  }
+  return userId.trim();
 }
 
 /**

@@ -6,10 +6,12 @@
 classDiagram
   class Dummy {
     +DummyId id
+    +OwnerId ownerId
     +string content
     +Date createdAt
     +Date updatedAt
     +changeContent(content: string, updatedAt: Date) Dummy
+    +isOwnedBy(ownerId: OwnerId) boolean
     +void validate()
   }
 
@@ -17,6 +19,12 @@ classDiagram
     -string _value
     +get value() string
     +equals(other: DummyId) boolean
+  }
+
+  class OwnerId {
+    -string _value
+    +get value() string
+    +equals(other: OwnerId) boolean
   }
 
   class DummyRepository {
@@ -48,6 +56,7 @@ classDiagram
   class EntityNotFoundError
 
   Dummy --> DummyId
+  Dummy --> OwnerId
   DomainError <|-- DomainValidationError
   DomainError <|-- EntityNotFoundError
   CreateDummyUseCase ..> Dummy : creates
@@ -64,6 +73,11 @@ classDiagram
 - **Entity**: `Dummy` は識別子を持つ集約ルートで、バリデーションやビジネスルールを自身で保持します。
   本文の差し替えは `changeContent` が新しいインスタンスを返す形にし、作成日時を勝手に変えられないようにしています。
 - **Value Object**: `DummyId` は不変の識別子を表現します。
+  `OwnerId` はレコードの所有者を表し、値は Supabase Auth のユーザー ID（`auth.users.id` / JWT の `sub`）です。
+  ユーザーの実体は Supabase 側にあり DB で存在確認ができないため、UUID 形式の検証をこの Value Object が担います
+  （[Discussion #19](https://github.com/Hitamuki/study-web-modern-stack/discussions/19)）。
+- **所有者の不変性**: `changeContent` は所有者を引数に取りません。永続化層の `update` も `owner_id` を
+  更新対象に含めません。レコードの持ち主を後から付け替えられないようにするためです。
 - **Repository**: ドメインからデータアクセスの詳細を切り離し、インフラ層（Prisma）で実装します。
 - **Use Case**: 画面の CRUD 操作に 1:1 で対応するユースケースを定義します。
 - **Domain Error**: ドメイン層の例外は `DomainError` を継承させ、インフラ層のフィルターが型で HTTP ステータスへ変換します

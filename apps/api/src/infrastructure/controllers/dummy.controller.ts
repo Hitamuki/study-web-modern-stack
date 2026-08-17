@@ -22,6 +22,7 @@ import type { Dummy } from "../../domain/entities/dummy.entity";
 /** ダミーレコードのレスポンス表現 */
 interface DummyResponse {
   id: string;
+  ownerId: string;
   content: string;
   createdAt: string;
   updatedAt: string;
@@ -29,6 +30,13 @@ interface DummyResponse {
 
 /**
  * ダミーレコードの HTTP API を提供するコントローラー（Hasura を経由しない直接アクセス用）
+ *
+ * > [!WARNING]
+ * > このコントローラーには認証がなく、所有者をリクエストボディから受け取る。
+ * > そのため呼び出し元は任意のユーザーになりすませる。ローカル検証専用であり、
+ * > 公開環境に出す前に認証を入れるか、ルーティングごと外す必要がある。
+ * > 認証を通す正規の経路は Hasura Actions（`hasura-action.controller.ts`）で、
+ * > そちらは所有者をセッション変数から取る。
  */
 @Controller("dummies")
 export class DummyController {
@@ -47,8 +55,10 @@ export class DummyController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() dto: { content: string }): Promise<DummyResponse> {
-    return toResponse(await this.createDummyUseCase.execute({ content: dto?.content }));
+  async create(@Body() dto: { ownerId: string; content: string }): Promise<DummyResponse> {
+    return toResponse(
+      await this.createDummyUseCase.execute({ ownerId: dto?.ownerId, content: dto?.content }),
+    );
   }
 
   @Patch(":id")
@@ -66,6 +76,7 @@ export class DummyController {
 function toResponse(dummy: Dummy): DummyResponse {
   return {
     id: dummy.id.value,
+    ownerId: dummy.ownerId.value,
     content: dummy.content.value,
     createdAt: dummy.createdAt.toISOString(),
     updatedAt: dummy.updatedAt.toISOString(),
