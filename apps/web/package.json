@@ -18,7 +18,8 @@
     "react": "catalog:frontend",
     "react-dom": "catalog:frontend",
     "tailwind-merge": "^3.4.1",
-    "tw-animate-css": "catalog:frontend"
+    "tw-animate-css": "catalog:frontend",
+    "react-router": "catalog:frontend"
   },
   "devDependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",
