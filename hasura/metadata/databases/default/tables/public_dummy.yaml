@@ -1,3 +1,44 @@
 table:
   name: dummy
   schema: public
+# user ロールは自分が所有する行だけを触れる。
+# 条件は全操作で owner_id = X-Hasura-User-Id（JWT のカスタムクレーム由来）。
+select_permissions:
+  - role: user
+    permission:
+      columns:
+        - id
+        - owner_id
+        - content
+        - created_at
+        - updated_at
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id
+      allow_aggregations: false
+insert_permissions:
+  - role: user
+    permission:
+      # owner_id を columns に入れない。クライアントが値を指定できないようにするため。
+      columns:
+        - content
+      # 所有者はセッション変数から強制的に埋める。なりすまし不可。
+      set:
+        owner_id: x-hasura-user-id
+      check: {}
+update_permissions:
+  - role: user
+    permission:
+      # 本文だけ更新できる。owner_id を含めないので持ち主の付け替えは不可。
+      columns:
+        - content
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id
+      check: null
+delete_permissions:
+  - role: user
+    permission:
+      filter:
+        owner_id:
+          _eq: X-Hasura-User-Id

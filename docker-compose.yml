@@ -25,8 +25,19 @@ services:
     environment:
       HASURA_GRAPHQL_DATABASE_URL: "postgres://user:password@postgres:5432/memo"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_ADMIN_SECRET: "myadminsecretkey"
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET:-myadminsecretkey}"
       HASURA_GRAPHQL_CORS_DOMAIN: "*"
+      # Supabase Auth が発行した JWT を検証する（Discussion #19）。
+      # 非対称鍵（ES256）なので Hasura は JWKS から公開鍵を取得する。秘密鍵は持たない。
+      # issuer / audience まで照合し、他プロジェクトのトークンを弾く。
+      # SUPABASE_PROJECT_REF は .env から渡す（.env.example を参照）。
+      HASURA_GRAPHQL_JWT_SECRET: >-
+        {"jwk_url":"https://${SUPABASE_PROJECT_REF}.supabase.co/auth/v1/.well-known/jwks.json",
+         "issuer":"https://${SUPABASE_PROJECT_REF}.supabase.co/auth/v1",
+         "audience":"authenticated",
+         "claims_namespace":"https://hasura.io/jwt/claims"}
+      # HASURA_GRAPHQL_UNAUTHORIZED_ROLE は意図的に設定しない。
+      # 設定すると未認証のリクエストがそのロールで通ってしまうため（#22 の AC）。
 
 volumes:
   postgres-data:

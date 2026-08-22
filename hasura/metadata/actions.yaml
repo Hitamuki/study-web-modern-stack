@@ -5,18 +5,24 @@ actions:
       handler: http://host.docker.internal:3001/hasura/actions/createDummy
       timeout: 60
     comment: Create dummy record via NestJS domain logic (Hasura Actions)
+    permissions:
+      - role: user
   - name: updateDummy
     definition:
       kind: synchronous
       handler: http://host.docker.internal:3001/hasura/actions/updateDummy
       timeout: 60
     comment: Update dummy record via NestJS domain logic (Hasura Actions)
+    permissions:
+      - role: user
   - name: deleteDummy
     definition:
       kind: synchronous
       handler: http://host.docker.internal:3001/hasura/actions/deleteDummy
       timeout: 60
     comment: Delete dummy record via NestJS domain logic (Hasura Actions)
+    permissions:
+      - role: user
 custom_types:
   enums: []
   input_objects: []
