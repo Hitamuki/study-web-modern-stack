@@ -36,6 +36,9 @@ services:
          "issuer":"https://${SUPABASE_PROJECT_REF}.supabase.co/auth/v1",
          "audience":"authenticated",
          "claims_namespace":"https://hasura.io/jwt/claims"}
+      # Actions のハンドラ（NestJS）へ付与する共有シークレット。
+      # NestJS 側も同じ値を持ち、一致しないリクエストを 401 で弾く（#26）。
+      HASURA_ACTION_SECRET: "${HASURA_ACTION_SECRET}"
       # HASURA_GRAPHQL_UNAUTHORIZED_ROLE は意図的に設定しない。
       # 設定すると未認証のリクエストがそのロールで通ってしまうため（#22 の AC）。
 

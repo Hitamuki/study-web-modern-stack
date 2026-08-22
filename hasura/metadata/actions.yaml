@@ -4,6 +4,11 @@ actions:
       kind: synchronous
       handler: http://host.docker.internal:3001/hasura/actions/createDummy
       timeout: 60
+      # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
+      # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。
+      headers:
+        - name: x-hasura-action-secret
+          value_from_env: HASURA_ACTION_SECRET
     comment: Create dummy record via NestJS domain logic (Hasura Actions)
     permissions:
       - role: user
@@ -12,6 +17,11 @@ actions:
       kind: synchronous
       handler: http://host.docker.internal:3001/hasura/actions/updateDummy
       timeout: 60
+      # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
+      # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。
+      headers:
+        - name: x-hasura-action-secret
+          value_from_env: HASURA_ACTION_SECRET
     comment: Update dummy record via NestJS domain logic (Hasura Actions)
     permissions:
       - role: user
@@ -20,6 +30,11 @@ actions:
       kind: synchronous
       handler: http://host.docker.internal:3001/hasura/actions/deleteDummy
       timeout: 60
+      # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
+      # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。
+      headers:
+        - name: x-hasura-action-secret
+          value_from_env: HASURA_ACTION_SECRET
     comment: Delete dummy record via NestJS domain logic (Hasura Actions)
     permissions:
       - role: user
