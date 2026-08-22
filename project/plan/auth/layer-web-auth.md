@@ -63,6 +63,15 @@ Wiki [認証・認可](https://github.com/Hitamuki/study-web-modern-stack/wiki/A
 の推奨（httpOnly Cookie）とは食い違うので、**未達として理由つきで Wiki に明記**し、
 将来の課題（NestJS の BFF 化）として残す。
 
+# メールの確認は自分のアドレスまで
+
+SCR-002 の確認メールと SCR-003 のリセットメールは、**Supabase の組み込み送信では
+組織メンバーのアドレスにしか届かず、上限は 2 通/時**。
+
+**層 5 はこれを待たない。** 自分のアドレス宛なら通しで確認できる。
+第三者に届く状態にするのは Issue [#71](https://github.com/Hitamuki/study-web-modern-stack/issues/71) の担当で、
+詳細は [email-delivery.md](/project/plan/auth/email-delivery.md) を参照。
+
 # 仕上げ
 
 - `ApolloProvider` に `getToken`（`supabase.auth.getSession()` 由来）を渡し、**admin secret を削除**

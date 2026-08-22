@@ -17,6 +17,7 @@ Issue [#20](https://github.com/Hitamuki/study-web-modern-stack/issues/20) の実
 | 7 | [layer-web-router.md](/project/plan/auth/layer-web-router.md) | 層 4 |
 | 8 | [layer-web-auth.md](/project/plan/auth/layer-web-auth.md) | 層 5 |
 | 9 | [verification.md](/project/plan/auth/verification.md) | 全層が入った後の検証手順 |
+| 10 | [email-delivery.md](/project/plan/auth/email-delivery.md) | 認証メールの配信経路。**層 5 の実装はブロックしないが、第三者への到達は #71 待ち** |
 
 ## いま止まっている理由
 
@@ -24,3 +25,8 @@ Issue [#20](https://github.com/Hitamuki/study-web-modern-stack/issues/20) の実
 
 1. Supabase プロジェクトの作成 → [supabase-setup.md](/project/plan/auth/supabase-setup.md)
 2. ルーターの選定（Discussion の Answer）→ [layer-web-router.md](/project/plan/auth/layer-web-router.md)
+
+**この計画の完了後に残る依存**（層の実装はブロックしない）
+
+3. 認証メールが第三者に届くこと → [email-delivery.md](/project/plan/auth/email-delivery.md)（Issue #71）。
+   サービス名（Discussion #46）→ ドメイン取得 が律速

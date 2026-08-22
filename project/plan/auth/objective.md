@@ -59,4 +59,6 @@ main
 - `apps/mobile` / `apps/desktop` への認証導入（Issue #25。開発停止中）。
   層 2 で共通クライアントを変えるため、**両アプリはビルドは通るが未認証**の状態になる
 - TLS の有効化（Issue #27）
+- 認証メールを第三者に届ける（Issue #71）。層 5 は自分のアドレス宛で確認でき、**待たない**。
+  詳細は [email-delivery.md](/project/plan/auth/email-delivery.md)
 - `dummy.controller.ts`（Hasura を経由しない REST）の保護 → [findings.md](/project/plan/auth/findings.md) を参照
