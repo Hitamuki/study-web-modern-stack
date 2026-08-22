@@ -22,6 +22,8 @@
   --pen-accent: #2f6fed;
   --pen-accent-text: #ffffff;
   --pen-danger: #d64545;
+  /* エラー帯の背景。danger の淡いティント（design/app.pen の danger-bg） */
+  --pen-danger-bg: #fceaea;
 
   /* 文字（.pen の font-body） */
   --pen-font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
@@ -34,6 +36,7 @@
   /* 余白（.pen の gap-sm / gap-md） */
   --pen-gap-sm: 8px;
   --pen-gap-md: 16px;
+  --pen-gap-lg: 24px;
 }
 
 /*
@@ -64,6 +67,7 @@
   --color-accent-foreground: var(--pen-text-primary);
 
   --color-destructive: var(--pen-danger);
+  --color-destructive-bg: var(--pen-danger-bg);
   --color-destructive-foreground: var(--pen-accent-text);
 
   --color-border: var(--pen-border);
@@ -78,6 +82,7 @@
   /* gap-sm / gap-md という .pen の名前をユーティリティにも残す */
   --spacing-sm: var(--pen-gap-sm);
   --spacing-md: var(--pen-gap-md);
+  --spacing-lg: var(--pen-gap-lg);
 }
 
 @layer base {

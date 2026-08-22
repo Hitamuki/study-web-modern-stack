@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import {
   CREATE_DUMMY,
   DELETE_DUMMY,
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { DummyRow } from "@/entities/dummy/ui/DummyRow";
 import { DeleteDummyDialog } from "@/features/dummy-delete/ui/DeleteDummyDialog";
 import { DummyForm } from "@/features/dummy-form/ui/DummyForm";
+import { supabase } from "@/shared/api/supabase";
 import { Button } from "@/shared/ui/button";
 
 /**
@@ -18,6 +19,7 @@ import { Button } from "@/shared/ui/button";
  * 切り替えは Tailwind の max-md: バリアントが担当する。
  */
 export const DummyPage = () => {
+  const apollo = useApolloClient();
   const { data, loading, error, refetch } = useQuery(DUMMY_LIST);
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -26,6 +28,15 @@ export const DummyPage = () => {
   const [formError, setFormError] = useState<string | null>(null);
 
   const handleMutationError = (mutationError: Error) => setFormError(mutationError.message);
+
+  /**
+   * サインアウト。**Apollo のキャッシュも消す。**
+   * 消さないと、次にログインした利用者の画面に前の利用者のメモが一瞬表示される。
+   */
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    await apollo.clearStore();
+  };
   const [createDummy, createState] = useMutation(CREATE_DUMMY, { onError: handleMutationError });
   const [updateDummy, updateState] = useMutation(UPDATE_DUMMY, { onError: handleMutationError });
   const [deleteDummy, deleteState] = useMutation(DELETE_DUMMY, { onError: handleMutationError });
@@ -90,6 +101,9 @@ export const DummyPage = () => {
         <h1 className="text-lg font-semibold max-md:text-[17px]">メモ</h1>
         <Button onClick={resetForm} className="max-md:h-8 max-md:px-3">
           新規作成
+        </Button>
+        <Button variant="outline" size="sm" onClick={() => void handleSignOut()}>
+          ログアウト
         </Button>
       </header>
 

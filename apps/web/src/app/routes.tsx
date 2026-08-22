@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router";
+import { RequireAuth } from "./RequireAuth";
 import { DummyPage } from "../pages/dummy/ui/DummyPage";
 import { LoginPage } from "../pages/login/ui/LoginPage";
 import { NotFoundPage } from "../pages/not-found/ui/NotFoundPage";
@@ -13,7 +14,15 @@ import { SignupPage } from "../pages/signup/ui/SignupPage";
  * Vite の SPA のため（Discussion #75 の規範 4）。
  */
 export const router = createBrowserRouter([
-  { path: "/", element: <DummyPage /> }, // SCR-005 ダミー画面
+  // SCR-005 ダミー画面。未ログインなら /login へ送る
+  {
+    path: "/",
+    element: (
+      <RequireAuth>
+        <DummyPage />
+      </RequireAuth>
+    ),
+  },
   { path: "/login", element: <LoginPage /> }, // SCR-001
   { path: "/signup", element: <SignupPage /> }, // SCR-002
   { path: "/password-reset", element: <PasswordResetPage /> }, // SCR-003

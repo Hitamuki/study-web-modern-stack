@@ -19,7 +19,8 @@
     "react-dom": "catalog:frontend",
     "tailwind-merge": "^3.4.1",
     "tw-animate-css": "catalog:frontend",
-    "react-router": "catalog:frontend"
+    "react-router": "catalog:frontend",
+    "@supabase/supabase-js": "catalog:frontend"
   },
   "devDependencies": {
     "@graphql-typed-document-node/core": "^3.2.0",
