@@ -5,7 +5,7 @@ import "./styles.css";
 
 // TODO(#24): Supabase Auth のセッションからトークンを返すように差し替える。
 // この層（#23）では配管だけを通し、トークンの供給は #24 の責務にしている。
-const getToken = async (): Promise<string | null> => null;
+const getToken = (): Promise<string | null> => Promise.resolve(null);
 
 export const App = () => (
   <ApolloProvider uri={GRAPHQL_URL} getToken={getToken}>

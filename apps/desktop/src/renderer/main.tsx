@@ -5,7 +5,7 @@ const GRAPHQL_URL: string = import.meta.env.VITE_GRAPHQL_URL ?? "http://localhos
 
 // #25（モバイル・デスクトップへの認証フロー導入）が保留のため、常に未認証。
 // ビルドは通るが Hasura からデータは取得できない。公開する前に #25 を消化すること。
-const getToken = async (): Promise<string | null> => null;
+const getToken = (): Promise<string | null> => Promise.resolve(null);
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { DummyPage } from "./pages/Dummy";

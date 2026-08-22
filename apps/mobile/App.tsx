@@ -7,7 +7,7 @@ const GRAPHQL_URL: string =
 
 // #25（モバイル・デスクトップへの認証フロー導入）が保留のため、常に未認証。
 // ビルドは通るが Hasura からデータは取得できない。公開する前に #25 を消化すること。
-const getToken = async (): Promise<string | null> => null;
+const getToken = (): Promise<string | null> => Promise.resolve(null);
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DummyPage } from "./src/pages/Dummy";
