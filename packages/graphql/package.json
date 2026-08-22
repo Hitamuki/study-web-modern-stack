@@ -18,6 +18,7 @@
     "@graphql-codegen/client-preset": "catalog:frontend",
     "typescript": "catalog:default",
     "@types/react": "catalog:frontend",
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "@types/node": "catalog:"
   }
 }

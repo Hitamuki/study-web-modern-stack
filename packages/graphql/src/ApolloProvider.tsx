@@ -33,9 +33,11 @@ export const ApolloProvider = ({ children, uri, getToken }: ApolloProviderProps)
     // v4 の SetContextLink は (prevContext, operation) の順。v3 の setContext とは引数が逆。
     const authLink = new SetContextLink(async (prevContext) => {
       const token = await getToken();
+      // OperationContext は任意のキーを持つため headers は any になる。明示的に絞る。
+      const headers = (prevContext.headers ?? {}) as Record<string, string>;
       return {
         headers: {
-          ...prevContext.headers,
+          ...headers,
           // トークンが無いときはヘッダ自体を付けない。
           // Hasura は Authorization が無いリクエストを invalid-headers で拒否するため、
           // 「未認証である」ことがサーバー側で明確に扱われる。
