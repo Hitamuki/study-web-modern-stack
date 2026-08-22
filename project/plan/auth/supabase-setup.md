@@ -2,7 +2,7 @@
 type: Task
 title: Supabase プロジェクトのセットアップ
 description: 層 1 のブロッカー。プロジェクト作成と Custom Access Token Hook の登録はユーザー本人の作業。
-resource: https://github.com/Hitamuki/study-web-modern-stack/discussions/19
+resource: https://github.com/Hitamuki/study-web-modern-stack/issues/74
 tags: [auth, supabase, ブロッカー, ユーザー作業]
 status: stable
 stale_after: 2026-09-18
@@ -17,6 +17,8 @@ sources:
 ---
 
 # これが済むまで実装に入れない
+
+**正本は Issue [#74](https://github.com/Hitamuki/study-web-modern-stack/issues/74)。** 以下は要点。
 
 Issue [#22](https://github.com/Hitamuki/study-web-modern-stack/issues/22) の AC が
 「発行した JWT で自分のレコードだけ取得できる」「別ユーザーの JWT では取得できない」を要求している。

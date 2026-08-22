@@ -4,6 +4,12 @@
 
 ## 2026-08-22
 
+- Issue [#74](https://github.com/Hitamuki/study-web-modern-stack/issues/74)（Supabase プロジェクトのセットアップ）を起票。
+  #22 と #71 の共通の前提でありながら、どの Issue にも属していなかったため独立させた。
+- Discussion [#75](https://github.com/Hitamuki/study-web-modern-stack/discussions/75)（画面遷移と URL の扱い）を起票。
+  **「ルーターに何を使うか」ではなく「URL が担う役割は何か」から掘り直した。**
+  H0（入れない）はブラウザ履歴の観点で落選、主仮説は H1（軽量ルーター）。
+
 - [auth/email-delivery.md](/project/plan/auth/email-delivery.md) を追加。
   Supabase の組み込みメール送信が組織メンバー宛・2 通/時に限られる件と、Issue
   [#71](https://github.com/Hitamuki/study-web-modern-stack/issues/71)（Resend の custom SMTP 化）との関係を記録した。

@@ -1,11 +1,12 @@
 ---
 type: Task
 title: 層 4 — apps/web へのルーター導入
-description: 認証 4 画面 + ダミー画面の遷移に必要。ライブラリ選定の Discussion が未起票のためブロック中。
+description: 認証 4 画面 + ダミー画面の遷移に必要。Discussion #75 が未決着のためブロック中。
 tags: [auth, apps-web, 層4, ブロッカー, 要選定]
-status: draft
+resource: https://github.com/Hitamuki/study-web-modern-stack/discussions/75
+status: stable
 stale_after: 2026-09-18
-generated: { by: claude-code/claude-fable-5, at: 2026-08-17T23:32:00Z }
+generated: { by: claude-code/claude-fable-5, at: 2026-08-22T00:00:00Z }
 ---
 
 # 位置づけ
@@ -16,17 +17,25 @@ SCR-001〜004 の 4 画面 + ダミー画面（SCR-005）の遷移には必要�
 ブランチ: `feat/NN-web-router`（層 3 の上に `gh stack add`）
 
 > [!WARNING]
-> **Issue も Discussion も未起票。この層だけ準備ができていない。**
+> **Discussion [#75](https://github.com/Hitamuki/study-web-modern-stack/discussions/75) は起票済みだが未決着。
+> Issue はまだ起票していない**（決着後に起票する）。
 
-# 先に Discussion が要る
+# 先に Discussion を決着させる
 
 ルーターは AGENTS.md の技術選定対象「状態管理・データ取得・UI 基盤」に当たり、
-ルートを定義した後の乗り換えコストが高い。**着手前に Discussion を立てて決着させる。**
+ルートを定義した後の乗り換えコストが高い。
 
-候補: React Router / TanStack Router / wouter
+Discussion [#75](https://github.com/Hitamuki/study-web-modern-stack/discussions/75) で
+**「ルーターに何を使うか」ではなく「URL が担う役割は何か」から掘り直している。** 要点は 2 つ。
 
-選定の進め方は [.github/guides/TECH_DECISIONS.md](../../../.github/guides/TECH_DECISIONS.md) が正本。
-評価軸を先に決めてから候補を並べ、比較表を本文に入れ、結論はコメントで投稿して Answer にマークする。
+- URL の役割は **(a) 外部から特定の状態へ入る入口**（メールのリンク → SCR-004）と
+  **(b) アプリ内の画面切り替え**に分かれ、URL でしか実現できないのは (a) だけ
+- **H0（ルーターを入れない）は軸 2 で落選**。`PASSWORD_RECOVERY` イベントで (a) は代替できるが、
+  ブラウザの履歴に積まれず全画面が `/` に潰れるため、将来の作り直しが確定する
+
+主仮説は **H1（wouter などの軽量ルーター）**。候補表の値は未検証で空欄のまま。
+
+**この Discussion は #22 / #23 / 層 3 に依存しない。並行して決着させてよい。**
 
 # やること（決着後）
 

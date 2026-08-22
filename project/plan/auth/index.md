@@ -23,8 +23,8 @@ Issue [#20](https://github.com/Hitamuki/study-web-modern-stack/issues/20) の実
 
 **ユーザーの作業が 2 つ揃うまで層 1 に入れません。**
 
-1. Supabase プロジェクトの作成 → [supabase-setup.md](/project/plan/auth/supabase-setup.md)
-2. ルーターの選定（Discussion の Answer）→ [layer-web-router.md](/project/plan/auth/layer-web-router.md)
+1. Supabase プロジェクトの作成（Issue #74）→ [supabase-setup.md](/project/plan/auth/supabase-setup.md)
+2. ルーターの選定（Discussion #75 の Answer）→ [layer-web-router.md](/project/plan/auth/layer-web-router.md)
 
 **この計画の完了後に残る依存**（層の実装はブロックしない）
 
