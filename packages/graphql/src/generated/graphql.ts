@@ -78,6 +78,7 @@ export type Dummy = {
   content: Scalars['String']['output'];
   created_at: Scalars['timestamptz']['output'];
   id: Scalars['uuid']['output'];
+  owner_id: Scalars['uuid']['output'];
   updated_at: Scalars['timestamptz']['output'];
 };
 
@@ -111,6 +112,7 @@ export type Dummy_Bool_Exp = {
   content?: InputMaybe<String_Comparison_Exp>;
   created_at?: InputMaybe<Timestamptz_Comparison_Exp>;
   id?: InputMaybe<Uuid_Comparison_Exp>;
+  owner_id?: InputMaybe<Uuid_Comparison_Exp>;
   updated_at?: InputMaybe<Timestamptz_Comparison_Exp>;
 };
 
@@ -125,6 +127,7 @@ export type Dummy_Insert_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  owner_id?: InputMaybe<Scalars['uuid']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -134,6 +137,7 @@ export type Dummy_Max_Fields = {
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  owner_id?: Maybe<Scalars['uuid']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
@@ -143,6 +147,7 @@ export type Dummy_Min_Fields = {
   content?: Maybe<Scalars['String']['output']>;
   created_at?: Maybe<Scalars['timestamptz']['output']>;
   id?: Maybe<Scalars['uuid']['output']>;
+  owner_id?: Maybe<Scalars['uuid']['output']>;
   updated_at?: Maybe<Scalars['timestamptz']['output']>;
 };
 
@@ -167,6 +172,7 @@ export type Dummy_Order_By = {
   content?: InputMaybe<Order_By>;
   created_at?: InputMaybe<Order_By>;
   id?: InputMaybe<Order_By>;
+  owner_id?: InputMaybe<Order_By>;
   updated_at?: InputMaybe<Order_By>;
 };
 
@@ -184,6 +190,8 @@ export enum Dummy_Select_Column {
   /** column name */
   Id = 'id',
   /** column name */
+  OwnerId = 'owner_id',
+  /** column name */
   UpdatedAt = 'updated_at'
 }
 
@@ -192,6 +200,7 @@ export type Dummy_Set_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  owner_id?: InputMaybe<Scalars['uuid']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -208,6 +217,7 @@ export type Dummy_Stream_Cursor_Value_Input = {
   content?: InputMaybe<Scalars['String']['input']>;
   created_at?: InputMaybe<Scalars['timestamptz']['input']>;
   id?: InputMaybe<Scalars['uuid']['input']>;
+  owner_id?: InputMaybe<Scalars['uuid']['input']>;
   updated_at?: InputMaybe<Scalars['timestamptz']['input']>;
 };
 
@@ -219,6 +229,8 @@ export enum Dummy_Update_Column {
   CreatedAt = 'created_at',
   /** column name */
   Id = 'id',
+  /** column name */
+  OwnerId = 'owner_id',
   /** column name */
   UpdatedAt = 'updated_at'
 }
