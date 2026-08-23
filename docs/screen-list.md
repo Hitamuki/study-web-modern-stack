@@ -25,6 +25,16 @@
 > | SCR-003 パスワードリセット申請 | `/password-reset` |
 > | SCR-004 新しいパスワードの設定 | `/password-update`（メールのリンクの戻り先） |
 > | SCR-005 ダミー画面 | `/` |
+>
+> **モバイル・デスクトップは Web の設計を流用します**（#25。新規に `MOB-` / `DSK-` は作りません）。
+>
+> | アプリ | 流用元 | 実装 |
+> | :- | :- | :- |
+> | `apps/desktop` | **PC 版** | `apps/desktop/src/renderer/pages/`（SCR-001 / SCR-002） |
+> | `apps/mobile` | **SP 版** | `apps/mobile/src/pages/`（SCR-001 / SCR-002） |
+>
+> パスワード再設定（SCR-003 / SCR-004）は Web のみです。メールのリンクを
+> デスクトップアプリでは受け取れず、モバイルはディープリンクの実装が別途必要なためです。
 
 - 書き出した画像は [screens/](./screens/) に `<画面ID>-<PC|SP>.png` で置く。`design/app.pen` の `Export`（PNG / scale 1）で生成し、
   デザインを変えたら同じ PR で書き出し直す。**ファイル名にノード ID を使わない**（ノードを作り直すと変わるため）。

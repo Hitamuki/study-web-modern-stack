@@ -23,7 +23,9 @@
     "react-native-web": "^0.21.0",
     "@expo/metro-runtime": "~6.1.2",
     "@apollo/client": "catalog:frontend",
-    "graphql": "catalog:frontend"
+    "graphql": "catalog:frontend",
+    "@supabase/supabase-js": "catalog:frontend",
+    "expo-secure-store": "~15.0.7"
   },
   "devDependencies": {
     "@types/react": "catalog:frontend",

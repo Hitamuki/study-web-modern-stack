@@ -13,6 +13,7 @@
       "supportsTablet": true
     },
     "android": {},
-    "web": {}
+    "web": {},
+    "scheme": "memoapp"
   }
 }
