@@ -7,5 +7,9 @@ declare namespace NodeJS {
   interface ProcessEnv {
     /** Hasura の GraphQL エンドポイント。実機から繋ぐ場合は PC の IP を指定する */
     readonly EXPO_PUBLIC_GRAPHQL_URL?: string;
+    /** Supabase プロジェクトの URL */
+    readonly EXPO_PUBLIC_SUPABASE_URL?: string;
+    /** Supabase の publishable key（公開前提の値。service_role は置かない） */
+    readonly EXPO_PUBLIC_SUPABASE_PUBLISHABLE_KEY?: string;
   }
 }

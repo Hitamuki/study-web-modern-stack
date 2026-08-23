@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import {
   CREATE_DUMMY,
   DELETE_DUMMY,
@@ -10,6 +10,7 @@ import { useState } from "react";
 import { Modal, ScrollView, StatusBar, StyleSheet, Text, TextInput, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { formatDateTime } from "../shared/format";
+import { supabase } from "../shared/supabase";
 import { tokens } from "../shared/tokens";
 import { Button } from "../shared/ui/Button";
 
@@ -18,7 +19,17 @@ import { Button } from "../shared/ui/Button";
  * design/app.pen の SCR-005-SP に合わせ、上にフォーム・下に一覧の 1 カラム構成。
  */
 export const DummyPage = () => {
+  const apollo = useApolloClient();
   const { data, loading, error, refetch } = useQuery(DUMMY_LIST);
+
+  /**
+   * サインアウト。**Apollo のキャッシュも消す。**
+   * 消さないと、次にログインした利用者の画面に前の利用者のメモが一瞬表示される。
+   */
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    await apollo.clearStore();
+  };
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [content, setContent] = useState("");
@@ -97,6 +108,12 @@ export const DummyPage = () => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>メモ</Text>
         <Button label="新規作成" compact onPress={resetForm} />
+        <Button
+          label="ログアウト"
+          variant="secondary"
+          compact
+          onPress={() => void handleSignOut()}
+        />
       </View>
 
       {/* 一覧が少数のうちは ScrollView で十分。FlatList を入れ子にすると警告になるため使わない */}

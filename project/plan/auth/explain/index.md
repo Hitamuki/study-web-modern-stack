@@ -14,6 +14,7 @@
 | 3 | [how-it-works.md](/project/plan/auth/explain/how-it-works.md) | どういう仕組みで守られるのか |
 | 4 | [settings.md](/project/plan/auth/explain/settings.md) | 何をどう設定するか |
 | 5 | [tech-stack.md](/project/plan/auth/explain/tech-stack.md) | 技術要素はなにか |
+| 6 | [email.md](/project/plan/auth/explain/email.md) | 認証メールは誰が送るのか。**API キーはどこに置くのか** |
 
 ## ひとことで言うと
 

@@ -19,7 +19,11 @@ export default defineConfig({
     build: { outDir: "dist/renderer" },
     // apps/web の Vite が既定の 5173 を使うため、ずらして固定します。
     // make frontend-start で両方を同時に起動しても取り合いになりません。
-    server: { port: 5174 },
+    //
+    // strictPort を立てているのは、塞がっていたときに**黙って別のポートへ逃げない**ようにするため。
+    // 逃げると、別のアプリが 5174 を掴んでいても気づかず、Electron が別物を読み込んで
+    // 原因の分かりにくい失敗（supabaseUrl is required など）になる。
+    server: { port: 5174, strictPort: true },
     plugins: [react()],
   },
 });

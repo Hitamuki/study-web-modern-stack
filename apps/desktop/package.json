@@ -28,6 +28,8 @@
     "@repo/graphql": "workspace:*",
     "graphql": "catalog:frontend",
     "react": "catalog:frontend",
-    "react-dom": "catalog:frontend"
+    "react-dom": "catalog:frontend",
+    "@supabase/supabase-js": "catalog:frontend",
+    "react-router": "catalog:frontend"
   }
 }

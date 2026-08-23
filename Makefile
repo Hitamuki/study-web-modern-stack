@@ -126,7 +126,25 @@ web-start: ## Web をデバッグ起動します（Vite / http://localhost:5173�
 
 .PHONY: mobile-start
 mobile-start: ## Mobile をデバッグ起動します（Expo）
-	$(RUN) $(MOBILE_PKG) run dev
+	@# Expo は**プロジェクトルート（apps/mobile）の .env しか読まない**。Vite の envDir に
+	@# 相当する設定が無いため、リポジトリ直下の .env をシェルで読み込んで渡す。
+	@# バンドルに埋め込まれるのは EXPO_PUBLIC_ 接頭辞のものだけなので、他の値は漏れない。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません。cp .env.example .env で作成してください。" >&2; \
+		exit 1; \
+	fi
+	@if ! grep -qE '^EXPO_PUBLIC_SUPABASE_URL=\"?http' .env; then \
+		echo "エラー: .env に EXPO_PUBLIC_SUPABASE_URL がありません。" >&2; \
+		echo "  未設定だと起動後に supabaseUrl is required で失敗します。" >&2; \
+		echo "  .env.example の apps/mobile の節を参照してください。" >&2; \
+		exit 1; \
+	fi
+	@if grep -qE '^EXPO_PUBLIC_GRAPHQL_URL=\"?http://localhost' .env; then \
+		echo "注意: EXPO_PUBLIC_GRAPHQL_URL が localhost です。" >&2; \
+		echo "  実機や Expo Go からは端末自身を指すため Hasura に届きません。" >&2; \
+		echo "  シミュレータ以外で試す場合は PC の LAN 内 IP に変えてください。" >&2; \
+	fi
+	set -a; . ./.env; set +a; $(RUN) $(MOBILE_PKG) run dev
 
 .PHONY: desktop-start
 desktop-start: ## Desktop をデバッグ起動します（Electron / renderer 5174・inspector 5858・DevTools 9222）
@@ -148,6 +166,37 @@ db-seed: ## SCR-005 の動作確認用データを投入します（既存の du
 .PHONY: codegen
 codegen: ## Hasura のスキーマから GraphQL の型を生成します（Hasura の起動が必要）
 	$(TURBO) run codegen --filter=$(GRAPHQL_PKG)
+
+##@ Supabase
+
+# Supabase の認証設定は supabase/config.toml が正本です（Discussion #70 / Issue #71）。
+# ダッシュボードで直接いじると config.toml とずれ、次の push で巻き戻ります。
+.PHONY: supabase-push
+supabase-push: ## supabase/config.toml をホスト版プロジェクトへ適用します（上書きするので確認プロンプトが出ます）
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	@if [ ! -f supabase/.temp/project-ref ]; then \
+		echo "エラー: Supabase プロジェクトに link していません。" >&2; \
+		echo "" >&2; \
+		echo "  supabase login" >&2; \
+		echo "  supabase link --project-ref <Reference ID>" >&2; \
+		exit 1; \
+	fi
+	@echo "警告: config push には dry-run も diff もありません。"
+	@echo "  config.toml に書いていない設定は既定値として送られ、"
+	@echo "  ダッシュボードでの手作業を上書きします。"
+	@echo "  特に [auth.hook.custom_access_token] が無効化されると JWT から"
+	@echo "  x-hasura-user-id が消え、Hasura の行レベル権限が全件を弾きます（0 件になります）。"
+	@echo ""
+	@printf "適用先: %s\n続行しますか? [y/N] " "$$(cat supabase/.temp/project-ref)"; \
+	read ans; \
+	if [ "$$ans" != "y" ]; then echo "中止しました"; exit 1; fi; \
+	set -a; . ./.env; set +a; \
+	supabase config push
+	@echo ""
+	@echo "適用しました。JWT に x-hasura-* が入っているか必ず確認してください:"
+	@echo "  project/plan/auth/manual/verify-hook.md"
 
 ##@ 品質
 

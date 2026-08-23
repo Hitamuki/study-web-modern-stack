@@ -133,6 +133,7 @@ Issue 本文のテンプレートは `.github/ISSUE_TEMPLATE/` 配下が正本
 | `.github/CONTRIBUTING.md` | GitHub | 開発者ガイド。Issue / PR 作成時に導線が表示される |
 | `.github/ISSUE_TEMPLATE/` `.github/DISCUSSION_TEMPLATE/` `.github/pull_request_template.md` | GitHub | Issue / Discussion / PR のテンプレート |
 | `.claude/settings.json` | Claude Code | 権限・フックなどのツール設定 |
+| `supabase/config.toml` | Supabase CLI | Supabase プロジェクトの設定（認証 / SMTP / Custom Access Token Hook）。`make supabase-push` で適用する正本 |
 
 GitHub が特別扱いしないドキュメント（Stacked PRs / 技術選定 / Wiki の運用ガイド）は `.github/guides/` に置き、`.github/` 直下は上表のファイルだけに保ちます。
 

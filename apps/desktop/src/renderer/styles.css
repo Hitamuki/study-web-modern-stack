@@ -15,12 +15,15 @@
   --accent: #2f6fed;
   --accent-text: #ffffff;
   --danger: #d64545;
+  /* エラー帯の背景。design/app.pen の danger-bg */
+  --danger-bg: #fceaea;
   --font-body: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Noto Sans JP",
     sans-serif;
   --radius-md: 8px;
   --radius-lg: 12px;
   --gap-sm: 8px;
   --gap-md: 16px;
+  --gap-lg: 24px;
 }
 
 *,
@@ -386,4 +389,114 @@ body {
     line-clamp: 2;
     white-space: normal;
   }
+}
+
+/* ── 認証画面（SCR-001 / SCR-002。PC 版の意匠を流用） ──────────────── */
+
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--gap-lg);
+  background: var(--bg);
+}
+
+.auth__card {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--gap-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+}
+
+.auth__brand {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.auth__title {
+  margin-top: var(--gap-lg);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.auth__description {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* エラー帯は見出しと入力欄の間に置く（docs/screen-list.md「エラー表示」） */
+.auth__error {
+  margin-top: var(--gap-md);
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--danger);
+  background: var(--danger-bg);
+  border-radius: var(--radius-md);
+}
+
+.auth__body {
+  margin-top: var(--gap-md);
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md);
+}
+
+.auth__footer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-sm);
+  margin-top: var(--gap-md);
+  text-align: center;
+}
+
+.auth__link {
+  font-size: 13px;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.auth__link:hover {
+  text-decoration: underline;
+}
+
+.auth__note {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.field__input {
+  height: 40px;
+  padding: 0 12px;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.field__input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -1px;
 }

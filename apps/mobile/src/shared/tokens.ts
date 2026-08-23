@@ -11,8 +11,11 @@ export const tokens = {
   accent: "#2F6FED",
   accentText: "#FFFFFF",
   danger: "#D64545",
+  /* エラー帯の背景。design/app.pen の danger-bg */
+  dangerBg: "#FCEAEA",
   radiusMd: 8,
   radiusLg: 12,
   gapSm: 8,
   gapMd: 16,
+  gapLg: 24,
 } as const;

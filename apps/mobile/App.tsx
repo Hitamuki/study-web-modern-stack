@@ -1,22 +1,24 @@
 import { ApolloProvider } from "@repo/graphql";
-
-// Expo は EXPO_PUBLIC_ 接頭辞の環境変数をクライアントへ埋め込む。
-// 実機・Expo Go から繋ぐ場合は localhost ではなく PC の IP を指定する。
-const GRAPHQL_URL: string =
-  process.env.EXPO_PUBLIC_GRAPHQL_URL ?? "http://localhost:8080/v1/graphql";
-
-// #25（モバイル・デスクトップへの認証フロー導入）が保留のため、常に未認証。
-// ビルドは通るが Hasura からデータは取得できない。公開する前に #25 を消化すること。
-const getToken = (): Promise<string | null> => Promise.resolve(null);
 import { StatusBar } from "expo-status-bar";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { DummyPage } from "./src/pages/Dummy";
+import { AuthGate } from "./src/AuthGate";
+import { getAccessToken } from "./src/shared/supabase";
+
+/**
+ * Expo は `EXPO_PUBLIC_` 接頭辞の環境変数だけをクライアントへ埋め込む。
+ *
+ * 実機や Expo Go から繋ぐ場合、`localhost` は端末自身を指すため到達できない。
+ * **PC の LAN 内 IP を指定する**（例: `http://192.168.1.10:8080/v1/graphql`）。
+ * 設定は `.env.example` の `EXPO_PUBLIC_GRAPHQL_URL` を参照。
+ */
+const GRAPHQL_URL: string =
+  process.env.EXPO_PUBLIC_GRAPHQL_URL ?? "http://localhost:8080/v1/graphql";
 
 export default function App() {
   return (
     <SafeAreaProvider>
-      <ApolloProvider uri={GRAPHQL_URL} getToken={getToken}>
-        <DummyPage />
+      <ApolloProvider uri={GRAPHQL_URL} getToken={getAccessToken}>
+        <AuthGate />
         <StatusBar style="dark" />
       </ApolloProvider>
     </SafeAreaProvider>
