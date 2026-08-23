@@ -1,4 +1,13 @@
-import { BadRequestException, Body, Controller, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  UseGuards,
+} from "@nestjs/common";
+import { HasuraActionGuard } from "../guards/hasura-action.guard";
 // biome-ignore lint/style/useImportType: Nest の DI は emitDecoratorMetadata が出力する design:paramtypes で解決するため、コンストラクタ引数の型は値として import する
 import { CreateDummyUseCase } from "../../application/use-case/create-dummy.use-case";
 // biome-ignore lint/style/useImportType: 同上
@@ -37,6 +46,7 @@ interface DeleteDummyPayload {
  *
  * 一覧・単体の参照は Hasura が自動生成するクエリを使うため、ここには書き込み系だけを置く。
  */
+@UseGuards(HasuraActionGuard)
 @Controller("hasura/actions")
 export class HasuraActionController {
   constructor(
@@ -60,9 +70,10 @@ export class HasuraActionController {
   async updateDummy(
     @Body() payload: HasuraActionPayload<{ id: string; content: string }>,
   ): Promise<DummyPayload> {
+    const ownerId = requireSessionUserId(payload);
     const id = requireString(payload?.input?.id, "id");
     const content = requireString(payload?.input?.content, "content");
-    return toDummyPayload(await this.updateDummyUseCase.execute({ id, content }));
+    return toDummyPayload(await this.updateDummyUseCase.execute({ id, ownerId, content }));
   }
 
   @Post("deleteDummy")
@@ -70,8 +81,9 @@ export class HasuraActionController {
   async deleteDummy(
     @Body() payload: HasuraActionPayload<{ id: string }>,
   ): Promise<DeleteDummyPayload> {
+    const ownerId = requireSessionUserId(payload);
     const id = requireString(payload?.input?.id, "id");
-    const deletedId = await this.deleteDummyUseCase.execute({ id });
+    const deletedId = await this.deleteDummyUseCase.execute({ id, ownerId });
     return { id: deletedId.value };
   }
 }

@@ -1,9 +1,12 @@
 import { ApolloProvider } from "@repo/graphql";
-import { DummyPage } from "../pages/dummy/ui/DummyPage";
+import { RouterProvider } from "react-router";
+import { getAccessToken } from "../shared/api/supabase";
+import { GRAPHQL_URL } from "../shared/config/env";
+import { router } from "./routes";
 import "./styles.css";
 
 export const App = () => (
-  <ApolloProvider>
-    <DummyPage />
+  <ApolloProvider uri={GRAPHQL_URL} getToken={getAccessToken}>
+    <RouterProvider router={router} />
   </ApolloProvider>
 );

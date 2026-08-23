@@ -9,9 +9,13 @@ export interface CreateDummyDto {
 
 export interface UpdateDummyDto {
   id: string;
+  /** 操作者の Supabase Auth ユーザー ID（UUID）。所有者チェックに使う */
+  ownerId: string;
   content: string;
 }
 
 export interface DeleteDummyDto {
   id: string;
+  /** 操作者の Supabase Auth ユーザー ID（UUID）。所有者チェックに使う */
+  ownerId: string;
 }

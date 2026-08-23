@@ -81,3 +81,34 @@ hasura console --project hasura
 # ※Hasura の設定やクエリを変更した後に実行してください。
 pnpm --filter @repo/graphql codegen
 ```
+
+## 認証・認可（JWT モード）
+
+Hasura は **Supabase Auth が発行した JWT** を検証します（[Discussion #19](https://github.com/Hitamuki/study-web-modern-stack/discussions/19)）。
+
+| 項目 | 値 |
+| :- | :- |
+| 署名 | 非対称（ES256）。Hasura は JWKS から公開鍵を取得し、**秘密鍵は持たない** |
+| JWKS | `https://<SUPABASE_PROJECT_REF>.supabase.co/auth/v1/.well-known/jwks.json` |
+| クレームの名前空間 | `https://hasura.io/jwt/claims` |
+| 検証する項目 | 署名 / `issuer` / `audience`（他プロジェクトのトークンを弾く） |
+
+`SUPABASE_PROJECT_REF` は `.env` から渡します。**未設定だと JWKS を取得できず Hasura は起動しません**
+（`make backend-up` が事前チェックで止めます）。
+
+### ロールと権限
+
+`user` ロールは `owner_id = X-Hasura-User-Id` の行だけを操作できます。
+`owner_id` は JWT のカスタムクレーム由来で、Supabase の Custom Access Token Hook が注入します。
+
+- **insert の `columns` に `owner_id` を含めていません。** 代わりに `set` でセッション変数から強制的に埋めるため、
+  クライアントが他人の ID を指定してなりすますことはできません。
+- **update の `columns` にも `owner_id` を含めていません。** レコードの持ち主を後から付け替えられないようにするためです。
+- `HASURA_GRAPHQL_UNAUTHORIZED_ROLE` は**設定していません**。設定すると未認証のリクエストがそのロールで通ってしまいます。
+
+### 書き込みは Actions を通る
+
+参照は Hasura が自動生成するクエリを使いますが、**書き込みは Actions（NestJS）経由**です。
+Actions は Hasura のパーミッションを迂回して Prisma で直接 DB に触るため、
+**テーブルの権限だけでは書き込みを守れません**。ハンドラ側の保護は
+[Issue #26](https://github.com/Hitamuki/study-web-modern-stack/issues/26) で行います。

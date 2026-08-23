@@ -1,1 +1,18 @@
-{}
+# 認証済みユーザーからの過大なクエリを制限する。admin は対象外（disabled: false でも除外される）。
+disabled: false
+depth_limit:
+  global: 10
+  per_role:
+    user: 10
+node_limit:
+  global: 100
+  per_role:
+    user: 100
+rate_limit:
+  global:
+    max_reqs_per_min: 120
+    unique_params: null
+  per_role:
+    user:
+      max_reqs_per_min: 60
+      unique_params: null

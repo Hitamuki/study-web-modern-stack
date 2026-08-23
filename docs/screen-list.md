@@ -7,14 +7,25 @@
 
 | 画面ID | 画面名 | フレーム | 関連 Issue | 実装 |
 | :- | :- | :- | :- | :- |
-| SCR-001 | ログイン | `SCR-001-PC` / `SCR-001-SP` | #68 / #24 | 未実装 |
-| SCR-002 | アカウント作成 | `SCR-002-PC` / `SCR-002-SP` | #68 / #24 | 未実装 |
-| SCR-003 | パスワードリセット申請 | `SCR-003-PC` / `SCR-003-SP` | #68 / #24 | 未実装 |
-| SCR-004 | 新しいパスワードの設定 | `SCR-004-PC` / `SCR-004-SP` | #68 / #24 | 未実装 |
+| SCR-001 | ログイン | `SCR-001-PC` / `SCR-001-SP` | #68 / #76 / #24 | `apps/web/src/pages/login/` |
+| SCR-002 | アカウント作成 | `SCR-002-PC` / `SCR-002-SP` | #68 / #76 / #24 | `apps/web/src/pages/signup/` |
+| SCR-003 | パスワードリセット申請 | `SCR-003-PC` / `SCR-003-SP` | #68 / #76 / #24 | `apps/web/src/pages/password-reset/` |
+| SCR-004 | 新しいパスワードの設定 | `SCR-004-PC` / `SCR-004-SP` | #68 / #76 / #24 | `apps/web/src/pages/password-update/` |
 | SCR-005 | ダミー画面 | `SCR-005-PC` / `SCR-005-SP` | - | `apps/web/src/pages/dummy/` / `apps/mobile/src/pages/Dummy.tsx` / `apps/desktop/src/renderer/pages/Dummy.tsx` |
 
 - 画面 ID は `SCR-` + 3 桁ゼロ埋めの連番。廃止しても再利用せず、欠番のまま残す。
 - PC 版 / SP 版は同一画面として ID を共有し、フレーム名のサフィックスで区別する。
+> [!NOTE]
+> **URL との対応**（#76 で React Router v7 を導入。[Discussion #75](https://github.com/Hitamuki/study-web-modern-stack/discussions/75)）
+>
+> | 画面 ID | パス |
+> | :- | :- |
+> | SCR-001 ログイン | `/login` |
+> | SCR-002 アカウント作成 | `/signup` |
+> | SCR-003 パスワードリセット申請 | `/password-reset` |
+> | SCR-004 新しいパスワードの設定 | `/password-update`（メールのリンクの戻り先） |
+> | SCR-005 ダミー画面 | `/` |
+
 - 書き出した画像は [screens/](./screens/) に `<画面ID>-<PC|SP>.png` で置く。`design/app.pen` の `Export`（PNG / scale 1）で生成し、
   デザインを変えたら同じ PR で書き出し直す。**ファイル名にノード ID を使わない**（ノードを作り直すと変わるため）。
 
@@ -49,8 +60,7 @@
 | 数値 | `radius-md` / `gap-sm` / `gap-md` / `gap-lg` |
 
 実装側（`apps/web/src/app/styles.css`）には `--pen-*` として 1:1 で写します。
-**`danger-bg` と `gap-lg` は認証画面で追加したもので、まだ `styles.css` に写していません。**
-認証画面を実装する Issue #24 で追加してください（[.claude/rules/design/pencil.md](../.claude/rules/design/pencil.md) の「実装への反映」）。
+`danger-bg`（`#fceaea`）と `gap-lg`（`24px`）は認証画面で追加し、#24 で `styles.css` に写しました。
 
 ## SCR-001〜004 認証画面
 

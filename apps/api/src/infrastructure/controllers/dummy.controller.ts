@@ -62,14 +62,19 @@ export class DummyController {
   }
 
   @Patch(":id")
-  async update(@Param("id") id: string, @Body() dto: { content: string }): Promise<DummyResponse> {
-    return toResponse(await this.updateDummyUseCase.execute({ id, content: dto?.content }));
+  async update(
+    @Param("id") id: string,
+    @Body() dto: { ownerId: string; content: string },
+  ): Promise<DummyResponse> {
+    return toResponse(
+      await this.updateDummyUseCase.execute({ id, ownerId: dto?.ownerId, content: dto?.content }),
+    );
   }
 
   @Delete(":id")
   @HttpCode(HttpStatus.NO_CONTENT)
-  async remove(@Param("id") id: string): Promise<void> {
-    await this.deleteDummyUseCase.execute({ id });
+  async remove(@Param("id") id: string, @Body() dto: { ownerId: string }): Promise<void> {
+    await this.deleteDummyUseCase.execute({ id, ownerId: dto?.ownerId });
   }
 }
 

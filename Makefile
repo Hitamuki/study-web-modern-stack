@@ -63,11 +63,34 @@ build: ## プロジェクトをビルドします
 # 各ターゲットの前提としてここに集約しています。
 .PHONY: backend-up
 backend-up:
+	@# Hasura は JWT モードで動くため、SUPABASE_PROJECT_REF が無いと JWKS を取得できず起動に失敗します。
+	@# 何も言わずに待ち続けると原因が分からないので、ここで先に止めます。
+	@if ! grep -qE '^SUPABASE_PROJECT_REF=\"?[a-z0-9]+' .env 2>/dev/null; then \
+		echo "エラー: .env に SUPABASE_PROJECT_REF がありません。" >&2; \
+		echo "" >&2; \
+		echo "  Hasura は Supabase が発行した JWT を検証するため、この値が必須です。" >&2; \
+		echo "  未設定だと JWKS の取得に失敗して Hasura が起動しません。" >&2; \
+		echo "" >&2; \
+		echo "  1. cp .env.example .env  （まだ無い場合）" >&2; \
+		echo "  2. Supabase ダッシュボードの Project Settings > General から Reference ID を取得" >&2; \
+		echo "  3. .env の SUPABASE_PROJECT_REF に設定" >&2; \
+		exit 1; \
+	fi
 	docker compose up -d
 	@printf "PostgreSQL の起動を待っています"
 	@until docker compose exec -T postgres pg_isready -U user -d memo >/dev/null 2>&1; do printf "."; sleep 1; done
 	@printf " ready\nHasura の起動を待っています"
-	@until curl -sf http://localhost:8080/healthz >/dev/null 2>&1; do printf "."; sleep 1; done
+	@n=0; until curl -sf http://localhost:8080/healthz >/dev/null 2>&1; do \
+		n=$$((n+1)); \
+		if [ $$n -gt 60 ]; then \
+			echo "" >&2; \
+			echo "エラー: Hasura が 60 秒以内に起動しませんでした。" >&2; \
+			echo "  ログを確認してください: docker compose logs hasura | tail -20" >&2; \
+			echo "  JWKS の取得失敗が多いです（SUPABASE_PROJECT_REF の値、ネットワーク接続）。" >&2; \
+			exit 1; \
+		fi; \
+		printf "."; sleep 1; \
+	done
 	@echo " ready"
 
 .PHONY: backend-init
