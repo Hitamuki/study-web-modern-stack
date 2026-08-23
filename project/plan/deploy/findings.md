@@ -16,7 +16,7 @@ Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/
 1〜4 は**公開の前提条件**（プラットフォームの選択に関係なく必要）、
 5〜7 は**プラットフォームを選ぶときに効いてくる制約**である。
 
-# 1. `/dummies` が認証なしで公開される（最優先）
+# 1. `/dummies` が認証なしで公開される（最優先）→ **解消済み（#86）**
 
 `apps/api/src/infrastructure/controllers/dummy.controller.ts` は
 **認証が一切なく、所有者をリクエストボディから受け取る。**
@@ -26,8 +26,13 @@ Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/
 async create(@Body() dto: { ownerId: string; content: string })
 ```
 
-`dummy.module.ts:26` の `controllers` に登録されており、**現在も有効**である。
-つまり `apps/api` を公開した瞬間に、誰でも次ができる。
+> [!NOTE]
+> **#86 で解消しました。** `dummy.controller.ts` と、そこからしか呼ばれていなかった
+> `ListDummiesUseCase` / `DummyRepository.findAll()` を削除しました。
+> 4 メソッドとも 404 を返すことを実測済みです。以下は解消前の記録です。
+
+`dummy.module.ts:26` の `controllers` に登録されており、**当時は有効**だった。
+つまり `apps/api` を公開した瞬間に、誰でも次ができた。
 
 | 操作 | 結果 |
 | :- | :- |

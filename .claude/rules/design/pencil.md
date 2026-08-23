@@ -58,7 +58,7 @@ Pencil で UI デザインを作るときの規約
 
 再採番してよい条件は次をすべて満たすときだけです。1 つでも欠けたら、欠番を作って新しい番号を採ってください。
 
-- **公開環境にデプロイしていない**（`data-layer-name` を辿る外部の参照が存在しない）
+- **公開環境にデプロイしていない**（`data-pencil-name` を辿る外部の参照が存在しない）
 - 影響がコメントと設計ドキュメントに限られ、**動作するコードが ID に依存していない**
 - Issue を立て、この表に日付・理由つきで記録する
 
@@ -71,7 +71,7 @@ SCR-<番号>-<PC|SP> <画面名>
 例: `SCR-001-PC ログイン` / `SCR-001-SP ログイン`
 
 - 機械可読な契約は `^SCR-\d{3}-(PC|SP) ` の前方一致部分**のみ**。日本語の画面名は表示用で、リネームしても追跡が壊れないようにする。
-- `Export`（`html-tailwind` / `html-css`）は `data-layer-name` にこの名前を出力するため、デザイン → HTML → 実装まで ID が貫通する。
+- `Export`（`html-tailwind` / `html-css`）は **`data-pencil-name`** にこの名前を出力するため、デザイン → HTML → 実装まで ID が貫通する。属性名は `data-layer-name` ではない（[Issue #48](https://github.com/Hitamuki/study-web-modern-stack/issues/48) で実測）。
 - **ノード ID（Pencil の自動採番）を設計書に書かない。** ノードを作り直すと変わるため、対応表の主キーには使えない。
 
 ## ビューポート
@@ -107,7 +107,31 @@ CSS 手法は **Tailwind CSS v4 + shadcn/ui** に決着した（[Discussion #47]
 
 - **実装側に色・寸法を直接書かない。** 必ず `--pen-*` を経由させる。`@theme inline` を使っているため、生成される CSS は `.bg-card{background-color:var(--pen-surface)}` のように `.pen` のトークンを直接参照する。
 - `.pen` のトークンを変えたら `styles.css` の `--pen-*` も同じ PR で直す。
-- `Export`（`html-tailwind` / `html-css`）の出力は**実装へ流し込まない**。トークンが 16 進値に解決され、要素も `<div>` のみでセマンティクスを持たないため、寸法と色を読み取る参考資料として扱う。
+- `Export`（`html-tailwind` / `html-css`）の出力は**実装へ流し込まない**。理由は下記「Export の実態」を参照。
+
+## Export の実態
+
+`design/app.pen` の `CMP/削除確認ダイアログ` を両形式で書き出して確認した内容（2026-08-24 / [Issue #48](https://github.com/Hitamuki/study-web-modern-stack/issues/48)）。
+**ルールを書くときはここを正本にする。** 推測で属性名や出力形式を書かない。
+
+| 項目 | 実際の出力 |
+| :- | :- |
+| フレーム名の属性 | **`data-pencil-name`**（`includeLayerNames` が既定 `true`） |
+| ノード ID の属性 | **`data-pencil-id`**（`includeLayerIds` が既定 `false`。渡せば出る） |
+| 要素 | **`<div>` のみ。** `<button>` も `<dialog>` も出ない |
+| `role` / `aria-*` | **1 つも出ない** |
+| デザイントークン | **16 進値に解決される。** `--pen-*` などの CSS 変数は残らない |
+| `html-tailwind` のクラス | **任意値だらけ**（`w-[420px]` / `bg-[#FFFFFF]` / `gap-[16px]` / `text-[18px]`） |
+| `html-tailwind` の読み込み | **Play CDN**（`<script src="https://cdn.tailwindcss.com">`）。ビルドに乗らない |
+
+つまり **`Export` の HTML は「寸法と色を読み取るための参考資料」**であって、実装の出発点にはならない。
+
+- **振る舞いとセマンティクスは実装側で書く。** ボタン・ダイアログ・フォーカス管理・`aria-*` は出力に含まれないため、
+  `apps/web` では shadcn/ui のプリミティブに載せ替える（[Discussion #47](https://github.com/Hitamuki/study-web-modern-stack/discussions/47)）。
+- **色と寸法はトークン経由で書き直す。** 出力の 16 進値をコピーしない。`--pen-*` を参照する
+  （上記「実装への反映」）。
+- `html-tailwind` は **Tailwind の採用可否を左右しない。** 任意値ベースかつ Play CDN 前提のため、
+  採用済みのビルド構成（Tailwind v4 + Vite プラグイン）とは別物として扱う。
 
 ## 設計書とのマッピング
 
@@ -118,7 +142,7 @@ CSS 手法は **Tailwind CSS v4 + shadcn/ui** に決着した（[Discussion #47]
 | SCR-001 | ログイン | `SCR-001-PC` / `SCR-001-SP` | #68 / #24 | `apps/web/src/pages/login/` |
 
 - 画面 ID から `Get` の visitor でフレーム名を前方一致検索し、`TakeScreenshot` / `Export` に渡せる。設計書からの画像生成はこの経路で自動化する。
-- 逆方向（実装 → 設計書）は `data-layer-name` を辿る。
+- 逆方向（実装 → 設計書）は **`data-pencil-name`** を辿る。
 
 ## 変更フロー
 
@@ -140,4 +164,4 @@ CSS 手法は **Tailwind CSS v4 + shadcn/ui** に決着した（[Discussion #47]
 
 ## 未決定（着手前に決着させる）
 
-- **ノードのカスタムメタデータ**: スキーマ上 `metadata?: { type: string; [key: string]: any }` を持てることは確認済み。フレーム名より堅い形で画面 ID を保持できるが、HTML に出るのは `data-layer-name` / `data-layer-id` なので実装への貫通は名前経由が必要。二重管理になるため採用は保留。
+- **ノードのカスタムメタデータ**: スキーマ上 `metadata?: { type: string; [key: string]: any }` を持てることは確認済み。フレーム名より堅い形で画面 ID を保持できるが、HTML に出るのは `data-pencil-name` / `data-pencil-id` なので実装への貫通は名前経由が必要。二重管理になるため採用は保留。

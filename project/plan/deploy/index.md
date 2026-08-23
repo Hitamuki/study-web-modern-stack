@@ -13,11 +13,10 @@ Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/
 ただし **決着を待たずに進められる作業が 4 層あります。** このリポジトリは載せ先が決まっても
 今のままでは安全に載らないためです（[findings.md](/project/plan/deploy/findings.md) の 1〜4）。
 
-> [!WARNING]
-> **`/dummies` が認証なしで全ユーザーのデータを読み書きできる状態です**
-> （[findings.md](/project/plan/deploy/findings.md) の 1）。
-> Hasura の行レベル権限（Issue #22）は**この経路には効きません。**
-> 公開の可否と関係なく、[層 1](/project/plan/deploy/layer-close-rest.md) を最初に塞いでください。
+> [!NOTE]
+> **層 1（#86）は解消しました。** 認証なしの `/dummies` を削除し、4 メソッドとも 404 になることを確認済みです
+> （[layer-close-rest.md](/project/plan/deploy/layer-close-rest.md)）。
+> 書き込みの正規経路は Hasura Actions のみで、共有シークレットで保護されています。
 
 ## 読む順序
 

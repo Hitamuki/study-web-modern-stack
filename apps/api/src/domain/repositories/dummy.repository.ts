@@ -25,5 +25,4 @@ export interface DummyRepository {
   /** 既存レコードを削除する */
   delete(id: DummyId): Promise<void>;
   findById(id: DummyId): Promise<Dummy | null>;
-  findAll(): Promise<Dummy[]>;
 }

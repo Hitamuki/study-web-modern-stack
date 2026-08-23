@@ -32,7 +32,7 @@
 | 2 | 無料のサービスに置く | **土地を借りて建てる** |
 | 3 | 構成を Terraform で書く | **設計図を残す** |
 
-> [!WARNING]
-> **いまは戸締まりができていません。** 鍵のかかっていない裏口（`/dummies`）が 1 つ開いており、
-> そこから誰でも全員のデータを読み書きできます。
-> 詳しくは [../findings.md](/project/plan/deploy/findings.md) の 1 を参照してください。
+> [!NOTE]
+> **裏口は閉じました。** 鍵のかかっていなかった `/dummies` は #86 で削除しました。
+> 残る入口は Hasura（行レベル権限つき）と Hasura Actions（共有シークレットつき）だけです。
+> 経緯は [../findings.md](/project/plan/deploy/findings.md) の 1 を参照してください。
