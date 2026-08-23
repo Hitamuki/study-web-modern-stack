@@ -30,5 +30,6 @@
 | ディレクトリ | 内容 | 状態 |
 | :- | :- | :- |
 | [auth/](/project/plan/auth/index.md) | 認証・認可の導入（Issue #20）。Supabase Auth 採用後の 5 層の積み方 | 進行中 |
+| [deploy/](/project/plan/deploy/index.md) | 無料枠への常設デプロイ（Discussion #29）と Terraform での管理。**選定が未決着のため、決着を待たずに進める 4 層を切り出している** | 計画のみ |
 
 更新履歴は [log.md](/project/plan/log.md) を参照してください。

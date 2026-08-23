@@ -20,6 +20,46 @@
   Supabase Auth / Hook / JWKS 検証 / 行レベル権限 / Actions の共有シークレット / Resend を追加し、
   未実装の経路（Resend・mobile・desktop）を破線で区別した。PostgreSQL が 2 つある理由も明記した。
 
+- [deploy/](/project/plan/deploy/index.md) を追加。無料枠への常設デプロイ（Discussion
+  [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29)）と Terraform での管理の計画。
+  **Issue はまだ 1 つも起票していない。**
+
+- **#29 の決着を待たずに進められる 4 層を切り出した。** #29 は未決着だが、
+  「どこに載せるか」以前に**このリポジトリが今のままではどこにも安全に載らない**ことが
+  判明したため、段階 1（前提条件）と段階 2（実際に載せる）に分けた。
+  段階 1 の Issue には **#29 を DoR に含めない**。
+
+- **`/dummies` が認証なしで全ユーザーのデータを読み書きできる状態を確認した**（層 1）。
+  `dummy.controller.ts` は `ownerId` をリクエストボディから受け取り、`dummy.module.ts:26` で
+  登録済み。Hasura の行レベル権限（#22）は**この経路に効かない**（Prisma へ直行するため）。
+  [auth/findings.md](/project/plan/auth/findings.md) の 3 で「公開前に別 Issue で塞ぐ」と
+  記録されたまま**起票されていなかった**もの。公開の可否と関係なく最優先で塞ぐ。
+
+- **`make check` がテストを 1 件も実行していないことを確認した。** `main` で `make check` は
+  通るが、`turbo run test` は 0 タスク（`test` スクリプトを持つパッケージが 1 つも無い）。
+  担保されているのは整形と lint だけで、**DoD を通しても振る舞いの回帰は検出されない。**
+  テストの導入はこの計画のスコープ外とし、別 Issue にする。
+
+- **Terraform プロバイダの実態を Registry API で確認した**（確認日 2026-08-24）。
+  Cloudflare / Vercel / Render / Google は活発だが、**Koyeb は 1 年半、Fly.io は 3 年更新が無く、
+  Hasura Cloud にはプロバイダ自体が無い**（最終公開 2021 年）。
+  つまり「**Terraform で管理したい**」という要望が候補を実際に絞る。
+  これは **#29 の評価軸に入っていない**ため、評価軸として追記することを提案する
+  （[deploy/decision.md](/project/plan/deploy/decision.md)）。
+
+- **Supabase の設定を Terraform で管理しない方針を記録した。**
+  同日に追加された `supabase/config.toml` が既に設定の正本であり、Terraform の
+  `supabase_settings` を足すと二重管理になる。**`config push` には dry-run も diff も無い**ため、
+  上書き事故に適用まで気づけない（上記の Hook 無効化と同じ事故になる）。
+
+- **README の成功条件 5「AWS でサービスが稼働すること」が無料枠デプロイと両立しない**点を
+  記録した（[deploy/terraform-scope.md](/project/plan/deploy/terraform-scope.md)）。
+  【目的】側は「Terraform の**ローカル品質管理**」なので apply を求めておらず、衝突は 5 だけ。
+  書き換える / 未達で残す / 一時的に apply して destroy する の 3 案を並べた。**判断は人間に委ねる。**
+
+- [deploy/explain/](/project/plan/deploy/explain/index.md) を追加。初学者向けの解説として
+  目的 / デプロイとは / 公開後の構成 / IaC とは / 無料枠の代償 / 技術要素の 6 本を置いた。
+
 ## 2026-08-23
 
 - **認証メールの配信経路を Resend に確定し、手順書と解説を追加した。**
