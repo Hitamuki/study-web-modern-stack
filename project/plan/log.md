@@ -4,12 +4,20 @@
 
 ## 2026-08-23
 
+- **通しの検証が完了した。** 実ユーザー 2 人で行レベル権限の分離を確認
+  （ユーザー A は自分の 3 件のみ、B は 1 件のみ、トークン無しは拒否）。
+  Actions 経由の作成・更新・削除も確認し、他人のレコードへの更新・削除が拒否されることを実測した。
+- [auth/explain/](/project/plan/auth/explain/index.md) を追加。初学者向けの解説として
+  目的とゴール / Supabase とは / 仕組み / 設定の意味 / 技術要素の 5 本を置いた。
+
 - **`seed-auth-users.sql` を削除した。** ホストされた Supabase では `postgres` ロールが
   `auth.users` の所有者ではなく、直接 INSERT が `ERROR 42501: must be owner of table users`
   で失敗する（意図的なプラットフォーム制限）。ローカルで検証していたのは自前で模した
   `auth` スキーマだったため、この制限を再現できていなかった。
-  代わりに Admin API を叩く `create-test-users.sh` を用意した。
-  **メールアドレスを引数で受け取る**ため、個人のアドレスがリポジトリに残らない。
+  代わりに Admin API を叩くスクリプトを用意したが、**これも削除した**。
+  service_role キー（全権）の取り回しが必要で、検証用に 2 人作るだけならダッシュボードの
+  Add user（Auto Confirm）のほうが安全なため。**手順書には方法 A だけを残した。**
+  試して失敗した記録は `manual/supabase-users.md` に残している。
 
 - [auth/manual/](/project/plan/auth/manual/index.md) を追加。**5 層の実装が完了した**ため、
   残りの人間の作業（検証用ユーザーの作成・Hook の確認・環境変数・シードの差し替え）を手順書にした。

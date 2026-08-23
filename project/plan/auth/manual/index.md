@@ -11,7 +11,7 @@
 
 | # | 手順 | 所要 | 出力 |
 | :- | :- | :- | :- |
-| 1 | [supabase-users.md](/project/plan/auth/manual/supabase-users.md) | 5 分 | 検証用ユーザー 2 人の **UUID** |
+| 1 | [supabase-users.md](/project/plan/auth/manual/supabase-users.md) | 5 分 | 検証用ユーザー 2 人の **UUID**（**完了済み**） |
 | 2 | [verify-hook.md](/project/plan/auth/manual/verify-hook.md) | 2 分 | Hook が効いているかの判定 |
 | 3 | [env-setup.md](/project/plan/auth/manual/env-setup.md) | 5 分 | `.env` / `apps/api/.env` |
 | 4 | [reseed.md](/project/plan/auth/manual/reseed.md) | 2 分 | 実ユーザーに紐づいたシードデータ |
@@ -21,6 +21,15 @@
 > **手順 2 でつまずいたら先に進まないでください。**
 > Custom Access Token Hook が効いていないと JWT に `x-hasura-user-id` が入らず、
 > Hasura の行レベル権限が全件を弾きます。**「権限が壊れている」ように見えますが、実際には正しく動いています。**
+
+## `.env` に控える値
+
+作成した検証用ユーザーは `.env`（`.gitignore` 済み）に控えます。以降の手順はここから読み込みます。
+
+```bash
+SUPABASE_USER_EMAIL_1= / SUPABASE_USER_PASSWORD_1= / SUPABASE_USER_UID_1=
+SUPABASE_USER_EMAIL_2= / SUPABASE_USER_PASSWORD_2= / SUPABASE_USER_UID_2=
+```
 
 ## 前提
 

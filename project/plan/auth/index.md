@@ -18,7 +18,8 @@ Issue [#20](https://github.com/Hitamuki/study-web-modern-stack/issues/20) の実
 | 8 | [layer-web-auth.md](/project/plan/auth/layer-web-auth.md) | 層 5 |
 | 9 | [verification.md](/project/plan/auth/verification.md) | 全層が入った後の検証手順 |
 | 10 | [email-delivery.md](/project/plan/auth/email-delivery.md) | 認証メールの配信経路。**層 5 の実装はブロックしないが、第三者への到達は #71 待ち** |
-| 11 | [manual/](/project/plan/auth/manual/index.md) | **人間の対応が必要な手順書。実装は完了済みで、ここが終われば検証できる** |
+| 11 | [manual/](/project/plan/auth/manual/index.md) | **人間の対応が必要な手順書** |
+| 12 | [explain/](/project/plan/auth/explain/index.md) | **初学者向けの解説。目的・Supabase とは・仕組み・設定の意味・技術要素** |
 
 ## いまの状況
 
