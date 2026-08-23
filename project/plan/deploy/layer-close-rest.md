@@ -9,6 +9,12 @@ stale_after: 2026-09-24
 generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
 ---
 
+# 状態
+
+**完了しました（#86）。** `dummy.controller.ts` を削除し、`GET` / `POST` / `PATCH` / `DELETE` の
+4 メソッドとも 404 になることを実測しています。あわせて、そこからしか到達できなかった
+`ListDummiesUseCase` と `DummyRepository.findAll()`（所有者で絞らない全件取得）も削除しました。
+
 # 位置づけ
 
 **唯一「公開する / しない」に関わらず今すぐ塞ぐべき層。**

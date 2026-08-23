@@ -51,7 +51,7 @@ Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/
 
 | 層 | 内容 | なぜ #29 と独立か |
 | :- | :- | :- |
-| [1](/project/plan/deploy/layer-close-rest.md) #86 | `/dummies` を塞ぐ | どこに載せても穴は穴 |
+| [1](/project/plan/deploy/layer-close-rest.md) #86 | `/dummies` を塞ぐ（**完了**） | どこに載せても穴は穴 |
 | [2](/project/plan/deploy/layer-container.md) #87 | `apps/api` のコンテナ化 | 主要な PaaS はどれも OCI イメージを受け取る |
 | [3](/project/plan/deploy/layer-ci.md) #88 | CI の土台（`make check`） | デプロイ先に依存しない |
 | [4](/project/plan/deploy/layer-config.md) #89 | ベタ書き設定の外部化 | 「環境変数から読む」形にするところまでは共通 |

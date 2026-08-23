@@ -46,13 +46,6 @@ export class PrismaDummyRepository implements DummyRepository {
     return row ? this.toDomain(row) : null;
   }
 
-  async findAll(): Promise<Dummy[]> {
-    const rows = await this.prisma.dummy.findMany({
-      orderBy: { updatedAt: "desc" },
-    });
-    return rows.map((row) => this.toDomain(row));
-  }
-
   private toDomain(row: DummyRow): Dummy {
     return new Dummy(
       new DummyId(row.id),
