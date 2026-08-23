@@ -197,6 +197,9 @@ importers:
       '@repo/graphql':
         specifier: workspace:*
         version: link:../../packages/graphql
+      '@supabase/supabase-js':
+        specifier: catalog:frontend
+        version: 2.112.3
       graphql:
         specifier: catalog:frontend
         version: 16.13.1
@@ -206,6 +209,9 @@ importers:
       react-dom:
         specifier: catalog:frontend
         version: 19.1.0(react@19.1.0)
+      react-router:
+        specifier: catalog:frontend
+        version: 7.18.2(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
     devDependencies:
       '@types/node':
         specifier: catalog:default

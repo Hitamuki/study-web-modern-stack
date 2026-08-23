@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client/react";
+import { useApolloClient, useMutation, useQuery } from "@apollo/client/react";
 import {
   CREATE_DUMMY,
   DELETE_DUMMY,
@@ -8,6 +8,7 @@ import {
 } from "@repo/graphql";
 import { useState } from "react";
 import { Button } from "../components/Button";
+import { supabase } from "../shared/supabase";
 import { DeleteDummyDialog } from "../components/DeleteDummyDialog";
 import { DummyForm } from "../components/DummyForm";
 import { DummyRow } from "../components/DummyRow";
@@ -18,7 +19,17 @@ import { DummyRow } from "../components/DummyRow";
  * 幅を絞ったときは styles.css のメディアクエリで 1 カラムに落ちる。
  */
 export const DummyPage = () => {
+  const apollo = useApolloClient();
   const { data, loading, error, refetch } = useQuery(DUMMY_LIST);
+
+  /**
+   * サインアウト。**Apollo のキャッシュも消す。**
+   * 消さないと、次にログインした利用者の画面に前の利用者のメモが一瞬表示される。
+   */
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+    await apollo.clearStore();
+  };
 
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [content, setContent] = useState("");
@@ -86,6 +97,9 @@ export const DummyPage = () => {
         <h1 className="header__title">メモ</h1>
         <Button variant="primary" onClick={resetForm}>
           新規作成
+        </Button>
+        <Button variant="secondary" onClick={() => void handleSignOut()}>
+          ログアウト
         </Button>
       </header>
 
