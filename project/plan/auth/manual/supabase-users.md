@@ -53,12 +53,26 @@ Issue [#22](https://github.com/Hitamuki/study-web-modern-stack/issues/22) の AC
 `project/plan/auth/manual/seed-auth-users.sql` をダッシュボードの **SQL Editor** に貼って実行します。
 冒頭の `emails` 配列（メールアドレスのみ。秘匿値ではない）を書き換えてから流してください。
 
-**パスワードはスクリプトがランダム生成し、実行結果の NOTICE に 1 度だけ表示します。**
-ファイルにパスワードを書かないための作りです。表示された値を控えてください。
+**パスワードはスクリプトがランダム生成し、実行結果の表に出します。**
+ファイルにパスワードを書かないための作りです。
 
-```
-NOTICE:  created: test-a@example.com / password: xxxxxxxxxxxxxxxxxxxxxxxx / id: <UUID>
-```
+| email | password | user_id |
+| :- | :- | :- |
+| test-a@example.com | `（24 文字のランダム文字列）` | `<UUID>` |
+| test-b@example.com | `（24 文字のランダム文字列）` | `<UUID>` |
+
+**この表を閉じる前に password と user_id を控えてください。** password は二度と表示されません
+（DB には bcrypt ハッシュしか残らないため）。`user_id` は手順 4 で使います。
+
+> [!NOTE]
+> **`RAISE NOTICE` は SQL Editor の結果ペインに表示されません**（Postgres Logs 側に遅れて出るだけ）。
+> そのため結果セットとして返す作りにしています。
+>
+> スクリプト全体を **1 文**にしているのも同じ理由です。SQL Editor は文ごとに接続が変わりうるため、
+> 一時テーブルや PL/pgSQL の変数を文をまたいで受け渡せないことがあります。
+
+**0 行が返った場合は「既に全員存在する」という意味**で、何も作られていません。
+パスワードを変えたいだけなら下記「すでにユーザーを作ってある場合」を参照してください。
 
 決まったパスワードを使いたい場合は、作成後にダッシュボードの Authentication > Users から
 変更してください（**ファイルを書き換えない**）。

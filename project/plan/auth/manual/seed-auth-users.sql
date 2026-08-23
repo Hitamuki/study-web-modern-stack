@@ -16,71 +16,71 @@
 -- **このファイルにパスワードを書かないこと。** リポジトリは公開されており、
 -- 一度コミットすると履歴から消えない。
 --
--- そのためパスワードは**スクリプト側でランダム生成し、実行結果に 1 度だけ表示する**。
--- 表示された値をパスワードマネージャなどに控えて使う。
--- 生成値ではなく決まったパスワードを使いたい場合は、作成後にダッシュボードの
+-- そのためパスワードは**スクリプト側でランダム生成し、実行結果の表に出す**。
+-- SQL Editor の結果ペインに表示されるので、閉じる前に控えること。
+-- （RAISE NOTICE は SQL Editor に出ないため、結果セットとして返している）
+--
+-- 決まったパスワードを使いたい場合は、作成後にダッシュボードの
 -- Authentication > Users から変更する（ファイルを書き換えない）。
 -- ------------------------------------------------------------------------
 
 create extension if not exists pgcrypto;
 
-do $$
-declare
+-- 全体を 1 文にしている。SQL Editor は文ごとに接続が変わりうるため、
+-- 一時テーブルや PL/pgSQL の変数をまたいで受け渡せないことがある。
+with input as (
   -- 作成するメールアドレス。ここは秘匿値ではないので書き換えてよい。
-  emails constant text[] := array['test-a@example.com', 'test-b@example.com'];
-  user_email text;
-  user_pass  text;
-  uid        uuid;
-begin
-  foreach user_email in array emails loop
-    -- 既にいるなら作り直さない（複数回流しても安全にする）
-    if exists (select 1 from auth.users where email = user_email) then
-      raise notice 'skip (already exists): %', user_email;
-      continue;
-    end if;
-
-    uid := gen_random_uuid();
-    -- ランダムなパスワードを生成する。ファイルには残らない。
-    user_pass := replace(encode(gen_random_bytes(18), 'base64'), '/', '_');
-
-    insert into auth.users (
-      id, instance_id, aud, role, email, encrypted_password,
-      email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
-      created_at, updated_at
-    ) values (
-      uid,
-      '00000000-0000-0000-0000-000000000000',
-      'authenticated',
-      'authenticated',
-      user_email,
-      -- Blowfish（bcrypt）でハッシュ化する。平文を入れるとログインできない
-      crypt(user_pass, gen_salt('bf')),
-      now(),  -- メール確認済みとして扱う
-      '{"provider":"email","providers":["email"]}'::jsonb,
-      '{}'::jsonb,
-      now(), now()
-    );
-
-    -- 近年の Supabase は identities が無いとサインインできない
-    insert into auth.identities (
-      id, user_id, identity_data, provider, provider_id,
-      last_sign_in_at, created_at, updated_at
-    ) values (
-      gen_random_uuid(),
-      uid,
-      jsonb_build_object('sub', uid::text, 'email', user_email),
-      'email',
-      uid::text,
-      now(), now(), now()
-    );
-
-    -- ここでしか表示されない。閉じる前に控えること。
-    raise notice 'created: % / password: % / id: %', user_email, user_pass, uid;
-  end loop;
-end $$;
-
--- 作成結果の確認。ここで出た id を dummy.owner_id に使う（パスワードは出ない）
-select id, email, email_confirmed_at is not null as confirmed
-from auth.users
-order by created_at desc
-limit 5;
+  select unnest(array['test-a@example.com', 'test-b@example.com']) as email
+),
+-- volatile な関数を含む CTE は materialized にして 1 度だけ評価させる。
+-- 明示しないと参照ごとに別の UUID / パスワードが生成されうる。
+prepared as materialized (
+  select
+    input.email,
+    gen_random_uuid() as id,
+    -- URL やコマンドラインで扱いやすいよう / と + を置き換える
+    translate(encode(gen_random_bytes(18), 'base64'), '/+', '__') as password
+  from input
+  -- 既にいるなら作らない（複数回流しても安全にする）
+  where not exists (select 1 from auth.users u where u.email = input.email)
+),
+new_users as (
+  insert into auth.users (
+    id, instance_id, aud, role, email, encrypted_password,
+    email_confirmed_at, raw_app_meta_data, raw_user_meta_data,
+    created_at, updated_at
+  )
+  select
+    p.id,
+    '00000000-0000-0000-0000-000000000000',
+    'authenticated',
+    'authenticated',
+    p.email,
+    -- Blowfish（bcrypt）でハッシュ化する。平文を入れるとログインできない
+    crypt(p.password, gen_salt('bf')),
+    now(),  -- メール確認済みとして扱う
+    '{"provider":"email","providers":["email"]}'::jsonb,
+    '{}'::jsonb,
+    now(), now()
+  from prepared p
+  returning id
+),
+new_identities as (
+  -- 近年の Supabase は identities が無いとサインインできない
+  insert into auth.identities (
+    id, user_id, identity_data, provider, provider_id,
+    last_sign_in_at, created_at, updated_at
+  )
+  select
+    gen_random_uuid(),
+    p.id,
+    jsonb_build_object('sub', p.id::text, 'email', p.email),
+    'email',
+    p.id::text,
+    now(), now(), now()
+  from prepared p
+  returning user_id
+)
+-- ここに出た password を控える。二度と表示されない。
+-- 0 行なら「既に全員存在する」という意味（何も作られていない）。
+select email, password, id as user_id from prepared order by email;
