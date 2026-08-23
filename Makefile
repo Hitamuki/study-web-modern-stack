@@ -167,6 +167,37 @@ db-seed: ## SCR-005 の動作確認用データを投入します（既存の du
 codegen: ## Hasura のスキーマから GraphQL の型を生成します（Hasura の起動が必要）
 	$(TURBO) run codegen --filter=$(GRAPHQL_PKG)
 
+##@ Supabase
+
+# Supabase の認証設定は supabase/config.toml が正本です（Discussion #70 / Issue #71）。
+# ダッシュボードで直接いじると config.toml とずれ、次の push で巻き戻ります。
+.PHONY: supabase-push
+supabase-push: ## supabase/config.toml をホスト版プロジェクトへ適用します（上書きするので確認プロンプトが出ます）
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	@if [ ! -f supabase/.temp/project-ref ]; then \
+		echo "エラー: Supabase プロジェクトに link していません。" >&2; \
+		echo "" >&2; \
+		echo "  supabase login" >&2; \
+		echo "  supabase link --project-ref <Reference ID>" >&2; \
+		exit 1; \
+	fi
+	@echo "警告: config push には dry-run も diff もありません。"
+	@echo "  config.toml に書いていない設定は既定値として送られ、"
+	@echo "  ダッシュボードでの手作業を上書きします。"
+	@echo "  特に [auth.hook.custom_access_token] が無効化されると JWT から"
+	@echo "  x-hasura-user-id が消え、Hasura の行レベル権限が全件を弾きます（0 件になります）。"
+	@echo ""
+	@printf "適用先: %s\n続行しますか? [y/N] " "$$(cat supabase/.temp/project-ref)"; \
+	read ans; \
+	if [ "$$ans" != "y" ]; then echo "中止しました"; exit 1; fi; \
+	set -a; . ./.env; set +a; \
+	supabase config push
+	@echo ""
+	@echo "適用しました。JWT に x-hasura-* が入っているか必ず確認してください:"
+	@echo "  project/plan/auth/manual/verify-hook.md"
+
 ##@ 品質
 
 .PHONY: lint

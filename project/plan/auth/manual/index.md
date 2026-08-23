@@ -15,7 +15,8 @@
 | 2 | [verify-hook.md](/project/plan/auth/manual/verify-hook.md) | 2 分 | Hook が効いているかの判定 |
 | 3 | [env-setup.md](/project/plan/auth/manual/env-setup.md) | 5 分 | `.env` / `apps/api/.env` |
 | 4 | [reseed.md](/project/plan/auth/manual/reseed.md) | 2 分 | 実ユーザーに紐づいたシードデータ |
-| 5 | [../verification.md](/project/plan/auth/verification.md) | 10 分 | 通しの検証 |
+| 5 | [../verification.md](/project/plan/auth/verification.md) | 10 分 | 通しの検証（**完了済み**） |
+| 6 | [resend-smtp.md](/project/plan/auth/manual/resend-smtp.md) | 30 分 | 第三者にメールが届く状態。**Discussion #46 待ちでブロック中** |
 
 > [!IMPORTANT]
 > **手順 2 でつまずいたら先に進まないでください。**

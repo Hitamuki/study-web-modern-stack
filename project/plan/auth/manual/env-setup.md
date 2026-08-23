@@ -35,6 +35,10 @@ HASURA_ACTION_SECRET="<上で生成した値>"
 VITE_GRAPHQL_URL="http://localhost:8080/v1/graphql"
 VITE_SUPABASE_URL="https://kdhyeuasgxdlkzwqfbij.supabase.co"
 VITE_SUPABASE_PUBLISHABLE_KEY="<publishable key>"
+
+# 認証メールの送信（#71）。supabase/config.toml が env(RESEND_API_KEY) で参照する。
+# #71 に着手するまでは空でよい（組み込み送信のまま）。
+RESEND_API_KEY=""
 ```
 
 `apps/api/.env` に追記する値。**`HASURA_ACTION_SECRET` は上と同じ値**にします。

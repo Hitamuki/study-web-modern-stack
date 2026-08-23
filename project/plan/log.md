@@ -2,7 +2,37 @@
 
 新しいものが上です。計画の追加・方針の変更・陳腐化をここに記録します。
 
+## 2026-08-24
+
+- **`supabase/config.toml` を作成し、Supabase の認証設定をコード管理に移した。**
+  `supabase init` で雛形を出し、本プロジェクトの現在値に合わせて調整した（`site_url` を Vite の 5173、
+  `additional_redirect_urls` を SCR-004 の `/password-update`、`enable_confirmations` を true）。
+  適用は `make supabase-push`（`supabase config push` のラッパー）。
+- **`[auth.hook.custom_access_token]` を明示的に宣言した。** 雛形はコメントアウトされており、
+  そのまま push すると **Hook が無効化されて JWT から `x-hasura-user-id` が消え、
+  Hasura の行レベル権限が全件を弾く**（0 件になり権限バグに見える）。`config push` には
+  dry-run も diff も無いため、Makefile 側に確認プロンプトと警告を入れた。
+- **API キーの置き場所を前日の結論から変更した。** config.toml が
+  `pass = "env(RESEND_API_KEY)"` で参照するため、**リポジトリ直下の `.env` に置く**のが正しくなった。
+  `.env.example` にコメントだけ置いていたのを実変数に変えた。
+  `apps/api/.env` に置かない理由は変わらず「NestJS がメールを送らず読む主体がいない」。
+- **[docs/context-map.md](/docs/context-map.md) を現状に更新した。** 3 月時点の図には認証が無かったため、
+  Supabase Auth / Hook / JWKS 検証 / 行レベル権限 / Actions の共有シークレット / Resend を追加し、
+  未実装の経路（Resend・mobile・desktop）を破線で区別した。PostgreSQL が 2 つある理由も明記した。
+
 ## 2026-08-23
+
+- **認証メールの配信経路を Resend に確定し、手順書と解説を追加した。**
+  [manual/resend-smtp.md](/project/plan/auth/manual/resend-smtp.md)（ダッシュボードと DNS の作業）と
+  [explain/email.md](/project/plan/auth/explain/email.md)（誰がメールを送るのかの解説）を新設し、
+  [auth/email-delivery.md](/project/plan/auth/email-delivery.md) に決定内容を反映した。
+- **Resend の API キーはリポジトリに置かないことを明文化した。** `apps/api` も `apps/web` も
+  送信処理を持たず、キーを読む処理が無いため。`.env` が `.gitignore` 済みで安全かどうかとは別の話で、
+  **使われない環境変数を増やすと「設定したのに動かない」の原因になる**という理由。
+  `.env.example` には変数ではなく所在を示すコメントだけを置いた。
+  置き場所が変わる条件（Send Email Hook への切り替え / ローカル Supabase の `config.toml`）も記録した。
+- **#71 の律速は Discussion #46（サービス名）のまま。** Resend はドメイン検証まで
+  `onboarding@resend.dev` から自分の登録アドレスにしか送れず、**サービスを決めたことで前倒しできる作業は無い。**
 
 - **通しの検証が完了した。** 実ユーザー 2 人で行レベル権限の分離を確認
   （ユーザー A は自分の 3 件のみ、B は 1 件のみ、トークン無しは拒否）。
