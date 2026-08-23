@@ -48,78 +48,44 @@ Issue [#22](https://github.com/Hitamuki/study-web-modern-stack/issues/22) の AC
 
 ---
 
-# 方法 B: SQL（一括で作りたいとき）
+# 方法 B: スクリプト（一括で作りたいとき）
 
-`project/plan/auth/manual/seed-auth-users.sql` をダッシュボードの **SQL Editor** に貼って実行します。
-冒頭の `emails` 配列（メールアドレスのみ。秘匿値ではない）を書き換えてから流してください。
-
-**パスワードはスクリプトがランダム生成し、実行結果の表に出します。**
-ファイルにパスワードを書かないための作りです。
-
-| email | password | user_id |
-| :- | :- | :- |
-| test-a@example.com | `（24 文字のランダム文字列）` | `<UUID>` |
-| test-b@example.com | `（24 文字のランダム文字列）` | `<UUID>` |
-
-**この表を閉じる前に password と user_id を控えてください。** password は二度と表示されません
-（DB には bcrypt ハッシュしか残らないため）。`user_id` は手順 4 で使います。
-
-> [!NOTE]
-> **`RAISE NOTICE` は SQL Editor の結果ペインに表示されません**（Postgres Logs 側に遅れて出るだけ）。
-> そのため結果セットとして返す作りにしています。
->
-> スクリプト全体を **1 文**にしているのも同じ理由です。SQL Editor は文ごとに接続が変わりうるため、
-> 一時テーブルや PL/pgSQL の変数を文をまたいで受け渡せないことがあります。
-
-**0 行が返った場合は「既に全員存在する」という意味**で、何も作られていません。
-パスワードを変えたいだけなら下記「すでにユーザーを作ってある場合」を参照してください。
-
-決まったパスワードを使いたい場合は、作成後にダッシュボードの Authentication > Users から
-変更してください（**ファイルを書き換えない**）。
-
-> [!WARNING]
-> **実行先は Supabase プロジェクトのデータベースです。** リポジトリの `docker-compose` の PostgreSQL ではありません。
-> `auth` スキーマは Supabase 側にしか存在しないため、`apps/api/prisma/seed.sql` とは**別物**です。
-> 既存の `make db-seed` はローカルの `dummy` テーブル用で、ユーザーは作れません。
-
-パスワードは `crypt(password, gen_salt('bf'))` で Blowfish（bcrypt）ハッシュにしています。
-**平文を入れるとログインできません。**
-
-`auth.users` だけでなく **`auth.identities` にも行が要ります**。近年の Supabase は identities が無いとサインインに失敗します。
-
-> [!NOTE]
-> Supabase 公式は `auth` スキーマへの直接 INSERT を推奨していません（Auth API の利用を推奨）。
-> **検証用ユーザーを手早く作る用途に限って**使い、本番のユーザー作成に流用しないでください。
-
-スクリプト末尾の `select` で作成された `id` が出ます。これを控えます。
-
----
-
-# 方法 C: Admin API（スクリプトから作りたいとき）
-
-**service_role キーが要ります。これは全権を持つ秘匿値で、絶対にコミットしないでください。**
+[create-test-users.sh](/project/plan/auth/manual/create-test-users.sh) を使います。
+**メールアドレスは引数で渡します。**ファイルに書かないため、個人のアドレスがリポジトリに残りません。
 
 ```bash
-export SUPABASE_SERVICE_ROLE_KEY='...'   # ダッシュボードの Project Settings > API Keys
-curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/admin/users" \
-  -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
-  -H 'Content-Type: application/json' \
-  -d "{\"email\":\"$TEST_EMAIL\",\"password\":\"$TEST_PASSWORD\",\"email_confirm\":true}" | jq '{id, email}'
+read -rs SUPABASE_SERVICE_ROLE_KEY && export SUPABASE_SERVICE_ROLE_KEY
+./project/plan/auth/manual/create-test-users.sh you@example.com other@example.com
 ```
 
-`email_confirm: true` が「確認済みとして作る」指定です。
+出力はこの形です。**閉じる前に password と user_id を控えてください。**
 
----
+```text
+email                            password                   user_id
+-------------------------------- -------------------------- ------------------------------------
+you@example.com                  A1b2C3d4E5f6G7h8I9j0K1l2   0fb3ac59-...
+```
 
-# すでにユーザーを作ってある場合
+パスワードはスクリプトが生成し、ファイルにもコマンド履歴にも残りません。
+`email_confirm: true` を指定しているので**確認メールは飛びません**。
 
-パスワードだけ変えたいときは、作り直さずに変更できます。
+> [!CAUTION]
+> **service_role キーは全権を持つ秘匿値です。** コミットしないのはもちろん、
+> `export SUPABASE_SERVICE_ROLE_KEY='...'` と直接打つとシェル履歴に残ります。
+> 上記のように `read -rs` で入力してください。
 
-> ダッシュボード → **Authentication → Users** → 対象のユーザー → **Reset password** / **Update password**
+## SQL による直接 INSERT は使えない
 
-`seed-auth-users.sql` は既存のメールアドレスをスキップするため、流し直しても
-パスワードは変わりません（`skip (already exists)` と表示されます）。
+当初 `auth.users` へ直接 INSERT する SQL を用意しましたが、**ホストされた Supabase では動きません。**
+
+```text
+ERROR: 42501: must be owner of table users
+```
+
+`postgres` ロールは `auth.users` の所有者ではなく、これは**意図的なプラットフォーム制限**です
+（Auth サービスが壊れる変更を防ぐため）。スーパーユーザー権限のあるセルフホストや
+Supabase CLI のローカルスタックでは動きますが、本プロジェクトはクラウドのプロジェクトを
+使う方針（Discussion #19）なので採れません。
 
 # 完了の確認
 

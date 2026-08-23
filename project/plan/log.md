@@ -4,6 +4,13 @@
 
 ## 2026-08-23
 
+- **`seed-auth-users.sql` を削除した。** ホストされた Supabase では `postgres` ロールが
+  `auth.users` の所有者ではなく、直接 INSERT が `ERROR 42501: must be owner of table users`
+  で失敗する（意図的なプラットフォーム制限）。ローカルで検証していたのは自前で模した
+  `auth` スキーマだったため、この制限を再現できていなかった。
+  代わりに Admin API を叩く `create-test-users.sh` を用意した。
+  **メールアドレスを引数で受け取る**ため、個人のアドレスがリポジトリに残らない。
+
 - [auth/manual/](/project/plan/auth/manual/index.md) を追加。**5 層の実装が完了した**ため、
   残りの人間の作業（検証用ユーザーの作成・Hook の確認・環境変数・シードの差し替え）を手順書にした。
 - `seed-auth-users.sql` を追加。`auth.users` と `auth.identities` に検証用ユーザーを作る SQL。
