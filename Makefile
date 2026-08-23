@@ -126,7 +126,25 @@ web-start: ## Web をデバッグ起動します（Vite / http://localhost:5173�
 
 .PHONY: mobile-start
 mobile-start: ## Mobile をデバッグ起動します（Expo）
-	$(RUN) $(MOBILE_PKG) run dev
+	@# Expo は**プロジェクトルート（apps/mobile）の .env しか読まない**。Vite の envDir に
+	@# 相当する設定が無いため、リポジトリ直下の .env をシェルで読み込んで渡す。
+	@# バンドルに埋め込まれるのは EXPO_PUBLIC_ 接頭辞のものだけなので、他の値は漏れない。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません。cp .env.example .env で作成してください。" >&2; \
+		exit 1; \
+	fi
+	@if ! grep -qE '^EXPO_PUBLIC_SUPABASE_URL=\"?http' .env; then \
+		echo "エラー: .env に EXPO_PUBLIC_SUPABASE_URL がありません。" >&2; \
+		echo "  未設定だと起動後に supabaseUrl is required で失敗します。" >&2; \
+		echo "  .env.example の apps/mobile の節を参照してください。" >&2; \
+		exit 1; \
+	fi
+	@if grep -qE '^EXPO_PUBLIC_GRAPHQL_URL=\"?http://localhost' .env; then \
+		echo "注意: EXPO_PUBLIC_GRAPHQL_URL が localhost です。" >&2; \
+		echo "  実機や Expo Go からは端末自身を指すため Hasura に届きません。" >&2; \
+		echo "  シミュレータ以外で試す場合は PC の LAN 内 IP に変えてください。" >&2; \
+	fi
+	set -a; . ./.env; set +a; $(RUN) $(MOBILE_PKG) run dev
 
 .PHONY: desktop-start
 desktop-start: ## Desktop をデバッグ起動します（Electron / renderer 5174・inspector 5858・DevTools 9222）
