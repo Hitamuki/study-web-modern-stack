@@ -9,6 +9,17 @@ stale_after: 2026-09-23
 generated: { by: claude-code/claude-fable-5, at: 2026-08-23T00:00:00Z }
 ---
 
+> [!CAUTION]
+> **パスワードをリポジトリ内のファイルに書かないでください。** このリポジトリは公開されており、
+> 一度コミットすると履歴から消えません。手順中のコマンドは環境変数で受け取る形にしてあります。
+>
+> ```bash
+> export TEST_EMAIL='test-a@example.com'
+> read -rs TEST_PASSWORD && export TEST_PASSWORD   # 画面に出さずに入力する
+> ```
+>
+> シェルの履歴にも残さないよう `read -rs` を使ってください。
+
 # なぜ 2 人必要か
 
 Issue [#22](https://github.com/Hitamuki/study-web-modern-stack/issues/22) の AC が
@@ -40,7 +51,17 @@ Issue [#22](https://github.com/Hitamuki/study-web-modern-stack/issues/22) の AC
 # 方法 B: SQL（一括で作りたいとき）
 
 `project/plan/auth/manual/seed-auth-users.sql` をダッシュボードの **SQL Editor** に貼って実行します。
-冒頭の `users` 配列を書き換えてから流してください。
+冒頭の `emails` 配列（メールアドレスのみ。秘匿値ではない）を書き換えてから流してください。
+
+**パスワードはスクリプトがランダム生成し、実行結果の NOTICE に 1 度だけ表示します。**
+ファイルにパスワードを書かないための作りです。表示された値を控えてください。
+
+```
+NOTICE:  created: test-a@example.com / password: xxxxxxxxxxxxxxxxxxxxxxxx / id: <UUID>
+```
+
+決まったパスワードを使いたい場合は、作成後にダッシュボードの Authentication > Users から
+変更してください（**ファイルを書き換えない**）。
 
 > [!WARNING]
 > **実行先は Supabase プロジェクトのデータベースです。** リポジトリの `docker-compose` の PostgreSQL ではありません。
@@ -70,7 +91,7 @@ curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/admin/users" \
   -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
   -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" \
   -H 'Content-Type: application/json' \
-  -d '{"email":"test-a@example.com","password":"test1234","email_confirm":true}' | jq '{id, email}'
+  -d "{\"email\":\"$TEST_EMAIL\",\"password\":\"$TEST_PASSWORD\",\"email_confirm\":true}" | jq '{id, email}'
 ```
 
 `email_confirm: true` が「確認済みとして作る」指定です。
@@ -84,7 +105,7 @@ curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/admin/users" \
 ```bash
 curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/token?grant_type=password" \
   -H "apikey: $VITE_SUPABASE_PUBLISHABLE_KEY" -H 'Content-Type: application/json' \
-  -d '{"email":"test-a@example.com","password":"test1234"}' | jq -r '.access_token // .msg'
+  -d "{\"email\":\"$TEST_EMAIL\",\"password\":\"$TEST_PASSWORD\"}" | jq -r '.access_token // .msg'
 ```
 
 `invalid_credentials` が返る場合、ユーザーが未作成か、未確認か、パスワードが違います。

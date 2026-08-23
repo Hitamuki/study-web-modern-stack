@@ -22,7 +22,7 @@ Hook が効いていないと JWT に `x-hasura-user-id` が入りません。�
 ```bash
 TOKEN=$(curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/token?grant_type=password" \
   -H "apikey: <publishable key>" -H 'Content-Type: application/json' \
-  -d '{"email":"test-a@example.com","password":"test1234"}' | jq -r .access_token)
+  -d "{\"email\":\"$TEST_EMAIL\",\"password\":\"$TEST_PASSWORD\"}" | jq -r .access_token)
 
 echo "$TOKEN" | cut -d. -f2 | tr '_-' '/+' \
   | awk '{l=length($0)%4; if(l==2)$0=$0"=="; else if(l==3)$0=$0"="; print}' \
