@@ -18,15 +18,16 @@ Issue [#20](https://github.com/Hitamuki/study-web-modern-stack/issues/20) の実
 | 8 | [layer-web-auth.md](/project/plan/auth/layer-web-auth.md) | 層 5 |
 | 9 | [verification.md](/project/plan/auth/verification.md) | 全層が入った後の検証手順 |
 | 10 | [email-delivery.md](/project/plan/auth/email-delivery.md) | 認証メールの配信経路。**層 5 の実装はブロックしないが、第三者への到達は #71 待ち** |
+| 11 | [manual/](/project/plan/auth/manual/index.md) | **人間の対応が必要な手順書。実装は完了済みで、ここが終われば検証できる** |
 
-## いま止まっている理由
+## いまの状況
 
-**ユーザーの作業が 2 つ揃うまで層 1 に入れません。**
+**5 層の実装はすべて完了し、PR #77〜#81 として上がっています**（2026-08-23 時点）。
+Discussion #75（ルーター）も React Router v7 で決着しました。
 
-1. Supabase プロジェクトの作成（Issue #74）→ [supabase-setup.md](/project/plan/auth/supabase-setup.md)
-2. ルーターの選定（Discussion #75 の Answer）→ [layer-web-router.md](/project/plan/auth/layer-web-router.md)
+**残っているのは人間の作業だけです。** → [manual/](/project/plan/auth/manual/index.md)
 
-**この計画の完了後に残る依存**（層の実装はブロックしない）
+**この計画の完了後に残る依存**（マージはブロックしない）
 
-3. 認証メールが第三者に届くこと → [email-delivery.md](/project/plan/auth/email-delivery.md)（Issue #71）。
-   サービス名（Discussion #46）→ ドメイン取得 が律速
+- 認証メールが第三者に届くこと → [email-delivery.md](/project/plan/auth/email-delivery.md)（Issue #71）。
+  サービス名（Discussion #46）→ ドメイン取得 が律速

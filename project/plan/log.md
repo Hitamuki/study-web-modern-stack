@@ -2,6 +2,15 @@
 
 新しいものが上です。計画の追加・方針の変更・陳腐化をここに記録します。
 
+## 2026-08-23
+
+- [auth/manual/](/project/plan/auth/manual/index.md) を追加。**5 層の実装が完了した**ため、
+  残りの人間の作業（検証用ユーザーの作成・Hook の確認・環境変数・シードの差し替え）を手順書にした。
+- `seed-auth-users.sql` を追加。`auth.users` と `auth.identities` に検証用ユーザーを作る SQL。
+  **ローカルの `auth` スキーマを模して実行検証済み**（bcrypt ハッシュの照合と冪等性を確認）。
+- Discussion #75 が React Router v7 で決着。Issue #76（ルーター導入）を起票し実装した。
+- `mise.toml` に `supabase` CLI を追加した。
+
 ## 2026-08-22
 
 - Issue [#74](https://github.com/Hitamuki/study-web-modern-stack/issues/74)（Supabase プロジェクトのセットアップ）を起票。
