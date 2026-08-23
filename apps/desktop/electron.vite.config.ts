@@ -13,6 +13,9 @@ export default defineConfig({
   },
   renderer: {
     root: resolve("src/renderer"),
+    // 既定では root（src/renderer）から .env を探すため、リポジトリ直下の .env が読まれない。
+    // apps/web と同じく環境変数の置き場所を 1 つに保つ。
+    envDir: resolve("../../"),
     build: { outDir: "dist/renderer" },
     // apps/web の Vite が既定の 5173 を使うため、ずらして固定します。
     // make frontend-start で両方を同時に起動しても取り合いになりません。
