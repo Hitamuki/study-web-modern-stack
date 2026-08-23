@@ -98,6 +98,15 @@ curl -s -X POST "https://kdhyeuasgxdlkzwqfbij.supabase.co/auth/v1/admin/users" \
 
 ---
 
+# すでにユーザーを作ってある場合
+
+パスワードだけ変えたいときは、作り直さずに変更できます。
+
+> ダッシュボード → **Authentication → Users** → 対象のユーザー → **Reset password** / **Update password**
+
+`seed-auth-users.sql` は既存のメールアドレスをスキップするため、流し直しても
+パスワードは変わりません（`skip (already exists)` と表示されます）。
+
 # 完了の確認
 
 作った 2 人でトークンを取得できることを確かめます。
