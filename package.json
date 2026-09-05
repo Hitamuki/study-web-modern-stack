@@ -12,15 +12,16 @@
     "test": "turbo test"
   },
   "devDependencies": {
-    "turbo": "catalog:",
     "@biomejs/biome": "catalog:",
-    "eslint": "catalog:",
-    "@eslint/js": "catalog:",
-    "typescript-eslint": "catalog:",
-    "globals": "catalog:",
     "@eslint/compat": "^2.1.0",
+    "@eslint/js": "catalog:",
+    "eslint": "catalog:",
     "eslint-plugin-better-tailwindcss": "^4.7.0",
-    "tailwindcss": "^4.3.3"
+    "globals": "catalog:",
+    "resend": "^6.26.0",
+    "tailwindcss": "^4.3.3",
+    "turbo": "catalog:",
+    "typescript-eslint": "catalog:"
   },
   "packageManager": "pnpm@9.5.0"
 }
