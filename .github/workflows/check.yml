@@ -33,15 +33,14 @@ jobs:
         with:
           install_args: node pnpm
 
-      # pnpm の store の場所はバージョンによって変わる（v10 / v11 …）ため、
-      # キャッシュのキーと install 先がずれないよう明示的に固定する。
-      - name: pnpm の store を固定
-        run: pnpm config set store-dir "$HOME/.pnpm-store" --global
-
+      # pnpm の store は既定で <pnpm home>/store/v<N> に置かれ、N は pnpm の
+      # バージョンで変わる（この構成では 9.5.0 が v3）。`pnpm config set store-dir` は
+      # mise が入れた pnpm と、packageManager で切り替わった pnpm とで読む設定ファイルが
+      # 違うため効かなかった。**バージョンごとの階層をまとめて含む親を対象にする。**
       - name: pnpm の store をキャッシュ
         uses: actions/cache@v4
         with:
-          path: ~/.pnpm-store
+          path: ~/.local/share/pnpm/store
           key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             pnpm-store-${{ runner.os }}-
@@ -59,6 +58,21 @@ jobs:
       # apps/api の postinstall（prisma generate）もここで走る。
       - name: 依存関係をインストール
         run: make install
+
+      # store の場所がキャッシュ対象の外へ動いたら、キャッシュは黙って効かなくなる。
+      # 気づけないまま毎回フルダウンロードする状態を避けるため、ここで落とす。
+      - name: キャッシュ対象の store が使われたことを確認
+        run: |
+          store=$(sed -n 's/^storeDir: //p' node_modules/.modules.yaml)
+          echo "実際に使われた store: $store"
+          case "$store" in
+            "$HOME/.local/share/pnpm/store"/*) echo "キャッシュ対象の配下です" ;;
+            *)
+              echo "::error::pnpm の store がキャッシュ対象の外にあります: $store"
+              echo "::error::.github/workflows/check.yml の cache の path を直してください"
+              exit 1
+              ;;
+          esac
 
       - name: make check
         run: make check
