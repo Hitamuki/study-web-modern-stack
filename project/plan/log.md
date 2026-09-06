@@ -2,6 +2,77 @@
 
 新しいものが上です。計画の追加・方針の変更・陳腐化をここに記録します。
 
+## 2026-09-06（段階 1・2 の完了）
+
+以下は Issue [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) /
+[#87](https://github.com/Hitamuki/study-web-modern-stack/issues/87) /
+[#88](https://github.com/Hitamuki/study-web-modern-stack/issues/88) /
+[#89](https://github.com/Hitamuki/study-web-modern-stack/issues/89) の実施結果です
+（反映は [#116](https://github.com/Hitamuki/study-web-modern-stack/issues/116)）。
+**4 本を 1 スタックで積み、`gh stack merge --merge` でまとめてマージしました。**
+
+- **段階 1・2 が完了した。** 残るのは段階 3（層 6〜11）だけになった。
+  各層で決めた内容と理由は Issue の「まとめ」が正本なので、ここには**計画の前提が変わった点だけ**を書く。
+
+### 計画どおりだった点
+
+- **層 2〜5 は載せ先に依存しない**という前提は正しかった。Discussion #29 の決着内容に
+  一度も触れずに 4 層とも完了できた。
+- **層 3（コンテナ化）が最も重い**という見立ても正しかった。pnpm workspace + Catalogs + Prisma の
+  組み合わせは、[findings.md](/project/plan/deploy/findings.md) の 2 に挙げた 5 つの論点が
+  そのまま作業になった。
+
+### 計画に無かった事実（次の層に効くもの）
+
+- **`@prisma/client` の optionalDependencies が実行イメージに残る。**
+  `prisma` CLI と `typescript` が optional dependency として入っており、
+  `--prod` だけでは落ちない。**typescript だけで 24MB**。`pnpm deploy --no-optional` で除去し、
+  イメージは 600MB → **517MB** になった。
+  → 層 9（Render）でイメージサイズが効くので記録しておく。
+
+- **turbo は既定で strict モードで動き、`turbo.json` の `env` に宣言していない環境変数を
+  タスクへ渡さない。** 層 5 で `codegen.ts` の admin secret のフォールバックを外した瞬間に
+  `make codegen` が壊れた。フォールバックがある間は表面化しない種類の不具合である。
+  → **段階 3 で CI から `VITE_*` を注入する際に同じ問題が起きる**（層 10 / #104）。
+  turbo 経由でビルドするなら `build` タスクにも `env` の宣言が要る。
+
+- **pnpm の store の場所は、pnpm のバージョンによって変わる**（この構成では 9.5.0 が `store/v3`）。
+  さらに `pnpm config set store-dir --global` は、mise が入れた pnpm と
+  `packageManager` で切り替わる pnpm とで読む設定ファイルが違うため**効かない**。
+  層 4 の CI で最初に書いたキャッシュは**保存すらされていなかった**。
+  バージョンごとの階層を含む親（`~/.local/share/pnpm/store`）を対象にして解決した。
+  → **「キャッシュを書いた」ことと「キャッシュが効いている」ことは別**である。CI ログで確認すること。
+
+- **Hasura CLI は `.env` を設定の探索順に含む**（フラグ > 環境変数 > `.env` > `config.yaml`）。
+  そのため `config.yaml` から `admin_secret` を消しても `--envfile ../.env` で足りる。
+  `endpoint` も環境変数が優先されるので、ローカルの既定値として残して問題ない。
+
+- **Actions の handler の `{{ACTION_BASE_URL}}` を展開するのは Hasura サーバー**であって CLI ではない。
+  `config.yaml` の `handler_webhook_base_url` はコンソール用で、メタデータには効いていなかった。
+  → 層 8（Hasura Cloud）では **Hasura Cloud 側の環境変数**に `ACTION_BASE_URL` を設定する必要がある。
+
+### 積み残し（別 Issue にする）
+
+| 内容 | 理由 |
+| :- | :- |
+| **テストが 1 件も無い** | `turbo run test` は 0 タスク。CI が緑でも振る舞いの回帰は検出されない。層 4 の対象外とし、**手動で別 Issue を起票する**方針にした |
+| **ブランチ保護を掛けていない** | 現時点では不要という判断。**CI が赤くてもマージできる**。将来必要になったら別 Issue で入れる |
+| **`apps/desktop` の CSP に `localhost:8080` が残る** | 静的な `<meta>` タグ。デプロイ対象外のアプリに Vite の HTML 置換を入れる判断はしなかった |
+
+### state はローカル暫定（2026-09-06 の判断）
+
+**層 6 の Terraform の state はローカルに置く。** つまり **CI から `apply` しない。**
+[terraform-scope.md](/project/plan/deploy/terraform-scope.md) の「state の置き場所」に挙げた
+3 案のうち「ローカルのまま」を暫定で採る。無料枠の条件は未検証のままなので、
+**必要になった時点でリモート state を検討する。**
+
+### ネームサーバーの委任は不要
+
+`sk8trickhub.com` は **Cloudflare Registrar** で取得したため
+（[#98](https://github.com/Hitamuki/study-web-modern-stack/issues/98)）、
+ゾーンは最初から Cloudflare にあり、DNS レコードを追加できる状態である。
+**層 6 で委任作業は発生しない。**
+
 ## 2026-09-06
 
 以下は Issue [#108](https://github.com/Hitamuki/study-web-modern-stack/issues/108)（デプロイ計画の整備）による更新です。

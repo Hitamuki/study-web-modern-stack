@@ -4,10 +4,15 @@ title: 層 5 — ベタ書き設定の外部化
 description: localhost / host.docker.internal / 平文の admin secret を環境変数から読む形にする。
 resource: https://github.com/Hitamuki/study-web-modern-stack/issues/89
 tags: [deploy, hasura, apps-web, 設定, 層5]
-status: draft
+status: deprecated
 stale_after: 2026-09-24
 generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
 ---
+
+> [!NOTE]
+> **この層は完了しました**（#89 / 2026-09-06）。**計画としての役目は終わっています。**
+> 実際に何を決め、何を反映したかは #89 の「まとめ」が正本です。
+> 以下は着手前に書いた計画で、実装と食い違う箇所がありえます。消さずに残しています。
 
 # 位置づけ
 

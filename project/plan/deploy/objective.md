@@ -32,9 +32,10 @@ sources:
 | 4 | Cloudflare / Render / GitHub の構成が `infra/` の Terraform に書かれ、`plan` が通る |
 | 5 | `main` へのマージから公開環境への反映までが CI で自動化されている |
 
-> [!NOTE]
-> **4 は一度失われてから戻る。** 層 2 で AWS 向けの `infra/` を削除するため、
-> 段階 2 の間は `plan` する対象がない。段階 3 の層 6 で作り直して回復させる。
+> [!WARNING]
+> **4 はいま満たせない。** 層 2（#99 / 2026-09-06）で AWS 向けの `infra/` を削除したため、
+> **`plan` する対象が存在しない。** 想定どおりの中間状態で、層 6（#100）で作り直して回復させる。
+> README の【成功の定義】2 にも同じ注記を入れてある。
 
 # 3 つの段階に分かれる
 
@@ -59,7 +60,7 @@ sources:
 | 層 | 内容 | Issue | 状態 |
 | :- | :- | :- | :- |
 | [1](/project/plan/deploy/layer-close-rest.md) | 認証なしの `/dummies` を削除 | [#86](https://github.com/Hitamuki/study-web-modern-stack/issues/86) | **完了** |
-| [2](/project/plan/deploy/layer-remove-terraform.md) | AWS 向け Terraform（`infra/`）を削除 | [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) | Backlog |
+| [2](/project/plan/deploy/layer-remove-terraform.md) | AWS 向け Terraform（`infra/`）を削除 | [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) | **完了** |
 
 **層 2 は「Terraform をやめる」変更ではない。** AWS を使う予定が無くなったため
 行き先を失ったコードを消すだけで、段階 3 で無料枠プラットフォーム向けに作り直す。
@@ -67,13 +68,18 @@ sources:
 
 ## 段階 2 — デプロイ準備（載せ先に依存しない）
 
-| 層 | 内容 | Issue | なぜ載せ先に依存しないか |
+**3 層とも完了しました**（2026-09-06）。
+
+| 層 | 内容 | Issue | 状態 |
 | :- | :- | :- | :- |
-| [3](/project/plan/deploy/layer-container.md) | `apps/api` のコンテナ化 | [#87](https://github.com/Hitamuki/study-web-modern-stack/issues/87) | 主要な PaaS はどれも OCI イメージを受け取る |
-| [4](/project/plan/deploy/layer-ci.md) | CI の土台（`make check`） | [#88](https://github.com/Hitamuki/study-web-modern-stack/issues/88) | デプロイ先に依存しない |
-| [5](/project/plan/deploy/layer-config.md) | ベタ書き設定の外部化 | [#89](https://github.com/Hitamuki/study-web-modern-stack/issues/89) | 「環境変数から読む」形にするところまでは共通 |
+| [3](/project/plan/deploy/layer-container.md) | `apps/api` のコンテナ化 | [#87](https://github.com/Hitamuki/study-web-modern-stack/issues/87) | **完了**（イメージ 517MB / `GET /health` 追加） |
+| [4](/project/plan/deploy/layer-ci.md) | CI の土台（`make check`） | [#88](https://github.com/Hitamuki/study-web-modern-stack/issues/88) | **完了**（ブランチ保護は掛けていない） |
+| [5](/project/plan/deploy/layer-config.md) | ベタ書き設定の外部化 | [#89](https://github.com/Hitamuki/study-web-modern-stack/issues/89) | **完了**（`apps/desktop` の CSP のみ積み残し） |
 
 ## 段階 3 — 実際に載せる
+
+**ここから先は外部サービスの操作が挟まります。** エージェントが代行できない作業の一覧は
+[index.md](/project/plan/deploy/index.md) の「着手前に人間がやること」にあります。
 
 | 層 | 内容 | Issue |
 | :- | :- | :- |
@@ -91,8 +97,8 @@ sources:
 AGENTS.md の積み順（`hasura` → `packages/graphql` → `apps/api` → `apps/web` → `infra`）は
 **「下流の依存ほど上」という原則**であり、デプロイでは依存の向きが変わる。
 
-段階 1・2 の残りは上から順に 1 本のスタックに積む。**層 2 と層 3 は本来独立**だが、
-スタックは直線しか作れないため（AGENTS.md「スタックは直線のみ」）順序を付ける。
+段階 1・2 は 1 本のスタック（#99 → #87 → #88 → #89）で積んだ。**層 2 と層 3 は本来独立**だが、
+スタックは直線しか作れないため（AGENTS.md「スタックは直線のみ」）順序を付けた。
 
 ```text
 main

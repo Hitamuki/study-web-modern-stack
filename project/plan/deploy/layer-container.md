@@ -4,10 +4,15 @@ title: 層 3 — apps/api のコンテナ化
 description: pnpm workspace + Catalogs + Prisma を含む NestJS を、どこにでも載る OCI イメージにする。
 resource: https://github.com/Hitamuki/study-web-modern-stack/issues/87
 tags: [deploy, apps-api, docker, 層3]
-status: draft
+status: deprecated
 stale_after: 2026-09-24
 generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
 ---
+
+> [!NOTE]
+> **この層は完了しました**（#87 / 2026-09-06）。**計画としての役目は終わっています。**
+> 実際に何を決め、何を反映したかは #87 の「まとめ」が正本です。
+> 以下は着手前に書いた計画で、実装と食い違う箇所がありえます。消さずに残しています。
 
 # 位置づけ
 

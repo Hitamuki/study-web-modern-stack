@@ -4,10 +4,15 @@ title: 層 2 — AWS 向け Terraform の削除
 description: 行き先を失った infra/ を消し、README と Wiki の AWS 前提を落とす。
 resource: https://github.com/Hitamuki/study-web-modern-stack/issues/99
 tags: [deploy, infra, terraform, 削除, 層2]
-status: draft
+status: deprecated
 stale_after: 2026-10-05
 generated: { by: claude-code/claude-opus-5, at: 2026-09-05T00:00:00Z }
 ---
+
+> [!NOTE]
+> **この層は完了しました**（#99 / 2026-09-06）。**計画としての役目は終わっています。**
+> 実際に何を決め、何を反映したかは #99 の「まとめ」が正本です。
+> 以下は着手前に書いた計画で、実装と食い違う箇所がありえます。消さずに残しています。
 
 # 位置づけ
 
