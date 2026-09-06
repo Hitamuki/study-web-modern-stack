@@ -32,6 +32,9 @@ API_IMAGE_PORT   := 3011
 # docker compose が作るネットワーク名（プロジェクト名 + _default）。
 COMPOSE_NETWORK  := study-web-modern-stack_default
 
+# Terraform の作業ディレクトリ（#100）。
+INFRA_DIR        := infra
+
 ##@ ヘルプ
 
 .PHONY: help
@@ -239,6 +242,67 @@ resend-test: ## Resend からテストメールを 1 通送ります（疎通確
 		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
 	fi
 	node --env-file=.env scripts/send-test-email.mjs
+
+##@ インフラ（Terraform）
+
+# 資格情報は .env から TF_VAR_* として渡します。リポジトリには置きません。
+# apply は入れていません。実サービスが作られるため、意図して手で打つ形にしています。
+define TF_ENV
+	set -a; . ./.env; set +a; \
+	export TF_VAR_cloudflare_api_token="$$CLOUDFLARE_API_TOKEN"; \
+	export TF_VAR_render_api_key="$$RENDER_API_KEY"; \
+	export TF_VAR_github_token="$$(gh auth token)";
+endef
+
+.PHONY: infra-check-tools
+infra-check-tools:
+	@for c in terraform tflint terraform-docs; do \
+		command -v $$c >/dev/null 2>&1 || { \
+			echo "エラー: $$c が見つかりません。" >&2; \
+			echo "  mise install を実行し、mise が有効なシェルで叩いてください" >&2; \
+			echo "  （有効化していない場合は mise exec -- make ... でも動きます）" >&2; \
+			exit 1; \
+		}; \
+	done
+
+.PHONY: infra-check-env
+infra-check-env: infra-check-tools
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	@for v in CLOUDFLARE_API_TOKEN RENDER_API_KEY; do \
+		if ! grep -qE "^$$v=\"?." .env; then \
+			echo "エラー: .env に $$v がありません（.env.example の Cloudflare / Render の節を参照）" >&2; \
+			exit 1; \
+		fi; \
+	done
+	@gh auth status >/dev/null 2>&1 || { \
+		echo "エラー: gh が未認証です（gh auth login）。GitHub の token に gh auth token を使います" >&2; \
+		exit 1; \
+	}
+	@# assets.directory が apps/web/dist を読むため、plan の前にビルドが要ります。
+	@if [ ! -d apps/web/dist ]; then \
+		echo "apps/web/dist が無いのでビルドします..."; \
+		$(RUN) $(WEB_PKG) exec vite build; \
+	fi
+
+.PHONY: infra-plan
+infra-plan: infra-check-env ## Terraform の実行計画を確認します（init / validate / plan）
+	$(TF_ENV) \
+	cd $(INFRA_DIR) && terraform init -input=false && terraform validate && terraform plan -input=false
+
+.PHONY: infra-test
+infra-test: infra-check-env ## Terraform のテストを実行します（plan ベース。apply しないので課金なし）
+	$(TF_ENV) \
+	cd $(INFRA_DIR) && terraform test
+
+.PHONY: infra-lint
+infra-lint: infra-check-tools ## Terraform の整形確認と静的解析を実行します（tffmt / tflint）
+	cd $(INFRA_DIR) && terraform fmt -recursive -check && tflint --format compact
+
+.PHONY: infra-docs
+infra-docs: infra-check-tools ## infra/README.md の入出力表を再生成します
+	cd $(INFRA_DIR) && terraform-docs .
 
 ##@ 品質
 
