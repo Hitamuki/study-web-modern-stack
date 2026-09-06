@@ -29,7 +29,7 @@ cd study-web-modern-stack
 ### 2. ツールと依存関係のセットアップ
 
 ```bash
-mise install    # Node / pnpm / terraform などのツールを導入
+mise install    # Node / pnpm / hasura-cli などのツールを導入
 make install    # 依存関係をインストール
 ```
 
@@ -117,35 +117,15 @@ NestJS の待ち受けポートは `PORT` で変更できます（例: `PORT=310
 
 ## infra/ での Terraform 操作
 
-infra ディレクトリ配下で以下のコマンドを実行します。
+**現在 `infra/` はありません。** AWS 向けの Terraform は
+[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除しました
+（[Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) で
+AWS を使わないことが決まったため）。`mise.toml` からも `terraform` / `tflint` / `terraform-docs` を外しています。
 
-```bash
-# infra ディレクトリに移動
-cd infra
-
-# プロバイダーやバックエンド設定を初期化
-terraform init
-
-# フォーマット (再帰的に全ファイル)
-terraform fmt -recursive
-
-# 設定の静的検証
-terraform validate
-
-# 変更内容のプランを確認
-terraform plan -var-file=terraform.tfvars
-
-# 変更を適用
-terraform apply -var-file=terraform.tfvars
-
-# 破棄（リソース削除）
-terraform destroy -var-file=terraform.tfvars
-
-# テスト（main.tftest.hcl）を実行
-terraform test
-```
-
-`terraform.tfvars` には `db_password` などの機密値が記載されているため、必要に応じて `TF_VAR_db_password` で上書きしてください。
+[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で
+Cloudflare / Render / GitHub 向けに作り直したときに、この節へ手順を書き直します。
+管理するもの・しないものの切り分けは
+[project/plan/deploy/terraform-scope.md](../project/plan/deploy/terraform-scope.md) が正本です。
 
 ## 開発フロー
 

@@ -19,7 +19,9 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 - **ビルドツール**: Turborepo
 - **静的解析**: ESLint (typescript-eslint の型認識ルール)
 - **整形**: Biome (Formatter)
-- **インフラ**: AWS / Terraform (tffmt, tflint, terraform plan, terraform test)
+- **インフラ**: 無料枠の PaaS / Terraform (tffmt, tflint, terraform plan, terraform test)
+  - 載せ先は Cloudflare Workers / Hasura Cloud / Supabase / Render（[Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29)）
+  - `infra/` は AWS 向けだったため [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除。[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で載せ先向けに作り直す
 - **ミドルウェア**: Hasura (GraphQL Engine)
 - **データベース**: PostgreSQL
 - **バックエンド**: TypeScript / Node.js / NestJS
@@ -46,7 +48,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 ### インフラ準備
 
-- **Terraform**
+- **Terraform**（AWS 向けに実施済み。[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で `infra/` ごと削除し、[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で無料枠プラットフォーム向けに作り直す）
   - ✅`main.tf` への基本リソース（VPC/RDS）定義
   - ✅`terraform fmt` による自動整形
   - ✅`terraform validate` による構文チェック
@@ -111,11 +113,8 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 - Terraformのモジュール設計、ベストプラクティス
   - ディレクトリ構造
   - 変数管理
-- AWSへデプロイ、GUI上でリソースや設定の確認
-- draw.io MCPサーバーを利用して、AWSインフラ構成図を作成
-- AWS コスト試算 & 設計調査
-  - AWS Pricing Calculator: VPC, RDS, ECS(Fargate) 等の月額コストを算出・比較
-  - AWS Well-Architected Framework: 「コスト最適化」「信頼性」の柱を中心に、今回の構成におけるベストプラクティスを抽出
+- 無料枠のサービスへデプロイ、GUI上でリソースや設定の確認（[Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29)）
+- draw.io MCPサーバーを利用して、インフラ構成図を作成
 - GitHub ActionsでCI/CD
 - VitestでTDD
 - PlaywrightでE2Eテスト
@@ -131,6 +130,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 1. GitHub にコードが管理され、ESLint の解析をパスしていること
 2. Terraform で `plan` が通り、`test` が成功すること
+   - **[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で `infra/` を削除したため、一時的に満たせない。**[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で回復する
 3. Hasura Actions を経由して NestJS のドメインロジックが実行されること
 4. フロントエンド（Web、モバイル、デスクトップ）から、同一の GraphQL API を通じてメモが表示・投稿できること
-5. AWSでサービスが稼働すること
+5. 無料枠のサービスで常設稼働すること

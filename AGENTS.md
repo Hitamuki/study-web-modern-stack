@@ -17,7 +17,7 @@ pnpm Catalogs + Turborepo のモノレポで、インフラからフロント（
 | `apps/desktop/` | Electron |
 | `packages/` | 共有パッケージ（GraphQL スキーマなど） |
 | `hasura/` | Hasura のメタデータ・マイグレーション |
-| `infra/` | Terraform |
+| `infra/` | Terraform（AWS 向けは #99 で削除。#100 で Cloudflare / Render / GitHub 向けに再作成） |
 | `docs/` | 設計ドキュメント |
 | `design/` | UI デザイン（Pencil の `.pen`） |
 

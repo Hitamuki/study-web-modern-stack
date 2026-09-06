@@ -265,7 +265,7 @@ gh stack link db-schema api web
 2. `packages/graphql/` — スキーマ・GraphQL Codegen
 3. `apps/api/` — NestJS のドメイン／ユースケース実装
 4. `apps/web/` `apps/mobile/` `apps/desktop/` — 各クライアントの画面実装
-5. `infra/` — Terraform のリソース追加
+5. `infra/` — Terraform のリソース追加（[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除済み。[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で作り直す）
 
 1 PR が「レビュアーが 15 分以内に読み切れる」サイズに収まるかを目安にしてください。
 
