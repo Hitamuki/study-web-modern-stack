@@ -1,9 +1,9 @@
 ---
 type: Task
-title: 層 4 — ベタ書き設定の外部化
+title: 層 5 — ベタ書き設定の外部化
 description: localhost / host.docker.internal / 平文の admin secret を環境変数から読む形にする。
 resource: https://github.com/Hitamuki/study-web-modern-stack/issues/89
-tags: [deploy, hasura, apps-web, 設定, 層4]
+tags: [deploy, hasura, apps-web, 設定, 層5]
 status: draft
 stale_after: 2026-09-24
 generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
@@ -12,10 +12,10 @@ generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
 # 位置づけ
 
 **「どこに載せるか」は決まっていなくても、「環境変数から読む」形にはできる。**
-値そのものは段階 2 で入れる。この層は**受け口を作るだけ**。
+値そのものは段階 3 で入れる。この層は**受け口を作るだけ**。
 
 Issue: **未起票**（`refactor`）
-ブランチ: `refactor/NN-externalize-config`（層 3 の上）
+ブランチ: `refactor/NN-externalize-config`（層 4 の上）
 前提: なし。**Discussion #29 の決着を待たない**
 
 # やること
@@ -55,7 +55,7 @@ Hasura は `{{VAR}}` 形式でメタデータ内の環境変数を展開でき�
 
 # あわせて整える
 
-`.env.example` に段階 2 で要る変数の**枠だけ**を足すか判断する。
+`.env.example` に段階 3 で要る変数の**枠だけ**を足すか判断する。
 値が決まるのは #29 の決着後だが、**何が要るかは今わかる。**
 
 ```bash

@@ -1,0 +1,717 @@
+<svg host="65bd71144e" xmlns="http://www.w3.org/2000/svg" style="background: transparent; background-color: transparent;" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1501px" height="1540px" viewBox="-0.5 -0.5 1501 1540" content="&lt;mxfile&gt;&lt;diagram id=&quot;context-map&quot; name=&quot;コンテキストマップ&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;">
+    <defs/>
+    <g>
+        <g>
+            <rect x="0" y="0" width="1500" height="1540" fill="#ffffff" stroke="none" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18));"/>
+        </g>
+        <g>
+            <rect x="60" y="200" width="380" height="250" rx="10" ry="10" fill="none" stroke="#6c8ebf" stroke-dasharray="7 5" pointer-events="all" style="stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 366px; height: 1px; padding-top: 213px; margin-left: 74px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #6c8ebf; ">
+                                <div style="display: inline-block; font-size: 13px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#6c8ebf, #5c79a3); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        フロントエンド（開発サーバー）
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="74" y="226" fill="#6c8ebf" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="13px">
+                        フロントエンド（開発サーバー）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="60" y="480" width="560" height="400" rx="16" ry="16" fill="none" stroke="#8c8c8c" stroke-dasharray="7 5" pointer-events="all" style="stroke: light-dark(rgb(140, 140, 140), rgb(117, 117, 117));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 546px; height: 1px; padding-top: 493px; margin-left: 74px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #8c8c8c; ">
+                                <div style="display: inline-block; font-size: 13px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#8c8c8c, #757575); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        ローカル（自分の PC）
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="74" y="506" fill="#8c8c8c" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="13px">
+                        ローカル（自分の PC）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="90" y="525" width="500" height="150" rx="6" ry="6" fill="none" stroke="#9673a6" stroke-dasharray="7 5" pointer-events="all" style="stroke: light-dark(rgb(150, 115, 166), rgb(149, 119, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 486px; height: 1px; padding-top: 538px; margin-left: 104px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #9673a6; ">
+                                <div style="display: inline-block; font-size: 13px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#9673a6, #9577a3); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Docker Compose（Hasura のみ）
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="104" y="551" fill="#9673a6" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="13px">
+                        Docker Compose（Hasura のみ）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="760" y="200" width="680" height="430" rx="17.2" ry="17.2" fill="none" stroke="#82b366" stroke-dasharray="7 5" pointer-events="all" style="stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 666px; height: 1px; padding-top: 213px; margin-left: 774px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #82b366; ">
+                                <div style="display: inline-block; font-size: 13px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#82b366, #446e2c); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Supabase（クラウド。開発用と本番用で 2 プロジェクト）
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="774" y="226" fill="#82b366" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="13px">
+                        Supabase（クラウド。開発用と本番用で 2 プロジェクト）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="760" y="860" width="680" height="200" rx="8" ry="8" fill="none" stroke="#d79b00" stroke-dasharray="7 5" pointer-events="all" style="stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 666px; height: 1px; padding-top: 873px; margin-left: 774px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #d79b00; ">
+                                <div style="display: inline-block; font-size: 13px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#d79b00, #996500); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        メール配信
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="774" y="886" fill="#d79b00" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="13px">
+                        メール配信
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="90" y="244" width="320" height="80" rx="3.2" ry="3.2" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 310px; height: 1px; padding-top: 284px; margin-left: 95px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        apps/web
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        React + Vite : localhost:5173
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="250" y="288" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        apps/web...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="90" y="344" width="320" height="80" rx="3.2" ry="3.2" fill="#dae8fc" stroke="#6c8ebf" pointer-events="all" style="fill: light-dark(rgb(218, 232, 252), rgb(29, 41, 59)); stroke: light-dark(rgb(108, 142, 191), rgb(92, 121, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 310px; height: 1px; padding-top: 384px; margin-left: 95px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        apps/mobile（Expo）/ apps/desktop（Electron）
+                                    </b>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="250" y="387" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        apps/mobile（Expo）/ apps/desktop（Electron）
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="120" y="560" width="440" height="90" rx="3.6" ry="3.6" fill="#e1d5e7" stroke="#9673a6" pointer-events="all" style="fill: light-dark(rgb(225, 213, 231), rgb(57, 47, 63)); stroke: light-dark(rgb(150, 115, 166), rgb(149, 119, 163));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 430px; height: 1px; padding-top: 605px; margin-left: 125px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Hasura GraphQL Engine
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        hasura/graphql-engine コンテナ : 8080
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        JWT 検証・行レベル権限・Actions 中継
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="608" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        Hasura GraphQL Engine...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="120" y="730" width="440" height="100" rx="4" ry="4" fill="#f0f0f0" stroke="#8c8c8c" pointer-events="all" style="fill: light-dark(rgb(240, 240, 240), rgb(31, 31, 31)); stroke: light-dark(rgb(140, 140, 140), rgb(117, 117, 117));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 430px; height: 1px; padding-top: 780px; margin-left: 125px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        apps/api  NestJS
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        ホストで pnpm 直起動 : localhost:3001
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="783" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        apps/api  NestJS...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="800" y="244" width="600" height="84" rx="3.36" ry="3.36" fill="#d5e8d4" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 590px; height: 1px; padding-top: 286px; margin-left: 805px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Supabase Auth
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        ユーザー・パスワード・トークン
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        JWT 発行
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="289" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        Supabase Auth...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="800" y="344" width="600" height="58" rx="2.32" ry="2.32" fill="#eaf5e8" stroke="#82b366" pointer-events="all" style="fill: light-dark(rgb(234, 245, 232), rgb(22, 32, 20)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 590px; height: 1px; padding-top: 373px; margin-left: 805px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Custom Access Token Hook
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        public.users.role を読んで x-hasura-* を返す
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="376" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="11px" text-anchor="middle">
+                        Custom Access Token Hook...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 830 453 C 830 445.82 950.88 440 1100 440 C 1171.61 440 1240.28 441.37 1290.92 443.81 C 1341.55 446.25 1370 449.55 1370 453 L 1370 577 C 1370 584.18 1249.12 590 1100 590 C 950.88 590 830 584.18 830 577 Z" fill="#d5e8d4" stroke="#82b366" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(213, 232, 212), rgb(31, 47, 30)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+            <path d="M 1370 453 C 1370 460.18 1249.12 466 1100 466 C 950.88 466 830 460.18 830 453" fill="none" stroke="#82b366" stroke-miterlimit="10" pointer-events="all" style="stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 530px; height: 1px; padding-top: 533px; margin-left: 835px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Supabase の PostgreSQL
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        auth.users（Supabase 管理）
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="537" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        Supabase の PostgreSQL...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="800" y="890" width="600" height="60" rx="2.4" ry="2.4" fill="#ffe6cc" stroke="#d79b00" pointer-events="all" style="fill: light-dark(rgb(255, 230, 204), rgb(54, 33, 10)); stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 590px; height: 1px; padding-top: 920px; margin-left: 805px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        Resend
+                                    </b>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        smtp.resend.com（enabled = false）
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="923" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        Resend...
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="800" y="980" width="600" height="50" rx="2" ry="2" fill="#ffffff" stroke="#d79b00" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 590px; height: 1px; padding-top: 1005px; margin-left: 805px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #000000; ">
+                                <div style="display: inline-block; font-size: 11.5px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    受信者のメールボックス
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="1008" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px" text-anchor="middle">
+                        受信者のメールボックス
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 410 284 L 791.76 284" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 797.76 284 L 789.76 288 L 791.76 284 L 789.76 280 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 284px; margin-left: 606px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ①
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="606" y="289" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ①
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 800 308 L 418.24 308" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 412.24 308 L 420.24 304 L 418.24 308 L 420.24 312 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 308px; margin-left: 604px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ②
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="604" y="313" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ②
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 90 304 L 50.11 304 Q 40.11 304 40.11 314 L 40.11 585.11 Q 40.11 595.11 50.11 595.1 L 111.76 595.01" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 117.76 595 L 109.77 599.01 L 111.76 595.01 L 109.76 591.01 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 465px; margin-left: 40px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ③
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="40" y="470" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ③
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 560 580 L 690.11 580 Q 700.11 580 700.11 570 L 700.11 330 Q 700.11 320 710.11 320 L 791.76 320" fill="none" stroke="#82b366" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="14 10" pointer-events="stroke" style="stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+            <path d="M 797.76 320 L 789.76 324 L 791.76 320 L 789.76 316 Z" fill="#82b366" stroke="#82b366" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(130, 179, 102), rgb(68, 110, 44)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 469px; margin-left: 700px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #82b366; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#82b366, #446e2c); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ④
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="700" y="474" fill="#82b366" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ④
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 560 620 L 710.11 620 Q 720.11 620 720.11 610 L 720.11 525.11 Q 720.11 515.11 730.11 515.1 L 821.76 515.01" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 827.76 515 L 819.77 519.01 L 821.76 515.01 L 819.76 511.01 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 593px; margin-left: 720px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑤
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="720" y="598" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑤
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 340 650 L 340 721.76" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 340 727.76 L 336 719.76 L 340 721.76 L 344 719.76 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 690px; margin-left: 340px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑥
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="695" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑥
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 560 780 L 730.11 780 Q 740.11 780 740.11 770 L 740.11 570 Q 740.11 560 750.11 560 L 821.76 560" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 827.76 560 L 819.76 564 L 821.76 560 L 819.76 556 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 716px; margin-left: 740px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑦
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="740" y="720" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑦
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 1400 286 L 1455 286 Q 1465 286 1465 296 L 1465 910 Q 1465 920 1455 920 L 1408.24 920" fill="none" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="14 10" pointer-events="stroke" style="stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+            <path d="M 1402.24 920 L 1410.24 916 L 1408.24 920 L 1410.24 924 Z" fill="#d79b00" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(215, 155, 0), rgb(153, 101, 0)); stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 337px; margin-left: 1465px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #d79b00; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#d79b00, #996500); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑧
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1465" y="341" fill="#d79b00" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑧
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 1100 950 L 1100 971.76" fill="none" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="14 10" pointer-events="stroke" style="stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+            <path d="M 1100 977.76 L 1096 969.76 L 1100 971.76 L 1104 969.76 Z" fill="#d79b00" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(215, 155, 0), rgb(153, 101, 0)); stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 966px; margin-left: 1100px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #d79b00; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#d79b00, #996500); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑨
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="970" fill="#d79b00" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑨
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 800 1005 L 750.11 1005.09 Q 740.11 1005.11 740.11 995.11 L 740.11 912 Q 740.11 902 730.11 902 L 40.11 902 Q 30.11 902 30.11 892 L 30.11 274 Q 30.11 264 40.11 264 L 81.76 264" fill="none" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="14 10" pointer-events="stroke" style="stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+            <path d="M 87.76 264 L 79.76 268 L 81.76 264 L 79.76 260 Z" fill="#d79b00" stroke="#d79b00" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(215, 155, 0), rgb(153, 101, 0)); stroke: light-dark(rgb(215, 155, 0), rgb(153, 101, 0));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 987px; margin-left: 740px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #d79b00; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#d79b00, #996500); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑩
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="740" y="992" fill="#d79b00" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑩
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 340 424 L 340 551.76" fill="none" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="stroke" style="stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+            <path d="M 340 557.76 L 336 549.76 L 340 551.76 L 344 549.76 Z" fill="#4b5563" stroke="#4b5563" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(75, 85, 99), rgb(157, 166, 178)); stroke: light-dark(rgb(75, 85, 99), rgb(157, 166, 178));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 493px; margin-left: 340px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #4b5563; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#4b5563, #9da6b2); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑪
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="340" y="498" fill="#4b5563" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑪
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <path d="M 1100 402 L 1100 431.76" fill="none" stroke="#82b366" stroke-width="2" stroke-miterlimit="10" stroke-dasharray="14 10" pointer-events="stroke" style="stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+            <path d="M 1100 437.76 L 1096 429.76 L 1100 431.76 L 1104 429.76 Z" fill="#82b366" stroke="#82b366" stroke-width="2" stroke-miterlimit="10" pointer-events="all" style="fill: light-dark(rgb(130, 179, 102), rgb(68, 110, 44)); stroke: light-dark(rgb(130, 179, 102), rgb(68, 110, 44));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 1px; height: 1px; padding-top: 422px; margin-left: 1100px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: center; color: #82b366; background-color: #ffffff; ">
+                                <div style="display: inline-block; font-size: 16px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#82b366, #446e2c); line-height: 1.2; pointer-events: all; background-color: light-dark(#ffffff, #121212); white-space: nowrap; ">
+                                    ⑫
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="1100" y="427" fill="#82b366" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="16px" text-anchor="middle">
+                        ⑫
+                    </text>
+                </switch>
+            </g>
+        </g>
+        <g>
+            <rect x="60" y="930" width="660" height="569" rx="22.76" ry="22.76" fill="#ffffff" stroke="#8c8c8c" pointer-events="all" style="fill: light-dark(rgb(255, 255, 255), rgb(18, 18, 18)); stroke: light-dark(rgb(140, 140, 140), rgb(117, 117, 117));"/>
+        </g>
+        <g>
+            <g transform="translate(-0.5 -0.5)">
+                <switch>
+                    <foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility">
+                        <div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe flex-start; justify-content: unsafe flex-start; width: 644px; height: 1px; padding-top: 945px; margin-left: 76px;">
+                            <div style="box-sizing: border-box; font-size: 0; text-align: left; color: #000000; ">
+                                <div style="display: inline-block; font-size: 12px; font-family: &quot;Hiragino Kaku Gothic ProN&quot;; color: light-dark(#000000, #ffffff); line-height: 1.2; pointer-events: all; white-space: normal; word-wrap: normal; ">
+                                    <b>
+                                        経路
+                                    </b>
+                                    <br/>
+                                    <br/>
+                                    ① apps/web → Supabase Auth：signUp / signInWithPassword / resetPasswordForEmail
+                                    <br/>
+                                    <br/>
+                                    ② Supabase Auth → apps/web：JWT（x-hasura-* クレーム入り）を返す
+                                    <br/>
+                                    <br/>
+                                    ③ apps/web → Hasura：GraphQL + Bearer JWT
+                                    <br/>
+                                    <br/>
+                                    ④ Hasura → Supabase Auth：JWKS で署名を検証（鍵は持たない）
+                                    <br/>
+                                    <br/>
+                                    ⑤ Hasura → Supabase の PostgreSQL：行レベル権限つき SQL
+                                    <br/>
+                                    <br/>
+                                    ⑥ Hasura → NestJS：Actions + 共有シークレット（session_variables を渡す）
+                                    <br/>
+                                    <br/>
+                                    ⑦ NestJS → Supabase の PostgreSQL：Prisma で書き込み
+                                    <br/>
+                                    <br/>
+                                    ⑧ Supabase Auth → Resend：SMTP。
+                                    <br/>
+                                    <br/>
+                                    ⑨ Resend → 受信者のメールボックス
+                                    <br/>
+                                    <br/>
+                                    ⑩ メールボックス → apps/web：メール内リンクから戻る（パスワード再設定など）
+                                    <br/>
+                                    <br/>
+                                    ⑪ apps/mobile / apps/desktop → Hasura：GraphQL。ログインの経路は apps/web と同じ（①②）
+                                    <br/>
+                                    <br/>
+                                    ⑫ Hook → public.users：ロールを引いて JWT に載せるｓ
+                                    <br/>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        実線 = リクエスト経路　　破線 = 補助・非同期・未実施の経路
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        コンテナは Hasura だけ。アプリの DB も Supabase に置き、ローカルと本番で権限の挙動を揃える
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        NestJS はホストで直接動く
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        本番との違いは Web / Hasura / NestJS の置き場所と、Supabase が別プロジェクトである点
+                                    </font>
+                                    <br/>
+                                    <font color="#5b6472" style="color: light-dark(rgb(91, 100, 114), rgb(145, 153, 165));">
+                                        起動は make dev / make backend-start（Makefile に集約）
+                                    </font>
+                                </div>
+                            </div>
+                        </div>
+                    </foreignObject>
+                    <text x="76" y="957" fill="light-dark(#000000, #ffffff)" font-family="&quot;Hiragino Kaku Gothic ProN&quot;" font-size="12px">
+                        経路① apps/web → Supabase Auth：signUp / signInWithPassword / resetPasswordForEmail...
+                    </text>
+                </switch>
+            </g>
+        </g>
+    </g>
+    <switch>
+        <g requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"/>
+        <a transform="translate(0,-5)" xlink:href="https://www.drawio.com/doc/faq/svg-export-text-problems" target="_blank">
+            <text text-anchor="middle" font-size="10px" x="50%" y="100%">
+                Text is not SVG - cannot display
+            </text>
+        </a>
+    </switch>
+</svg>

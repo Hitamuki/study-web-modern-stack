@@ -92,8 +92,8 @@ Web だけ事情が違います。**ブラウザで動くコードは実行時�
 **暗号化されるだけでなく、「相手が本物か」の確認も含みます。**
 
 主要なサービスはこれを自動でやってくれるため、**この計画では自分で設定しません。**
-Issue [#27](https://github.com/Hitamuki/study-web-modern-stack/issues/27) に
-TLS の項目がありますが、それは AWS 上に自分で構築する前提のものです。
+Issue [#27](https://github.com/Hitamuki/study-web-modern-stack/issues/27) に TLS の項目がありましたが、
+それは AWS 上に自分で構築する前提のもので、**AWS をやめたため close 済み**です。
 
 # 変わらないこと
 

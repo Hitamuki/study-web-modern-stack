@@ -1,77 +1,67 @@
 ---
 type: Decision
-title: Discussion #29 で決めること
-description: 載せ先の選定のうち、何が既に拘束され、何が未決で、何がこの計画では決められないか。
+title: Discussion #29 の決着内容
+description: #29 で確定した載せ先と、追加した評価軸 7、採らなかった 2 案。
 resource: https://github.com/Hitamuki/study-web-modern-stack/discussions/29
 tags: [deploy, 技術選定, ブロッカー]
-status: draft
-stale_after: 2026-09-24
-generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
+status: stable
+stale_after: 2026-10-06
+generated: { by: claude-code/claude-opus-5, at: 2026-09-05T00:00:00Z }
 ---
 
-# この計画は載せ先を決めない
+# 決着した（2026-09-06）
 
-**選定は Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) の仕事である。**
-計画が結論を先取りすると、AGENTS.md の「結論だけをコミットに残さず、
-なぜ他を選ばなかったかを後から人間が読める形にする」に反する。
+Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) は
+**Answer が付いて決着した。** 選定の全文・比較・落選理由は **#29 の Answer が正本**である。
+ここには計画を読むうえで必要な要約だけを置く。
 
-ここに書くのは **#29 に持ち込むべき材料**と、**決着を待つ範囲の切り分け**だけである。
+## 確定した構成
 
-> [!IMPORTANT]
-> **無料枠の具体的な数値（帯域・RAM・休止時間など）をこの計画に書いていないのは意図的である。**
-> #29 の本文自身が「無料枠の条件は変動が激しいため、値は空欄にしている。
-> **検証時に各公式から確認日付つきで埋める**」としている。
-> 数値の正本は #29 であり、ここに写すと二重管理になり、古い値が残る。
+| レイヤー | 採用 |
+| :- | :- |
+| 静的フロント | **Cloudflare Workers + Static Assets** |
+| DNS | **Cloudflare DNS**（`sk8trickhub.com`） |
+| GraphQL エンジン | **Hasura Cloud（v2 / Cloud Free）** |
+| DB・認証 | **Supabase**（PostgreSQL + Auth） |
+| API | **NestJS on Render Free**（Docker） |
+| メール | **Resend**（Supabase の custom SMTP） |
+| 監視 / Keep Warm | **UptimeRobot** |
+| CI/CD | **GitHub Actions** |
+| IaC | **Terraform**（Cloudflare / Render / GitHub のみ） |
 
-# 既に拘束されている部分
+## 評価軸 7 を追加した
 
-| 要素 | 状態 | 根拠 |
-| :- | :- | :- |
-| **PostgreSQL** | **Supabase でほぼ確定** | Discussion [#19](https://github.com/Hitamuki/study-web-modern-stack/discussions/19) で認証に Supabase Auth を採用。DB を別サービスにすると #29 の評価軸 3 で不利。#29 のコメントで追記済み |
+提案していた「**Terraform で管理できるか**」を **#29 の評価軸 7 として追加**し、Answer に反映した。
 
-# 未決着の部分
+**この軸で Fly.io と Koyeb が落選した。** プロバイダがそれぞれ 2023-06 / 2024-12 を最後に
+更新されておらず、実質使えないためである。
 
-#29 のコメントが挙げた 3 つがそのまま残っている。**決める順序は制約の強い順**（#29 本文の「決め方の順序」）。
+**Hasura Cloud はこの軸で唯一の管理外項目**だが、評価軸 4（Hasura を動かせるか）と
+2（休止しないこと）を優先して採用した。**受け入れた妥協として記録する。**
 
-| 順 | 要素 | 最大の論点 |
-| :- | :- | :- |
-| 1 | **GraphQL エンジン（Hasura）** | 常時起動のコンテナを無料で確保できるか。**ここが全体を決める** |
-| 2 | API（`apps/api` / NestJS） | Hasura の載せ先に引きずられる（Actions の呼び出し経路） |
-| 3 | 静的フロント（`apps/web`） | 難易度は低い。最後でよい |
+## 採らなかった 2 案（当初の構成案からの修正）
 
-**Hasura が決まらないと API も決まらない。** Hasura は Actions のハンドラを
-HTTP で呼ぶため、両者が同じプラットフォームなら内部ネットワークで済み、
-別なら公開エンドポイントと共有シークレットでの保護が要る（既に実装済み）。
+| 案 | 採らない理由 |
+| :- | :- |
+| **Supabase RLS で行レベル制御** | **Hasura 経由に既定で効かない。** 認可は Hasura permissions に一本化 |
+| **Supabase CLI でマイグレーション** | Prisma と正本が二重になる。Supabase CLI は `config.toml` 専用 |
 
-# #29 に足りていない評価軸
+詳細は [terraform-scope.md](/project/plan/deploy/terraform-scope.md) の「採らなかった 2 つ」。
 
-**「Terraform で管理できるか」が #29 の評価軸に無い。**
+# 残った未検証項目
 
-#29 の評価軸は 6 つ（無料枠で常設 / 休止条件 / 賄える要素数 / Hasura を動かせるか / 学習価値 / 移行コスト）で、
-IaC で管理できるかは入っていない。しかし本プロジェクトは README の【目的】に
-Terraform を掲げており、**この軸で候補が実際に絞られる。**
-
-→ 検証結果は [terraform-scope.md](/project/plan/deploy/terraform-scope.md) の
-「プロバイダの実態」にまとめた。**Terraform プロバイダが実質使えない候補が複数ある。**
-
-**#29 に評価軸 7 として追記することを提案する。** 追記はコメントで行い、本文の書き換えはしない
-（AGENTS.md「本文を書き換えて結論だけ残さない」）。
-
-# #29 の未検証項目
-
-コメントに残っている 3 つ。**いずれも人間の判断が要る**ため、この計画では埋められない。
+**#29 のコメントにあった 3 つのうち、2 つがそのまま残っている。**
 
 - [ ] 通常のアクセスで Supabase の一時停止を回避できるか
 - [ ] cron で定期 ping する回避策を前提としてよいか（**サービスの想定利用から外れた運用**）
-- [ ] 無料プロジェクト 2 つの上限を、本番用と検証用で使い切ることを許容するか
+- [x] 無料プロジェクト 2 つの上限 → **1 つで足りる**（認証と DB を同居させるため）
 
-→ 背景は [findings.md](/project/plan/deploy/findings.md) の 5 を参照。
+> [!IMPORTANT]
+> **Render の Keep Warm（UptimeRobot）も同じ性質の運用である。**
+> Supabase の定期 ping と**同じ判断**として扱う。片方だけ許容する理屈は立たない。
+> → [phase-3.md](/project/plan/deploy/phase-3.md) の「残るリスク」
 
-# 決着していなくても進められること
+# 段階ごとの DoR
 
-**#29 の決着を待つ必要があるのは段階 2 だけである。**
-段階 1（層 1〜4）は載せ先に依存しない。→ [objective.md](/project/plan/deploy/objective.md)
-
-これは「DoR を満たさない Issue に着手しない」に反しない。
-**層 1〜4 の Issue は #29 を DoR に持たない**（載せ先に依存しないため）。
-段階 2 の Issue にだけ「Discussion #29 が決着している」を DoR として入れる。
+**#29 が決着したので、段階 3 の Issue も着手できる状態になった。**
+層 1〜5 はもともと #29 に依存しない。
