@@ -5,54 +5,20 @@
 
 ## 全体図
 
-```mermaid
-flowchart TB
-  subgraph SB["Supabase（外部サービス）"]
-    SBA["Supabase Auth<br/>ユーザー・パスワード・トークン"]
-    HOOK["Custom Access Token Hook<br/>public.custom_access_token_hook"]
-    SBDB[("Supabase の PostgreSQL<br/>auth.users")]
-    SBA --- SBDB
-    SBA --> HOOK
-  end
+[![コンテキストマップ](./context-map.drawio.svg)](./context-map.drawio.svg)
 
-  subgraph MAIL["メール配信"]
-    RS["Resend<br/>smtp.resend.com"]
-    BOX(("受信者のメールボックス"))
-  end
+### ローカル開発時の構成
 
-  subgraph FE["フロントエンド"]
-    W["apps/web<br/>React + Vite"]
-    M["apps/mobile<br/>Expo"]
-    D["apps/desktop<br/>Electron"]
-  end
+[![ローカル開発時の構成](./context-map-local.drawio.svg)](./context-map-local.drawio.svg)
 
-  subgraph GQL["GraphQL 層"]
-    H["Hasura GraphQL Engine"]
-  end
+`make dev` で立ち上がる開発環境の姿です。**本番との違いは「置き場所」だけ**になります。
 
-  subgraph BE["バックエンド"]
-    N["apps/api<br/>NestJS（DDD / Clean）"]
-  end
-
-  APPDB[("アプリの PostgreSQL<br/>dummy.owner_id")]
-
-  W -->|"1. signUp / signInWithPassword<br/>resetPasswordForEmail"| SBA
-  SBA -->|"2. JWT（x-hasura-* クレーム入り）"| W
-  W -->|"3. GraphQL + Bearer JWT"| H
-  H -.->|"4. JWKS で署名を検証"| SBA
-  H -->|"5. 行レベル権限つき SQL"| APPDB
-  H -->|"6. Actions + 共有シークレット<br/>session_variables"| N
-  N -->|"7. Prisma"| APPDB
-
-  SBA -.->|"SMTP（未実施）"| RS
-  RS -.-> BOX
-  BOX -.->|"メール内リンク"| W
-
-  M -.->|"未実装"| SBA
-  D -.->|"実装中"| SBA
-  M -->|"GraphQL"| H
-  D -->|"GraphQL"| H
-```
+| | ローカル | 本番 |
+| :- | :- | :- |
+| Web | Vite の開発サーバー（:5173） | Cloudflare Workers |
+| Hasura | **Docker コンテナ**（:8080） | Hasura Cloud |
+| NestJS | **ホストで pnpm 直起動**（:3001） | Render 上の Docker コンテナ |
+| DB・認証 | Supabase（**開発用**プロジェクト） | Supabase（**本番用**プロジェクト） |
 
 ## 責務の分担
 
@@ -120,12 +86,3 @@ apps/web ──頼む──▶ Supabase ──SMTP──▶ Resend ──▶ 受
 | Hasura のメタデータ（テーブル・権限・Actions） | [hasura/metadata/](../hasura/) |
 | 秘匿値 | `.env` / `apps/api/.env`（どちらも `.gitignore` 済み） |
 | インフラ | [infra/](../infra/) の Terraform |
-
-## 未実装・ブロック中
-
-| 経路 | 状態 | ブロッカー |
-| :- | :- | :- |
-| Resend による**第三者へのメール配信** | 未実施。組み込み送信のままで、**組織メンバー以外に届かない** | [#71](https://github.com/Hitamuki/study-web-modern-stack/issues/71) → Discussion #46（サービス名 → ドメイン） |
-| `apps/mobile` の認証フロー | 未実装 | [#25](https://github.com/Hitamuki/study-web-modern-stack/issues/25) |
-| `apps/desktop` の認証フロー | 実装中 | [#25](https://github.com/Hitamuki/study-web-modern-stack/issues/25) |
-| TLS | 未対応。ローカルは `http://localhost:8080` | [#27](https://github.com/Hitamuki/study-web-modern-stack/issues/27) |

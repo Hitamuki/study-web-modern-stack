@@ -5,8 +5,8 @@ description: 無料枠デプロイに入る前に判明した、Discussion #29 �
 resource: https://github.com/Hitamuki/study-web-modern-stack/discussions/29
 tags: [deploy, infra, terraform, 既知の不具合]
 status: stable
-stale_after: 2026-09-23
-generated: { by: claude-code/claude-fable-5, at: 2026-08-23T10:00:00Z }
+stale_after: 2026-10-05
+generated: { by: claude-code/claude-opus-5, at: 2026-09-05T00:00:00Z }
 ---
 
 Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) は
@@ -14,7 +14,8 @@ Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/
 どのプラットフォームにも安全に載らない。** その理由を並べる。
 
 1〜4 は**公開の前提条件**（プラットフォームの選択に関係なく必要）、
-5〜7 は**プラットフォームを選ぶときに効いてくる制約**である。
+5〜6 は**プラットフォームを選ぶときに効いてくる制約**、
+7〜8 は**既存の Terraform と Issue の処遇**である。
 
 # 1. `/dummies` が認証なしで公開される（最優先）→ **解消済み（#86）**
 
@@ -145,8 +146,14 @@ Discussion #29 のコメントで「7 日間の低活動で一時停止、90 日
 
 **この 3 択は #29 で決めることであり、この計画では決めない。**
 
-なお**無料プロジェクトは 2 つまで**なので、本番用と検証用に分けると枠を使い切る。
-現在 1 つ（`kdhyeuasgxdlkzwqfbij`）を認証で使用中である。
+なお**無料プロジェクトは 2 つまで**である。現在 1 つ（`kdhyeuasgxdlkzwqfbij`）を認証で使用中。
+
+> [!IMPORTANT]
+> **2026-09-06 の決定で、この 2 枠を使い切ることが確定した。**
+> ローカル開発でもアプリの DB を Supabase にするため、**開発用 + 本番用で 2 つ**必要になる
+> （理由は [phase-3.md](/project/plan/deploy/phase-3.md) の「ローカルも Supabase に寄せる」）。
+> **3 つ目は作れない。** 検証用の環境が別途要るなら、有料化か既存プロジェクトの共用を検討することになる。
+> **開発用プロジェクトも 7 日の一時停止の対象**である点にも注意。
 
 # 6. アプリの DB を Supabase へ移すと、接続経路の制約が付く
 
@@ -163,7 +170,7 @@ Discussion #29 のコメントで「7 日間の低活動で一時停止、90 日
 DB の正本は Prisma（`hasura/README.md` の役割分担）なので、
 **本番へのスキーマ反映も Prisma から流す**ことになる。CI から実行する経路が必要。
 
-# 7. `infra/` の Terraform は、行き先を失っている
+# 7. `infra/` の Terraform は行き先を失った（削除が決定）
 
 `infra/main.tf` は AWS の VPC / Subnet / IGW / Route Table / SG / **RDS** を定義している。
 これは Discussion #29 が「**RDS を常時起動すると費用が発生する**ため常設に向かない」として
@@ -172,33 +179,53 @@ DB の正本は Prisma（`hasura/README.md` の役割分担）なので、
 つまり **`infra/` の中身は、この計画で作る環境と 1 つも重ならない。**
 
 さらに `main.tf` は **一度も `apply` されていない**（Wiki [Infra](https://github.com/Hitamuki/study-web-modern-stack/wiki/Infra) の
-「デプロイ: （未導入）」、README の成功条件 5 が未達）。`main.tftest.hcl` は `plan` に対する
-アサーションなので、**apply しなくても通る。**
+「デプロイ: （未導入）」）。`main.tftest.hcl` は `plan` に対するアサーションなので、
+**apply しなくても通る。**
 
-## README の成功条件と両立しない
+## 削除する（2026-09-05 決定）
+
+**AWS を使う予定が無くなったため、`infra/` はディレクトリごと削除する。**
+→ [layer-remove-terraform.md](/project/plan/deploy/layer-remove-terraform.md)（層 2）
+
+**Terraform をやめるわけではない。** 段階 3 で、#29 で決まった無料枠プラットフォーム向けに
+作り直す。AWS 向けのコードは 1 資源も再利用しない。
+
+## README の記述が 2 か所ずれる
 
 README の【成功の定義】は 5 項目あり、Terraform に関わるのは 2 つである。
 
-| # | 内容 | 無料枠デプロイとの関係 |
+| # | 内容 | 削除後どうなるか |
 | :- | :- | :- |
-| 2 | Terraform で `plan` が通り、`test` が成功すること | **両立する。** apply は要求していない |
-| 5 | **AWS でサービスが稼働すること** | **両立しない。** AWS で常設すると課金される |
+| 2 | Terraform で `plan` が通り、`test` が成功すること | **段階 2 の間だけ満たせない。** 対象が無いため。段階 3 の層 6 で回復する |
+| 5 | **AWS でサービスが稼働すること** | **恒久的に満たさない。**「無料枠のサービスで常設稼働すること」へ書き換える |
 
-【目的】側も「Terraform の**ローカル品質管理**（fmt, lint, plan, test）を実践する」であり、
-**apply を求めていない。** 衝突しているのは成功条件 5 だけである。
+【目的】側の「Terraform の**ローカル品質管理**（fmt, lint, plan, test）を実践する」は
+**段階 3 で復活する**ので消さない。
 
-**成功条件 5 を書き換えるか、未達として残すかは人間の判断**であり、この計画では決めない。
-→ [terraform-scope.md](/project/plan/deploy/terraform-scope.md) に選択肢を整理する。
+書き換えは層 2 の Issue に含める。
 
-# 8. Issue #27 の位置づけが変わる
+# 8. Issue #27 は close した
 
 Issue [#27](https://github.com/Hitamuki/study-web-modern-stack/issues/27)（Terraform の本番前セキュリティ設定）は
-**RDS の `storage_encrypted` やバックアップ保持期間**を対象にしている。
+**RDS の `storage_encrypted` やバックアップ保持期間**を対象にしていた。
 
-AWS へデプロイしないなら、**#27 の対象リソースは存在しないまま**になる。
-Discussion #29 の「影響範囲」表も「AWS へデプロイしない方針になるなら、優先度が下がる」と書いている。
+**層 2 で AWS 向け Terraform を削除するため、直す対象のリソースが消滅する。**
+そのため **not planned として close した**（2026-09-05）。
 
-一方で **TLS の有効化**は #27 に含まれており、こちらは無料枠デプロイでも必要になる。
-ただし主要な PaaS は HTTPS を自動で終端するため、**Terraform で書く対象ではなくなる**可能性が高い。
+削除ではなく close にしたのは、**Wiki / Discussion #29 / この計画からの参照リンクを生かし、
+「なぜ不要になったか」を辿れるようにするため**である。
+AGENTS.md の「却下した候補も消さずに残す」と同じ考え方による。
 
-→ #29 の決着後に **#27 を分割するか閉じるかの判断**が要る。
+## 論点自体は消えていない
+
+#27 が扱っていた**保存時の暗号化・バックアップ・TLS** は、載せ先が変わっても本来必要である。
+ただし扱いが変わる。
+
+| 論点 | 段階 3 での扱い |
+| :- | :- |
+| 保存時の暗号化 | **Supabase 側の仕様に従う。** 自分で設定する資源が無い |
+| バックアップ | 同上。無料枠の保持期間は #29 で確認する |
+| TLS | **主要な PaaS は HTTPS を自動で終端する。** Terraform で書く対象ではなくなる |
+
+必要になった時点で**新しい Issue を立てる。** #27 を再開しない
+（AGENTS.md「決定を上書きしない」／新しい経緯は新しい番号で残す）。
