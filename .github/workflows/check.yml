@@ -1,0 +1,84 @@
+# 品質ゲート。PR と main への push で `make check`（format-check / lint / test）を回す。
+#
+# デプロイはここでは扱わない。デプロイの workflow は段階 3 で別に足す
+# （project/plan/deploy/phase-3.md の層 11）。
+name: check
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# 同じブランチで新しい push があったら、走っている古い実行は打ち切る。
+# Stacked PRs は 1 スタックで複数ブランチを同時に押すため、無駄な実行が積み上がりやすい。
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: make check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # ツールのバージョンは mise.toml が正本。CI 側で Node / pnpm を二重管理しない。
+      # make check に要るのは node と pnpm だけなので install_args で絞る。
+      # hasura-cli / supabase / github-cli はこのジョブでは使わない。
+      - name: mise でツールを導入
+        uses: jdx/mise-action@v2
+        with:
+          install_args: node pnpm
+
+      # pnpm の store は既定で <pnpm home>/store/v<N> に置かれ、N は pnpm の
+      # バージョンで変わる（この構成では 9.5.0 が v3）。`pnpm config set store-dir` は
+      # mise が入れた pnpm と、packageManager で切り替わった pnpm とで読む設定ファイルが
+      # 違うため効かなかった。**バージョンごとの階層をまとめて含む親を対象にする。**
+      - name: pnpm の store をキャッシュ
+        uses: actions/cache@v4
+        with:
+          path: ~/.local/share/pnpm/store
+          key: pnpm-store-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: |
+            pnpm-store-${{ runner.os }}-
+
+      # Turborepo のキャッシュ。lint / format-check のタスク結果を run 間で再利用する。
+      - name: Turborepo のキャッシュ
+        uses: actions/cache@v4
+        with:
+          path: .turbo
+          key: turbo-${{ runner.os }}-${{ github.sha }}
+          restore-keys: |
+            turbo-${{ runner.os }}-
+
+      # CI=true のとき pnpm は自動で --frozen-lockfile になる。
+      # apps/api の postinstall（prisma generate）もここで走る。
+      - name: 依存関係をインストール
+        run: make install
+
+      # store の場所がキャッシュ対象の外へ動いたら、キャッシュは黙って効かなくなる。
+      # 気づけないまま毎回フルダウンロードする状態を避けるため、ここで落とす。
+      - name: キャッシュ対象の store が使われたことを確認
+        run: |
+          store=$(sed -n 's/^storeDir: //p' node_modules/.modules.yaml)
+          echo "実際に使われた store: $store"
+          case "$store" in
+            "$HOME/.local/share/pnpm/store"/*) echo "キャッシュ対象の配下です" ;;
+            *)
+              echo "::error::pnpm の store がキャッシュ対象の外にあります: $store"
+              echo "::error::.github/workflows/check.yml の cache の path を直してください"
+              exit 1
+              ;;
+          esac
+
+      - name: make check
+        run: make check
+
+      # prisma generate が docs/er-diagram.md を書き出す（#106）。
+      # 生成物とコミット済みの内容がずれていたら、schema.prisma の変更が
+      # ER 図に反映されていないということなので落とす。
+      - name: 生成物に差分が無いことを確認
+        run: git diff --exit-code -- docs/er-diagram.md

@@ -25,6 +25,13 @@ MOBILE_PKG   := @memo-app/mobile
 DESKTOP_PKG  := desktop
 GRAPHQL_PKG  := @repo/graphql
 
+# apps/api のコンテナ（#87）。レジストリは載せ先の決定待ちなので、ここではローカルのタグだけを持ちます。
+API_IMAGE        := memo-app-api:dev
+API_IMAGE_NAME   := memo-app-api
+API_IMAGE_PORT   := 3011
+# docker compose が作るネットワーク名（プロジェクト名 + _default）。
+COMPOSE_NETWORK  := study-web-modern-stack_default
+
 ##@ ヘルプ
 
 .PHONY: help
@@ -100,7 +107,9 @@ backend-init: backend-up ## DB と Hasura を初期化します（スキーマ�
 		exit 1; \
 	}
 	$(TURBO) run db:push --filter=$(API_PKG)
-	hasura metadata apply --project hasura
+	@# admin_secret は config.yaml から外したため（#89）、CLI へは .env から渡します。
+	@# --envfile はプロジェクトディレクトリ（hasura/）からの相対パスです。
+	hasura metadata apply --project hasura --envfile ../.env
 	@$(MAKE) --no-print-directory db-seed
 	@echo "初期化が完了しました。make backend-start で起動できます。"
 
@@ -111,6 +120,24 @@ backend-start: backend-up ## PostgreSQL / Hasura / NestJS をデバッグ起動�
 .PHONY: backend-stop
 backend-stop: ## PostgreSQL / Hasura のコンテナを停止します
 	docker compose stop
+
+.PHONY: api-image
+api-image: ## apps/api の OCI イメージをビルドします（タグは make api-image API_IMAGE=... で変更可）
+	@# ビルドコンテキストはリポジトリのルートです。pnpm workspace の Catalogs が
+	@# ルートの pnpm-lock.yaml 経由でしか解決できないため、apps/api 単体ではビルドできません。
+	docker build -f apps/api/Dockerfile -t $(API_IMAGE) .
+	@echo ""
+	@docker image ls $(API_IMAGE) --format 'イメージサイズ: {{.Size}}'
+
+.PHONY: api-image-run
+api-image-run: ## ビルドしたイメージをローカルの PostgreSQL に繋いで起動します（http://localhost:3011）
+	@# docker-compose のネットワークに入れて、コンテナ名 postgres で解決させます。
+	docker run --rm --name $(API_IMAGE_NAME) \
+		--network $(COMPOSE_NETWORK) \
+		-p $(API_IMAGE_PORT):3001 \
+		-e DATABASE_URL="postgresql://user:password@postgres:5432/memo" \
+		-e HASURA_ACTION_SECRET="$${HASURA_ACTION_SECRET:?.env の HASURA_ACTION_SECRET を export してください}" \
+		$(API_IMAGE)
 
 ##@ フロントエンド
 
@@ -165,7 +192,12 @@ db-seed: ## SCR-005 の動作確認用データを投入します（既存の du
 
 .PHONY: codegen
 codegen: ## Hasura のスキーマから GraphQL の型を生成します（Hasura の起動が必要）
-	$(TURBO) run codegen --filter=$(GRAPHQL_PKG)
+	@# codegen.ts は admin secret の既定値を持たないため（#89）、.env から渡します。
+	@# turbo は strict モードで動くため、turbo.json の codegen.env に載せた変数だけが届きます。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	set -a; . ./.env; set +a; $(TURBO) run codegen --filter=$(GRAPHQL_PKG)
 
 ##@ Supabase
 

@@ -29,7 +29,7 @@ cd study-web-modern-stack
 ### 2. ツールと依存関係のセットアップ
 
 ```bash
-mise install    # Node / pnpm / terraform などのツールを導入
+mise install    # Node / pnpm / hasura-cli などのツールを導入
 make install    # 依存関係をインストール
 ```
 
@@ -88,6 +88,40 @@ make web-start        # Web だけ
 NestJS の待ち受けポートは `PORT` で変更できます（例: `PORT=3100 make backend-start`）。
 変更した場合は `hasura/metadata/actions.yaml` の handler URL も合わせて直してください。
 
+### コンテナ関連コマンド
+
+`apps/api` は PaaS に載せるため OCI イメージにできます（[#87](https://github.com/Hitamuki/study-web-modern-stack/issues/87)）。
+日常の開発では使いません。**イメージのまま動くかを確認したいとき**に使います。
+
+| コマンド              | 内容                                                       |
+| :-------------------- | :--------------------------------------------------------- |
+| `make api-image`      | `apps/api` のイメージをビルドし、サイズを表示               |
+| `make api-image-run`  | ビルドしたイメージをローカルの PostgreSQL に繋いで起動（3011） |
+
+`apps/api/Dockerfile` の**ビルドコンテキストはリポジトリのルート**です。
+pnpm Catalogs（`catalog:backend`）はルートの `pnpm-lock.yaml` 経由でしか解決できないため、
+`apps/api` 単体ではビルドできません。
+
+`make api-image-run` は `.env` の `HASURA_ACTION_SECRET` を環境変数として要求します。
+
+```bash
+export $(grep -E '^HASURA_ACTION_SECRET=' .env | tr -d '"')
+make api-image-run
+```
+
+#### `GET /health`
+
+イメージには死活監視用の `GET /health` が入っています。**認証はありません。**
+
+| 状態 | 応答 |
+| :- | :- |
+| DB まで到達できる | `200` / 本文 `ok` |
+| DB に到達できない | `503` / 本文 `ng` |
+
+`SELECT 1` を実際に流すのは、Render のスピンダウン回避（HTTP で足りる）だけでなく
+Supabase の一時停止回避（判定が `user database activity`）を同時に満たすためです。
+本文を `ok` / `ng` だけにしているのは、認証なしで公開するため DB の情報を漏らさないようにするためです。
+
 ### Stacked PRs 関連コマンド
 
 `make stack-setup` で `gh stack` 拡張を導入したあとは、`gh` で直接操作します。
@@ -117,35 +151,57 @@ NestJS の待ち受けポートは `PORT` で変更できます（例: `PORT=310
 
 ## infra/ での Terraform 操作
 
-infra ディレクトリ配下で以下のコマンドを実行します。
+**現在 `infra/` はありません。** AWS 向けの Terraform は
+[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除しました
+（[Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) で
+AWS を使わないことが決まったため）。`mise.toml` からも `terraform` / `tflint` / `terraform-docs` を外しています。
 
-```bash
-# infra ディレクトリに移動
-cd infra
+[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で
+Cloudflare / Render / GitHub 向けに作り直したときに、この節へ手順を書き直します。
+管理するもの・しないものの切り分けは
+[project/plan/deploy/terraform-scope.md](../project/plan/deploy/terraform-scope.md) が正本です。
 
-# プロバイダーやバックエンド設定を初期化
-terraform init
+## 環境変数
 
-# フォーマット (再帰的に全ファイル)
-terraform fmt -recursive
+接続先と秘匿値はすべて `.env`（`.gitignore` 済み）から読みます。枠は `.env.example` が正本です。
+**ソースにローカル固有の値を書かない**でください（[#89](https://github.com/Hitamuki/study-web-modern-stack/issues/89)）。
 
-# 設定の静的検証
-terraform validate
+| 変数 | 誰が読むか |
+| :- | :- |
+| `HASURA_GRAPHQL_ADMIN_SECRET` | Hasura サーバー / Hasura CLI / `make codegen` |
+| `HASURA_GRAPHQL_ENDPOINT` | Hasura CLI（`hasura/config.yaml` の `endpoint` を上書き） |
+| `ACTION_BASE_URL` | **Hasura サーバー。** `metadata/actions.yaml` の `{{ACTION_BASE_URL}}` を解決する |
+| `HASURA_GRAPHQL_CORS_DOMAIN` | Hasura サーバー |
+| `VITE_GRAPHQL_URL` / `EXPO_PUBLIC_GRAPHQL_URL` | 各クライアント（**ビルド時に埋め込まれる**） |
 
-# 変更内容のプランを確認
-terraform plan -var-file=terraform.tfvars
+クライアント側の GraphQL エンドポイントに `localhost` のフォールバックはありません。
+未設定なら起動時にエラーになります。埋め込み済みの成果物を実行するまで気づけない状態を避けるためです。
 
-# 変更を適用
-terraform apply -var-file=terraform.tfvars
+> [!WARNING]
+> **`.env.example` の `HASURA_GRAPHQL_ADMIN_SECRET` はローカル専用です。**
+> 以前 `hasura/config.yaml` に平文で入っていた値で、リポジトリは public、
+> **値はコミット履歴に残っています。** 行を消しても履歴からは消えないため、
+> 本番の admin secret は必ずこれと別の値にしてください。
 
-# 破棄（リソース削除）
-terraform destroy -var-file=terraform.tfvars
+`turbo` は strict モードで動くため、タスクへ渡す環境変数は `turbo.json` の `env` に宣言が要ります。
 
-# テスト（main.tftest.hcl）を実行
-terraform test
-```
+## CI
 
-`terraform.tfvars` には `db_password` などの機密値が記載されているため、必要に応じて `TF_VAR_db_password` で上書きしてください。
+`.github/workflows/check.yml` が PR と `main` への push で `make check`
+（format-check / lint / test）を回します（[#88](https://github.com/Hitamuki/study-web-modern-stack/issues/88)）。
+ツールのバージョンは `mise.toml` が正本で、CI 側では二重管理しません。
+
+> [!WARNING]
+> **CI が緑でも「動作が壊れていない」ことにはなりません。**
+> `test` スクリプトを持つパッケージが 1 つも無いため、`make check` の `turbo run test` は
+> **0 タスク**です。担保しているのは整形（Biome）と静的解析（ESLint）だけです。
+> → [project/plan/deploy/findings.md](../project/plan/deploy/findings.md) の 3
+
+**`main` にブランチ保護は掛けていません。** CI が赤くてもマージは可能です。
+マージ前に Actions の結果を自分で確認してください。
+
+デプロイの workflow はまだありません。段階 3
+（[project/plan/deploy/phase-3.md](../project/plan/deploy/phase-3.md) の層 11）で足します。
 
 ## 開発フロー
 

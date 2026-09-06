@@ -1,0 +1,32 @@
+# ビルドコンテキストから外すもの。
+# apps/api/Dockerfile はリポジトリのルートをコンテキストにするため、ここが唯一の正本。
+
+# 依存とビルド成果物（イメージ内で作り直す）
+**/node_modules
+**/dist
+**/build
+**/.turbo
+**/.next
+**/.expo
+
+# 秘匿値。イメージに焼き込まない（#26 / #89）
+**/.env
+**/.env.*
+!**/.env.example
+
+# バージョン管理と CI
+.git
+.github
+.gitignore
+
+# 実行に不要な資産
+.wiki
+.vscode
+.claude
+design
+docs
+project
+hasura
+supabase
+**/*.md
+!apps/api/prisma/**

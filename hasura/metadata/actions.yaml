@@ -2,7 +2,7 @@ actions:
   - name: createDummy
     definition:
       kind: synchronous
-      handler: http://host.docker.internal:3001/hasura/actions/createDummy
+      handler: "{{ACTION_BASE_URL}}/hasura/actions/createDummy"
       timeout: 60
       # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
       # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。
@@ -15,7 +15,7 @@ actions:
   - name: updateDummy
     definition:
       kind: synchronous
-      handler: http://host.docker.internal:3001/hasura/actions/updateDummy
+      handler: "{{ACTION_BASE_URL}}/hasura/actions/updateDummy"
       timeout: 60
       # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
       # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。
@@ -28,7 +28,7 @@ actions:
   - name: deleteDummy
     definition:
       kind: synchronous
-      handler: http://host.docker.internal:3001/hasura/actions/deleteDummy
+      handler: "{{ACTION_BASE_URL}}/hasura/actions/deleteDummy"
       timeout: 60
       # ハンドラを Hasura からの呼び出しだけに限定する共有シークレット。
       # Actions は Hasura のパーミッションを迂回するため、テーブルの権限では守れない。

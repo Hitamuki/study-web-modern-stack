@@ -10,9 +10,21 @@ import { getAccessToken } from "./src/shared/supabase";
  * 実機や Expo Go から繋ぐ場合、`localhost` は端末自身を指すため到達できない。
  * **PC の LAN 内 IP を指定する**（例: `http://192.168.1.10:8080/v1/graphql`）。
  * 設定は `.env.example` の `EXPO_PUBLIC_GRAPHQL_URL` を参照。
+ *
+ * **localhost のフォールバックを置かない。** バンドル時に埋め込まれるため、
+ * 未設定のまま作った成果物は実行するまで気づけない（#89）。
  */
-const GRAPHQL_URL: string =
-  process.env.EXPO_PUBLIC_GRAPHQL_URL ?? "http://localhost:8080/v1/graphql";
+const GRAPHQL_URL: string = requireEnv(
+  process.env.EXPO_PUBLIC_GRAPHQL_URL,
+  "EXPO_PUBLIC_GRAPHQL_URL",
+);
+
+function requireEnv(value: string | undefined, name: string): string {
+  if (value === undefined || value === "") {
+    throw new Error(`${name} が未設定です。.env を確認してください（.env.example を参照）。`);
+  }
+  return value;
+}
 
 export default function App() {
   return (

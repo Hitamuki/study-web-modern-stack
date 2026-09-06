@@ -43,6 +43,12 @@ Linter と Formatter を Biome に一本化することで、設定ファイル�
 Terraform を用いて AWS リソース（VPC, Subnet, Internet Gateway, Security Group, RDS）をコード化し、インフラの再現性とバージョン管理を実現。Terraform Test を導入し、plan 出力の検証により設定ミスを早期に検知可能にしました。
 
 ### 6. infraディレクトリ内での Terraform 操作
+
+> **追記（2026-09-06）**: `infra/` は [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除しました。
+> AWS を使わないことが [Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) で決まったためです。
+> **以下は当時の記録**で、いまは実行できません。Terraform 自体は
+> [#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で無料枠プラットフォーム向けに作り直します。
+
 `infra/` フォルダ内で以下の手順で Terraform を実行します。
 
 - 初回、またはプロバイダー/モジュール更新時:

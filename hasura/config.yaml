@@ -1,8 +1,13 @@
 version: 3
+# ローカルの既定値。CLI の優先順位は「フラグ > 環境変数 > .env > config.yaml」なので、
+# 本番は HASURA_GRAPHQL_ENDPOINT を渡せばこの値を上書きできる。
 endpoint: http://localhost:8080
-admin_secret: myadminsecretkey
+# admin_secret はここに書かない。平文でコミットされるため（#89）。
+# CLI は HASURA_GRAPHQL_ADMIN_SECRET を読む。Makefile が .env から渡している。
 metadata_directory: metadata
 # Prisma がマイグレーションを管理するため、Hasura 側はメタデータのみを対象にします。
 actions:
   kind: synchronous
+  # コンソールから Actions を作るときのハンドラの既定値。metadata/actions.yaml の
+  # handler は {{ACTION_BASE_URL}} で解決するため、こちらは効いていない。
   handler_webhook_base_url: http://host.docker.internal:3001

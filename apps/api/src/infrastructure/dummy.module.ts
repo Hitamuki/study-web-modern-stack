@@ -4,7 +4,7 @@ import { DeleteDummyUseCase } from "../application/use-case/delete-dummy.use-cas
 import { UpdateDummyUseCase } from "../application/use-case/update-dummy.use-case";
 import type { DummyRepository } from "../domain/repositories/dummy.repository";
 import { HasuraActionController } from "./controllers/hasura-action.controller";
-import { PrismaService } from "./persistence/prisma.service";
+import { PrismaModule } from "./persistence/prisma.module";
 import { PrismaDummyRepository } from "./repositories/prisma-dummy.repository";
 
 export const DUMMY_REPOSITORY = Symbol("DummyRepository");
@@ -20,9 +20,9 @@ const provideUseCase = <T>(UseCase: new (repo: DummyRepository) => T) => ({
 });
 
 @Module({
+  imports: [PrismaModule],
   controllers: [HasuraActionController],
   providers: [
-    PrismaService,
     {
       provide: DUMMY_REPOSITORY,
       useClass: PrismaDummyRepository,

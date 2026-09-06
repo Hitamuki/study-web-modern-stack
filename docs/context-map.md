@@ -84,5 +84,5 @@ apps/web ──頼む──▶ Supabase ──SMTP──▶ Resend ──▶ 受
 | :- | :- |
 | Supabase の認証設定（SMTP / Hook / Redirect URL / レート上限） | [supabase/config.toml](../supabase/config.toml)（`supabase config push` で適用） |
 | Hasura のメタデータ（テーブル・権限・Actions） | [hasura/metadata/](../hasura/) |
-| 秘匿値 | `.env` / `apps/api/.env`（どちらも `.gitignore` 済み） |
-| インフラ | [infra/](../infra/) の Terraform |
+| 秘匿値・環境ごとの接続先 | `.env` / `apps/api/.env`（どちらも `.gitignore` 済み。枠は `.env.example`） |
+| インフラ | 未定（`infra/` の Terraform は AWS 向けだったため [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除。[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で Cloudflare / Render / GitHub 向けに作り直す） |
