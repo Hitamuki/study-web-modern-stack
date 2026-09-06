@@ -74,6 +74,9 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
   - ✅Hasura の Mutation 実行時に NestJS のエンドポイントを叩く Action 設定
   - ✅「Hasura（受付）→ NestJS（ロジック）→ DB（Prisma）」のデータフロー構築
   - ✅HasuraでNestJSのAPIを実行
+- **コンテナ化**
+  - ✅`apps/api/Dockerfile`（マルチステージ / pnpm workspace + Catalogs + Prisma 対応）
+  - ✅死活監視用の `GET /health`（DB まで到達する。`ok` / `ng` だけを返す）
 
 ### アジャイル開発体験
 

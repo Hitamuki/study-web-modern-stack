@@ -88,6 +88,40 @@ make web-start        # Web だけ
 NestJS の待ち受けポートは `PORT` で変更できます（例: `PORT=3100 make backend-start`）。
 変更した場合は `hasura/metadata/actions.yaml` の handler URL も合わせて直してください。
 
+### コンテナ関連コマンド
+
+`apps/api` は PaaS に載せるため OCI イメージにできます（[#87](https://github.com/Hitamuki/study-web-modern-stack/issues/87)）。
+日常の開発では使いません。**イメージのまま動くかを確認したいとき**に使います。
+
+| コマンド              | 内容                                                       |
+| :-------------------- | :--------------------------------------------------------- |
+| `make api-image`      | `apps/api` のイメージをビルドし、サイズを表示               |
+| `make api-image-run`  | ビルドしたイメージをローカルの PostgreSQL に繋いで起動（3011） |
+
+`apps/api/Dockerfile` の**ビルドコンテキストはリポジトリのルート**です。
+pnpm Catalogs（`catalog:backend`）はルートの `pnpm-lock.yaml` 経由でしか解決できないため、
+`apps/api` 単体ではビルドできません。
+
+`make api-image-run` は `.env` の `HASURA_ACTION_SECRET` を環境変数として要求します。
+
+```bash
+export $(grep -E '^HASURA_ACTION_SECRET=' .env | tr -d '"')
+make api-image-run
+```
+
+#### `GET /health`
+
+イメージには死活監視用の `GET /health` が入っています。**認証はありません。**
+
+| 状態 | 応答 |
+| :- | :- |
+| DB まで到達できる | `200` / 本文 `ok` |
+| DB に到達できない | `503` / 本文 `ng` |
+
+`SELECT 1` を実際に流すのは、Render のスピンダウン回避（HTTP で足りる）だけでなく
+Supabase の一時停止回避（判定が `user database activity`）を同時に満たすためです。
+本文を `ok` / `ng` だけにしているのは、認証なしで公開するため DB の情報を漏らさないようにするためです。
+
 ### Stacked PRs 関連コマンド
 
 `make stack-setup` で `gh stack` 拡張を導入したあとは、`gh` で直接操作します。

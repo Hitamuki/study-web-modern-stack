@@ -25,6 +25,13 @@ MOBILE_PKG   := @memo-app/mobile
 DESKTOP_PKG  := desktop
 GRAPHQL_PKG  := @repo/graphql
 
+# apps/api のコンテナ（#87）。レジストリは載せ先の決定待ちなので、ここではローカルのタグだけを持ちます。
+API_IMAGE        := memo-app-api:dev
+API_IMAGE_NAME   := memo-app-api
+API_IMAGE_PORT   := 3011
+# docker compose が作るネットワーク名（プロジェクト名 + _default）。
+COMPOSE_NETWORK  := study-web-modern-stack_default
+
 ##@ ヘルプ
 
 .PHONY: help
@@ -111,6 +118,24 @@ backend-start: backend-up ## PostgreSQL / Hasura / NestJS をデバッグ起動�
 .PHONY: backend-stop
 backend-stop: ## PostgreSQL / Hasura のコンテナを停止します
 	docker compose stop
+
+.PHONY: api-image
+api-image: ## apps/api の OCI イメージをビルドします（タグは make api-image API_IMAGE=... で変更可）
+	@# ビルドコンテキストはリポジトリのルートです。pnpm workspace の Catalogs が
+	@# ルートの pnpm-lock.yaml 経由でしか解決できないため、apps/api 単体ではビルドできません。
+	docker build -f apps/api/Dockerfile -t $(API_IMAGE) .
+	@echo ""
+	@docker image ls $(API_IMAGE) --format 'イメージサイズ: {{.Size}}'
+
+.PHONY: api-image-run
+api-image-run: ## ビルドしたイメージをローカルの PostgreSQL に繋いで起動します（http://localhost:3011）
+	@# docker-compose のネットワークに入れて、コンテナ名 postgres で解決させます。
+	docker run --rm --name $(API_IMAGE_NAME) \
+		--network $(COMPOSE_NETWORK) \
+		-p $(API_IMAGE_PORT):3001 \
+		-e DATABASE_URL="postgresql://user:password@postgres:5432/memo" \
+		-e HASURA_ACTION_SECRET="$${HASURA_ACTION_SECRET:?.env の HASURA_ACTION_SECRET を export してください}" \
+		$(API_IMAGE)
 
 ##@ フロントエンド
 
