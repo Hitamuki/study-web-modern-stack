@@ -25,8 +25,14 @@ services:
     environment:
       HASURA_GRAPHQL_DATABASE_URL: "postgres://user:password@postgres:5432/memo"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
-      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET:-myadminsecretkey}"
-      HASURA_GRAPHQL_CORS_DOMAIN: "*"
+      # 平文の既定値は置かない（#89）。未設定なら起動時に落として気づけるようにする。
+      HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET:?.env に設定してください}"
+      # ローカルは全許可のまま。公開時は Web のオリジンに絞る（層 10 / #104）。
+      HASURA_GRAPHQL_CORS_DOMAIN: "${HASURA_GRAPHQL_CORS_DOMAIN:-*}"
+      # metadata/actions.yaml の handler が {{ACTION_BASE_URL}} で参照する。
+      # host.docker.internal は Docker Desktop 固有の名前なのでクラウドでは解決できない。
+      # 本番は Render の公開 URL を .env 相当の場所から渡す（層 9 / #103）。
+      ACTION_BASE_URL: "${ACTION_BASE_URL:-http://host.docker.internal:3001}"
       # Supabase Auth が発行した JWT を検証する（Discussion #19）。
       # 非対称鍵（ES256）なので Hasura は JWKS から公開鍵を取得する。秘密鍵は持たない。
       # issuer / audience まで照合し、他プロジェクトのトークンを弾く。

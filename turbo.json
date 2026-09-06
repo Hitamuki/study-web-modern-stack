@@ -16,7 +16,8 @@
       "persistent": true
     },
     "codegen": {
-      "cache": false
+      "cache": false,
+      "env": ["HASURA_GRAPHQL_ENDPOINT", "HASURA_GRAPHQL_ADMIN_SECRET"]
     },
     "db:push": {
       "cache": false

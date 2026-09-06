@@ -161,6 +161,30 @@ Cloudflare / Render / GitHub 向けに作り直したときに、この節へ手
 管理するもの・しないものの切り分けは
 [project/plan/deploy/terraform-scope.md](../project/plan/deploy/terraform-scope.md) が正本です。
 
+## 環境変数
+
+接続先と秘匿値はすべて `.env`（`.gitignore` 済み）から読みます。枠は `.env.example` が正本です。
+**ソースにローカル固有の値を書かない**でください（[#89](https://github.com/Hitamuki/study-web-modern-stack/issues/89)）。
+
+| 変数 | 誰が読むか |
+| :- | :- |
+| `HASURA_GRAPHQL_ADMIN_SECRET` | Hasura サーバー / Hasura CLI / `make codegen` |
+| `HASURA_GRAPHQL_ENDPOINT` | Hasura CLI（`hasura/config.yaml` の `endpoint` を上書き） |
+| `ACTION_BASE_URL` | **Hasura サーバー。** `metadata/actions.yaml` の `{{ACTION_BASE_URL}}` を解決する |
+| `HASURA_GRAPHQL_CORS_DOMAIN` | Hasura サーバー |
+| `VITE_GRAPHQL_URL` / `EXPO_PUBLIC_GRAPHQL_URL` | 各クライアント（**ビルド時に埋め込まれる**） |
+
+クライアント側の GraphQL エンドポイントに `localhost` のフォールバックはありません。
+未設定なら起動時にエラーになります。埋め込み済みの成果物を実行するまで気づけない状態を避けるためです。
+
+> [!WARNING]
+> **`.env.example` の `HASURA_GRAPHQL_ADMIN_SECRET` はローカル専用です。**
+> 以前 `hasura/config.yaml` に平文で入っていた値で、リポジトリは public、
+> **値はコミット履歴に残っています。** 行を消しても履歴からは消えないため、
+> 本番の admin secret は必ずこれと別の値にしてください。
+
+`turbo` は strict モードで動くため、タスクへ渡す環境変数は `turbo.json` の `env` に宣言が要ります。
+
 ## CI
 
 `.github/workflows/check.yml` が PR と `main` への push で `make check`

@@ -107,7 +107,9 @@ backend-init: backend-up ## DB と Hasura を初期化します（スキーマ�
 		exit 1; \
 	}
 	$(TURBO) run db:push --filter=$(API_PKG)
-	hasura metadata apply --project hasura
+	@# admin_secret は config.yaml から外したため（#89）、CLI へは .env から渡します。
+	@# --envfile はプロジェクトディレクトリ（hasura/）からの相対パスです。
+	hasura metadata apply --project hasura --envfile ../.env
 	@$(MAKE) --no-print-directory db-seed
 	@echo "初期化が完了しました。make backend-start で起動できます。"
 
@@ -190,7 +192,12 @@ db-seed: ## SCR-005 の動作確認用データを投入します（既存の du
 
 .PHONY: codegen
 codegen: ## Hasura のスキーマから GraphQL の型を生成します（Hasura の起動が必要）
-	$(TURBO) run codegen --filter=$(GRAPHQL_PKG)
+	@# codegen.ts は admin secret の既定値を持たないため（#89）、.env から渡します。
+	@# turbo は strict モードで動くため、turbo.json の codegen.env に載せた変数だけが届きます。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	set -a; . ./.env; set +a; $(TURBO) run codegen --filter=$(GRAPHQL_PKG)
 
 ##@ Supabase
 
