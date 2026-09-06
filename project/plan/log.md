@@ -282,6 +282,22 @@
   なお **成功条件 2（`plan` が通り `test` が成功する）は段階 2 の間だけ満たせなくなる**
   （対象が無いため）。段階 3 の層 6 で回復する。中間状態であることを #99 の AC に明記した。
 
+## 2026-09-06
+
+- **認証メールを Resend の custom SMTP に切り替えた（#71 完了）。** 送信ドメイン `sk8trickhub.com` を
+  Resend で検証し、`supabase/config.toml` の `[auth.email.smtp]` を有効化して `make supabase-push` で適用した。
+  **外部アドレス宛に受信トレイで到達することを実測**し、Discussion #70 の反証条件 3 が良い方向で解消した。
+- **`[storage.vector] enabled` を false に修正した。** 雛形の既定 `true` は Free プランで使えず、
+  `config push` が **402 で停止**する。Auth の適用は完了していたのに失敗に見えるため、
+  「config push は書いていない設定を既定値で送る」というリスクが実際に顕在化した例として記録する。
+- **順序の落とし穴を記録した。** SMTP を有効化する**前**に到達性を試すと、組み込み送信の制限で
+  第三者に届かず Resend にも記録が残らない。設定ミスに見えるが順序の問題。
+  作業用に置いていた `DNS-SETUP.md` は [manual/resend-smtp.md](/project/plan/auth/manual/resend-smtp.md) へ統合し、
+  実値を除いて落とし穴 10 件を追記した。
+- **サービス名が `SK8TrickHub` に決着した（Discussion #46）。** ドメインは `sk8trickhub.com`（#98）。
+  評価軸 1（一意性）より軸 2・3（親近感・わかりやすさ）を優先した判断で、**軸の優先順位を変えた決定**である旨を
+  Answer に明記した。
+
 ## 2026-08-24
 
 - **`supabase/config.toml` を作成し、Supabase の認証設定をコード管理に移した。**
