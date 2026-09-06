@@ -18,8 +18,8 @@
 # >     Hasura の行レベル権限が全件を弾きます（0 件になる。壊れて見えるが設計どおりの挙動）
 # >   - site_url / additional_redirect_urls  メール内リンクの着地先が変わります
 #
-# 現状は**ダッシュボードの現在値をこのファイルに写したもの**です。
-# #71（Resend の custom SMTP 化）で変える箇所は `#71:` 印のコメントを付けています。
+# #71（Resend の custom SMTP 化）は 2026-09-06 に適用済みです。
+# 送信ドメイン sk8trickhub.com は Resend で検証済み（DKIM / SPF / MX / DMARC）。
 # ==========================================================================
 # A string used to distinguish different Supabase projects on the same host. Defaults to the
 # working directory name when running `supabase init`.
@@ -166,7 +166,9 @@ max_catalogs = 2
 
 # Store vector embeddings in S3 for large and durable datasets
 [storage.vector]
-enabled = true
+# Free プランでは vector buckets を使えない（config push が 402 で止まる）。
+# 雛形の既定は true だが、ホスト版の実態に合わせて false にする。
+enabled = false
 max_buckets = 10
 max_indexes = 5
 
@@ -223,8 +225,8 @@ password_requirements = ""
 [auth.rate_limit]
 # Number of emails that can be sent per hour. Requires auth.email.smtp to be enabled.
 # 組み込み送信のままなので 2（Supabase 側の制限そのもの）。
-# #71: custom SMTP を有効化したら 30 に上げる（custom SMTP 時の既定）。
-email_sent = 2
+# custom SMTP を有効化したため 30（custom SMTP 時の既定）。#71 で 2 から引き上げた。
+email_sent = 30
 # Number of SMS messages that can be sent per hour. Requires auth.sms to be enabled.
 sms_sent = 30
 # Number of anonymous sign-ins that can be made per hour per IP address. Requires enable_anonymous_sign_ins = true.
@@ -265,15 +267,10 @@ otp_expiry = 3600
 
 # 認証メールの送信経路（Discussion #70 で Resend に決着 / Issue #71）
 #
-# #71: 送信ドメインを取得して Resend で検証したら enabled = true にする。
-#      それまでは false（Supabase の組み込み送信）。組み込み送信は
-#      **組織メンバー宛にしか届かず 2 通/時**のため、第三者には届かない。
-#
-# ドメイン未検証のまま true にしても意味が無い。Resend は検証前は
-# onboarding@resend.dev から Resend アカウントの登録アドレス宛にしか送れない。
-# 律速は Discussion #46（サービス名 → ドメイン）。
+# 送信ドメイン sk8trickhub.com を Resend で検証済みのため有効化した（#71 / 2026-09-06）。
+# 組み込み送信は組織メンバー宛にしか届かず 2 通/時のため、第三者に届けるにはこれが必要。
 [auth.email.smtp]
-enabled = false
+enabled = true
 host = "smtp.resend.com"
 # 587 = STARTTLS。465 は暗黙 TLS。
 port = 587
@@ -282,9 +279,10 @@ user = "resend"
 # Resend の API キー。リポジトリ直下の .env から解決する（.gitignore 済み）。
 # 値をこのファイルに直接書かないこと。
 pass = "env(RESEND_API_KEY)"
-# #71: 検証済みドメインのアドレスに差し替える。
-admin_email = "noreply@example.com"
-sender_name = "study-web-modern-stack"
+# 検証済みドメイン sk8trickhub.com のアドレス。
+admin_email = "noreply@sk8trickhub.com"
+# 受信者の一覧に表示される差出人名。Discussion #46 で決めたラテン文字表記に揃える。
+sender_name = "SK8TrickHub"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]

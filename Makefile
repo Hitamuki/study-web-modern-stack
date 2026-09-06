@@ -198,6 +198,16 @@ supabase-push: ## supabase/config.toml をホスト版プロジェクトへ適�
 	@echo "適用しました。JWT に x-hasura-* が入っているか必ず確認してください:"
 	@echo "  project/plan/auth/manual/verify-hook.md"
 
+# 認証メールの疎通確認（Issue #71 / Discussion #70 の反証条件 2・3）。
+# アプリの機能ではなく、Resend のアカウントで実際に送れるかを人手で確かめる道具です。
+# 秘匿値は .env（.gitignore 済み）から Node の --env-file で読みます。
+.PHONY: resend-test
+resend-test: ## Resend からテストメールを 1 通送ります（疎通確認。.env の RESEND_* を使います）
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	node --env-file=.env scripts/send-test-email.mjs
+
 ##@ 品質
 
 .PHONY: lint
