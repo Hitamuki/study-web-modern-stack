@@ -50,3 +50,5 @@ catalogs:
     "@types/express": ^4.17.21
     "prisma": ^6.0.0
     "@prisma/client": ^6.0.0
+    # ER 図を schema.prisma から生成する（#106）。.md 出力なので mermaid-cli / graphviz は不要
+    "prisma-erd-generator": ^3.2.1

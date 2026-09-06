@@ -1,6 +1,15 @@
-// docs/er-diagram.md に合わせた dummy テーブル定義
+// このファイルが DB スキーマの正本。ER 図（docs/er-diagram.md）はここから生成する（#106）。
+// 解説は生成で消えるため docs/er-diagram-notes.md に置く。
 generator client {
   provider = "prisma-client-js"
+}
+
+// prisma generate で docs/er-diagram.md を mermaid の .md として書き出す。
+// .md 出力なので mermaid-cli / graphviz（どちらも optional peer）は要らない。
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../../../docs/er-diagram.md"
+  theme    = "default"
 }
 
 datasource db {

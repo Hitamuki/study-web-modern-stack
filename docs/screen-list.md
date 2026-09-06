@@ -144,7 +144,7 @@ SCR-001 のフレームは、この帯が出た状態（認証失敗時）で作
 CRUD 一式を 1 画面に集約した検証用の画面です。デザイントークンとコンポーネントの当たりを取るのが目的で、
 実際のアプリの画面構成を決めるものではありません。
 
-対象ドメインは `Dummy`（[domain-model.md](./domain-model.md)）で、永続化先は `dummy` テーブル（[er-diagram.md](./er-diagram.md)）です。
+対象ドメインは `Dummy`（[domain-model.md](./domain-model.md)）で、永続化先は `dummy` テーブル（[er-diagram.md](./er-diagram.md) / 解説は [er-diagram-notes.md](./er-diagram-notes.md)）です。
 フィールドは `id` / `ownerId` / `content` / `createdAt` / `updatedAt` で、タイトルを持たないため一覧は本文の冒頭と更新日時で表示します。
 
 画面の日本語ラベル（「メモ」「メモ一覧」など）はデザインの表記をそのまま使っています。

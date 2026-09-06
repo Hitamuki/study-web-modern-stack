@@ -27,7 +27,7 @@ src/
 
 ## データベース (PostgreSQL + Prisma)
 
-- スキーマ: `prisma/schema.prisma`（`docs/er-diagram.md` の定義に準拠）
+- スキーマ: `prisma/schema.prisma`（**DB 定義の正本**。`docs/er-diagram.md` はここから自動生成）
 - 接続: ルートの `docker-compose.yml` で Postgres を起動し、`apps/api` に `.env` を用意する。
 
 ```bash
