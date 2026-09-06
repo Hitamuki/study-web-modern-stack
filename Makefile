@@ -25,13 +25,13 @@ MOBILE_PKG   := @memo-app/mobile
 DESKTOP_PKG  := desktop
 GRAPHQL_PKG  := @repo/graphql
 
+# ローカルの PostgreSQL を廃止したため（#101）、psql はこのイメージから使い捨てで起動します。
+PSQL_IMAGE        := postgres:17
+
 # apps/api のコンテナ（#87）。レジストリは載せ先の決定待ちなので、ここではローカルのタグだけを持ちます。
 API_IMAGE        := memo-app-api:dev
 API_IMAGE_NAME   := memo-app-api
 API_IMAGE_PORT   := 3011
-# docker compose が作るネットワーク名（プロジェクト名 + _default）。
-COMPOSE_NETWORK  := study-web-modern-stack_default
-
 # Terraform の作業ディレクトリ（#100）。
 INFRA_DIR        := infra
 
@@ -86,10 +86,17 @@ backend-up:
 		echo "  3. .env の SUPABASE_PROJECT_REF に設定" >&2; \
 		exit 1; \
 	fi
+	@# アプリの DB も Supabase なので（#101）、接続文字列が無いと Hasura が起動できません。
+	@if ! grep -qE '^SUPABASE_DB_URL=\"?postgres' .env 2>/dev/null; then \
+		echo "エラー: .env に SUPABASE_DB_URL がありません。" >&2; \
+		echo "" >&2; \
+		echo "  アプリの DB も Supabase を使います（ローカルの PostgreSQL は廃止しました）。" >&2; \
+		echo "  Supabase ダッシュボードの Project Settings > Database から" >&2; \
+		echo "  session pooler（ポート 5432）の接続文字列をコピーしてください。" >&2; \
+		exit 1; \
+	fi
 	docker compose up -d
-	@printf "PostgreSQL の起動を待っています"
-	@until docker compose exec -T postgres pg_isready -U user -d memo >/dev/null 2>&1; do printf "."; sleep 1; done
-	@printf " ready\nHasura の起動を待っています"
+	@printf "Hasura の起動を待っています"
 	@n=0; until curl -sf http://localhost:8080/healthz >/dev/null 2>&1; do \
 		n=$$((n+1)); \
 		if [ $$n -gt 60 ]; then \
@@ -104,7 +111,7 @@ backend-up:
 	@echo " ready"
 
 .PHONY: backend-init
-backend-init: backend-up ## DB と Hasura を初期化します（スキーマ反映 → メタデータ適用 → シード投入。dummy の既存データは消えます）
+backend-init: backend-up ## DB と Hasura を初期化します（スキーマ反映 → メタデータ適用 → シード投入。**Supabase の dummy を入れ直します**）
 	@command -v hasura >/dev/null 2>&1 || { \
 		echo "hasura CLI が見つかりません。mise install か、公式手順で導入してください。" >&2; \
 		exit 1; \
@@ -117,11 +124,11 @@ backend-init: backend-up ## DB と Hasura を初期化します（スキーマ�
 	@echo "初期化が完了しました。make backend-start で起動できます。"
 
 .PHONY: backend-start
-backend-start: backend-up ## PostgreSQL / Hasura / NestJS をデバッグ起動します（NestJS の inspector は 9229、PORT で待ち受けポートを変更可）
+backend-start: backend-up ## Hasura / NestJS をデバッグ起動します（DB は Supabase。NestJS の inspector は 9229、PORT で待ち受けポートを変更可）
 	$(RUN) $(API_PKG) run dev
 
 .PHONY: backend-stop
-backend-stop: ## PostgreSQL / Hasura のコンテナを停止します
+backend-stop: ## Hasura のコンテナを停止します
 	docker compose stop
 
 .PHONY: api-image
@@ -133,13 +140,16 @@ api-image: ## apps/api の OCI イメージをビルドします（タグは mak
 	@docker image ls $(API_IMAGE) --format 'イメージサイズ: {{.Size}}'
 
 .PHONY: api-image-run
-api-image-run: ## ビルドしたイメージをローカルの PostgreSQL に繋いで起動します（http://localhost:3011）
-	@# docker-compose のネットワークに入れて、コンテナ名 postgres で解決させます。
+api-image-run: ## ビルドしたイメージを Supabase に繋いで起動します（http://localhost:3011）
+	@# DB は Supabase なので docker-compose のネットワークに入れる必要はありません（#101）。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	@set -a; . ./.env; set +a; \
 	docker run --rm --name $(API_IMAGE_NAME) \
-		--network $(COMPOSE_NETWORK) \
 		-p $(API_IMAGE_PORT):3001 \
-		-e DATABASE_URL="postgresql://user:password@postgres:5432/memo" \
-		-e HASURA_ACTION_SECRET="$${HASURA_ACTION_SECRET:?.env の HASURA_ACTION_SECRET を export してください}" \
+		-e DATABASE_URL="$$SUPABASE_DB_TX_URL" \
+		-e HASURA_ACTION_SECRET="$$HASURA_ACTION_SECRET" \
 		$(API_IMAGE)
 
 ##@ フロントエンド
@@ -189,9 +199,35 @@ desktop-start: ## Desktop をデバッグ起動します（Electron / renderer 5
 db-push: ## Prisma スキーマを DB に反映します
 	$(TURBO) run db:push --filter=$(API_PKG)
 
+.PHONY: supabase-sql
+supabase-sql: ## supabase/sql/ の SQL を Supabase の DB へ適用します（Hook と auth.users 同期トリガー）
+	@# Prisma が管理しないもの（auth スキーマに触るトリガー、認証 Hook の関数）だけを置いています。
+	@# テーブル定義の正本は apps/api/prisma/schema.prisma です。
+	@if [ ! -f .env ]; then \
+		echo "エラー: .env がありません（cp .env.example .env）" >&2; exit 1; \
+	fi
+	@set -a; . ./.env; set +a; \
+	for f in supabase/sql/*.sql; do \
+		echo "適用: $$f"; \
+		docker run --rm -i -e PGPASSWORD="$$SUPABASE_DB_PASSWORD" $(PSQL_IMAGE) psql "$$SUPABASE_DB_SESSION_URL" \
+			-v ON_ERROR_STOP=1 -q < "$$f" || exit 1; \
+	done
+	@echo "適用が完了しました。Hook の確認手順は project/plan/auth/manual/verify-hook.md にあります。"
+
 .PHONY: db-seed
-db-seed: ## SCR-005 の動作確認用データを投入します（既存の dummy を全削除します）
-	docker compose exec -T postgres psql -U user -d memo -q < apps/api/prisma/seed.sql
+db-seed: ## SCR-005 の動作確認用データを投入します（検証用ユーザー 2 人分の dummy を入れ直します）
+	@# ローカルの PostgreSQL を廃止したため（#101）、psql はコンテナから使い捨てで起動します。
+	@# owner_a は .env の検証用ユーザー（実在）、owner_b は他人役（auth.users には居ない）。
+	@if ! grep -qE '^SUPABASE_USER_UID_1=\"?[0-9a-f]' .env 2>/dev/null; then \
+		echo "エラー: .env に SUPABASE_USER_UID_1 がありません（.env.example の検証用ユーザーの節）" >&2; \
+		exit 1; \
+	fi
+	@set -a; . ./.env; set +a; \
+	docker run --rm -i -e PGPASSWORD="$$SUPABASE_DB_PASSWORD" $(PSQL_IMAGE) psql "$$SUPABASE_DB_SESSION_URL" \
+		-v ON_ERROR_STOP=1 -q \
+		-v owner_a="$$SUPABASE_USER_UID_1" \
+		-v owner_b="00000000-0000-4000-8000-000000000002" \
+		< apps/api/prisma/seed.sql
 
 .PHONY: codegen
 codegen: ## Hasura のスキーマから GraphQL の型を生成します（Hasura の起動が必要）

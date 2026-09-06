@@ -47,18 +47,37 @@
 > 「権限が壊れた」ように見えますが設計どおりの挙動です。確認手順は
 > [project/plan/auth/manual/verify-hook.md](../project/plan/auth/manual/verify-hook.md) にあります。
 
-## PostgreSQL が 2 つある
+## PostgreSQL は 1 つ
 
-**ユーザーの実体とアプリのデータは別インスタンス**にあります。
+**ユーザーの実体とアプリのデータは同じ Supabase の PostgreSQL にあります**（#101）。
+ローカル開発でも同じで、`docker-compose.yml` から `postgres` を外しました。
 
-| DB | 中身 | 所有者 |
+| スキーマ | 中身 | 所有者 |
 | :- | :- | :- |
-| Supabase の PostgreSQL | `auth.users`（メール・パスワードハッシュ） | Supabase |
-| アプリの PostgreSQL | `dummy` などのドメインテーブル | 本プロジェクト（ローカルは Docker） |
+| `auth` | `auth.users`（メール・パスワードハッシュ） | **Supabase**。アプリから直接参照しない |
+| `public` | `users` / `dummy` | 本プロジェクト（正本は `schema.prisma`） |
 
-このため **`users` テーブルを作らず、外部キー制約も張っていません。**
-`dummy.owner_id` は `auth.users.id`（JWT の `sub`）を指す `uuid` ですが、DB では存在確認ができません。
-形式の検証は `OwnerId` 値オブジェクトが担います（[domain-model.md](./domain-model.md) / [er-diagram-notes.md](./er-diagram-notes.md)）。
+`public.users` を挟み、**`dummy.owner_id` は `users.id` への外部キー**です。
+`auth.users` → `public.users` の同期は [supabase/sql/sync_auth_users.sql](../supabase/sql/sync_auth_users.sql) の
+トリガーが受け持ちます（Prisma は `auth` スキーマを管理しないため）。
+
+形式の検証は `OwnerId` 値オブジェクトが引き続き担います。DB の制約とアプリの不変条件は別物です
+（[domain-model.md](./domain-model.md) / [er-diagram-notes.md](./er-diagram-notes.md)）。
+
+> [!WARNING]
+> **オフラインでは開発できません。** ローカルの PostgreSQL を廃止したためです。
+> Hook が `public.users` を読む以上、アプリの DB を Docker に残すと
+> **ローカルだけロールが固定**になり、権限のバグを本番でしか踏めなくなるため受け入れました。
+
+### 接続方式の使い分け
+
+| 用途 | 方式 | ポート |
+| :- | :- | :- |
+| Hasura | session pooler | 5432 |
+| Prisma（実行時） | transaction pooler（`?pgbouncer=true`） | 6543 |
+| Prisma（マイグレーション） | session pooler | 5432 |
+
+**direct 接続（`db.<ref>.supabase.co`）は使いません。** IPv6 のみで、環境によっては名前解決できないためです。
 
 ## メール配信
 
@@ -83,6 +102,8 @@ apps/web ──頼む──▶ Supabase ──SMTP──▶ Resend ──▶ 受
 | 設定 | 正本 |
 | :- | :- |
 | Supabase の認証設定（SMTP / Hook / Redirect URL / レート上限） | [supabase/config.toml](../supabase/config.toml)（`supabase config push` で適用） |
+| 認証 Hook と `auth.users` の同期トリガー | [supabase/sql/](../supabase/sql/)（`make supabase-sql` で適用） |
+| テーブル定義 | [apps/api/prisma/schema.prisma](../apps/api/prisma/schema.prisma)（`make db-push`） |
 | Hasura のメタデータ（テーブル・権限・Actions） | [hasura/metadata/](../hasura/) |
 | 秘匿値・環境ごとの接続先 | `.env` / `apps/api/.env`（どちらも `.gitignore` 済み。枠は `.env.example`） |
 | インフラ | 未定（`infra/` の Terraform は AWS 向けだったため [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除。[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で Cloudflare / Render / GitHub 向けに作り直す） |

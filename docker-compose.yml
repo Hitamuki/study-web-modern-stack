@@ -1,29 +1,24 @@
+# ローカルで動かすのは Hasura だけです。**アプリの DB も Supabase を使います**（#101）。
+#
+# Hook は Supabase の DB 上で動くため、アプリの DB が Docker のままだと public.users が
+# 見えず、ローカルだけロールが固定になります。「権限のバグを本番でしか踏めない」状態を
+# 避けるためにローカルも寄せました。代償として**オフラインでは開発できません**。
 services:
-  postgres:
-    image: postgres:15
-    container_name: study_web_pg
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: memo
-    ports:
-      - "5433:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-
   hasura:
     image: hasura/graphql-engine:v2.20.0
     container_name: study_web_hasura
-    depends_on:
-      - postgres
     ports:
       - "8080:8080"
     # Linux で host.docker.internal を使う場合に必要（Mac/Windows は不要）
     # extra_hosts:
     #   - "host.docker.internal:host-gateway"
     environment:
-      HASURA_GRAPHQL_DATABASE_URL: "postgres://user:password@postgres:5432/memo"
+      # Supabase の session pooler（5432）。direct 接続（db.<ref>.supabase.co）は
+      # **IPv6 のみ**で、環境によっては名前解決すらできないため使いません。
+      # transaction pooler（6543）は prepared statement を使えず、Hasura は既定で使います。
+      HASURA_GRAPHQL_DATABASE_URL: "${SUPABASE_DB_URL:?.env に設定してください（.env.example を参照）}"
+      # 無料枠は同時接続数の上限が小さい。既定の 50 のままだと枠を食い潰します。
+      HASURA_GRAPHQL_PG_CONNECTIONS: "${HASURA_GRAPHQL_PG_CONNECTIONS:-5}"
       HASURA_GRAPHQL_ENABLE_CONSOLE: "true"
       # 平文の既定値は置かない（#89）。未設定なら起動時に落として気づけるようにする。
       HASURA_GRAPHQL_ADMIN_SECRET: "${HASURA_GRAPHQL_ADMIN_SECRET:?.env に設定してください}"
@@ -47,7 +42,3 @@ services:
       HASURA_ACTION_SECRET: "${HASURA_ACTION_SECRET}"
       # HASURA_GRAPHQL_UNAUTHORIZED_ROLE は意図的に設定しない。
       # 設定すると未認証のリクエストがそのロールで通ってしまうため（#22 の AC）。
-
-volumes:
-  postgres-data:
-    name: study_web_pgdata

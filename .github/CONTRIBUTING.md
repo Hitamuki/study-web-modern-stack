@@ -78,7 +78,8 @@ make web-start        # Web だけ
 | コマンド             | 起動するもの                                   | ポート |
 | :------------------- | :--------------------------------------------- | :----- |
 | `make backend-init`  | DB / Hasura の初期化・マイグレーション（起動はしない） | -      |
-| `make backend-start` | PostgreSQL + Hasura + NestJS                    | 5433 / 8080 / 3001（inspector 9229） |
+| `make supabase-sql`  | 認証 Hook と `auth.users` 同期トリガーの適用      | -      |
+| `make backend-start` | Hasura + NestJS（**DB は Supabase**）            | 8080 / 3001（inspector 9229） |
 | `make backend-stop`  | コンテナの停止                                  | -      |
 | `make frontend-start`| Web + Mobile + Desktop                          | 下記すべて |
 | `make web-start`     | Web (Vite)                                      | 5173   |
@@ -160,6 +161,48 @@ AWS を使わないことが決まったため）。`mise.toml` からも `terra
 Cloudflare / Render / GitHub 向けに作り直したときに、この節へ手順を書き直します。
 管理するもの・しないものの切り分けは
 [project/plan/deploy/terraform-scope.md](../project/plan/deploy/terraform-scope.md) が正本です。
+
+## データベース
+
+**アプリの DB は Supabase です**（[#101](https://github.com/Hitamuki/study-web-modern-stack/issues/101)）。
+ローカルの PostgreSQL は廃止しました。
+
+> [!WARNING]
+> **オフラインでは開発できません。** `make dev` がネットワークを要求します。
+> Hook が `public.users` を読む以上、アプリの DB を Docker に残すと
+> **ローカルだけロールが固定**になり、権限のバグを本番でしか踏めなくなるためです。
+
+### 接続方式の使い分け
+
+Supabase は 3 種類の接続を出し分けます。**用途で使い分けが要ります。**
+
+| 用途 | 方式 | ポート | `.env` の変数 |
+| :- | :- | :- | :- |
+| Hasura | session pooler | 5432 | `SUPABASE_DB_URL` |
+| Prisma（実行時） | transaction pooler | 6543 | `SUPABASE_DB_TX_URL` |
+| Prisma（マイグレーション） | session pooler | 5432 | `SUPABASE_DB_SESSION_URL` |
+
+- **transaction pooler は prepared statement を使えません。** Prisma は既定で使うので `?pgbouncer=true` が要ります
+- **direct 接続（`db.<ref>.supabase.co`）は使いません。** IPv6 のみで、環境によっては名前解決すらできません
+- **`HASURA_GRAPHQL_PG_CONNECTIONS` を絞っています**（既定 5）。無料枠の同時接続数の上限が小さいためです
+
+### 正本の分担
+
+| 対象 | 正本 | 適用 |
+| :- | :- | :- |
+| テーブル定義 | `apps/api/prisma/schema.prisma` | `make db-push` |
+| 認証 Hook / `auth.users` 同期トリガー | `supabase/sql/` | `make supabase-sql` |
+| Hasura の権限・Actions | `hasura/metadata/` | `hasura metadata apply` |
+| Supabase の認証設定 | `supabase/config.toml` | `make supabase-push` |
+
+**`auth` スキーマは Supabase の管理下**で Prisma が触れないため、
+`public.users` への同期はトリガー（`supabase/sql/sync_auth_users.sql`）が受け持ちます。
+
+### 本番への反映
+
+`make backend-init` はローカル固定なので、本番には
+`.github/workflows/db-migrate.yml` を**手動起動**して流します（`workflow_dispatch`）。
+既定は差分の確認だけ（`dry_run: true`）です。**DDL は元に戻せない**ので、何を流すか見てから実行してください。
 
 ## 環境変数
 

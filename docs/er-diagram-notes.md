@@ -24,18 +24,33 @@
 - 日時は `timestamptz`。`timestamp` はオフセットが付かず、クライアントがローカル時刻と誤読する
 - `owner_id` は Supabase Auth のユーザー ID（`auth.users.id` = JWT の `sub`）。型は `uuid`
 - `owner_id` に索引。Hasura の行レベル権限が全クエリで条件に入れるため
+- **`owner_id` は `users.id` への外部キー**（#101）。`onDelete: Cascade`
 
-## users（未導入）
+## users
 
-アプリの DB を Supabase へ移した時点で導入する。`schema.prisma` に追加すれば図へ自動で反映される。
+**DB を Supabase に一本化したことで導入した**（#101）。それまで `users` が無く外部キーも
+張れなかったのは、`auth.users` とドメインテーブルが別インスタンスにあったためで、
+同居した時点でその理由が消えた。
 
-- `public.users` を置き、`auth.users.id` を参照する
-- `auth` スキーマは Supabase の管理下。アプリのテーブルから直接参照しない
 - `users.id` は JWT の `sub` と同値。`auth.users` と 1:1
-- `users.role` で利用者ごとに権限を分ける。Hasura のロールに対応させる
-- `dummy.owner_id` は `users.id` への外部キーにする
-- 現在 `users` が無く外部キーも無いのは、`auth.users` とドメインテーブルが別インスタンスにあるため
-- ドメイン層の `OwnerId` による形式検証は外部キー導入後も残す。DB の制約とアプリの不変条件は別物
+- **`auth` スキーマは Supabase の管理下。アプリのテーブルから直接参照しない**（`public.users` を挟む）
+- `users.role` は利用者ごとに権限を分けるための列。Hasura のロール名に対応させる
+- ドメイン層の `OwnerId` による形式検証は**残している**。DB の制約とアプリの不変条件は別物
+
+### auth.users との同期
+
+**Prisma は `auth` スキーマを管理しない**ため、`public.users` の行を作るのは
+[supabase/sql/sync_auth_users.sql](../supabase/sql/sync_auth_users.sql) のトリガーの責務。
+`auth.users` への挿入と同じトランザクションで作る（サインアップ直後に行が無いと外部キーで弾かれるため）。
+
+**`public.users` から `auth.users` への外部キーは張っていない。** シードの「他人役」のように、
+ログインできないが所有者としては存在するユーザーを置けるようにするため。
+
+### role の現状
+
+**値は実質すべて `user`。** Hasura に定義しているロールが `user` の 1 つだけのため（#101 の判断）。
+Hook（[custom_access_token_hook.sql](../supabase/sql/custom_access_token_hook.sql)）は
+`users.role` を読む形になっているので、**ロールを増やせば列の値がそのまま JWT に載る。**
 
 ## 関連
 

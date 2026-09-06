@@ -14,22 +14,46 @@ generator erd {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  // 実行時は transaction pooler（6543）。同時接続数の上限が小さい Supabase 無料枠で、
+  // 短い接続を大量に捌く用途に向く。prepared statement は使えないため ?pgbouncer=true を付ける。
+  url = env("DATABASE_URL")
+  // マイグレーション（prisma db push / migrate）は session pooler（5432）を使う。
+  // DDL は prepared statement と長いセッションを要求するので transaction mode では通らない。
+  // direct 接続（db.<ref>.supabase.co）は IPv6 のみで、環境によっては名前解決できない。
+  directUrl = env("DIRECT_DATABASE_URL")
+}
+
+// アプリ側のユーザー。auth.users とは 1:1 で、id は JWT の sub と同値。
+//
+// auth スキーマは Supabase の管理下なので、アプリのテーブルから直接参照しない。
+// public.users を挟み、auth.users への同期は supabase/sql/sync_auth_users.sql の
+// トリガーが受け持つ（Prisma は auth スキーマを管理しない）。
+model User {
+  id        String   @id @db.Uuid
+  // 利用者ごとに権限を分けるための列。Hasura のロール名に対応させる。
+  // 現在 Hasura に定義しているロールは user だけなので、実質すべて user になる（#101）。
+  role      String   @default("user") @db.Text
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  dummies Dummy[]
+
+  @@map("users")
 }
 
 // SCR-005 ダミー画面の検証用テーブル。実際のドメインが固まるまでの仮置き。
 model Dummy {
   id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  // 所有者は Supabase Auth のユーザー ID（auth.users.id、JWT の sub クレーム）。形式は UUID。
-  // users テーブルを持たず外部キー制約も張らないのは、ユーザーの実体が Supabase 側の
-  // 別 PostgreSQL にあるため（ローカル開発では docker-compose の PostgreSQL を使う）。
-  // 参照整合性を DB で担保できない代わりに、形式の検証はドメイン層の OwnerId が受け持つ。
+  // 所有者。JWT の sub と同値で、public.users への外部キー。
+  // DB が Supabase に一本化されて参照整合性を担保できるようになったため張っている（#101）。
+  // 形式の検証はドメイン層の OwnerId が引き続き受け持つ。DB の制約とアプリの不変条件は別物。
   ownerId   String   @map("owner_id") @db.Uuid
   content   String   @db.Text
   // 日時はドメイン層（UseCase）が明示的に決める。default はコンソールなどからの直接 INSERT 用の保険。
   // Hasura がオフセット付きで返すよう timestamptz を使う（timestamp だとクライアントがローカル時刻と誤読する）。
   createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
+
+  owner User @relation(fields: [ownerId], references: [id], onDelete: Cascade)
 
   // Hasura の行レベル権限が全クエリで owner_id を条件に入れるため索引を張る。
   @@index([ownerId])
