@@ -4,10 +4,15 @@ title: 層 1 — 認証なしの REST を塞ぐ
 description: 公開前に必ず消す穴。/dummies は認証がなく、所有者をリクエストボディから受け取る。
 resource: https://github.com/Hitamuki/study-web-modern-stack/issues/86
 tags: [deploy, apps-api, セキュリティ, 層1]
-status: draft
+status: deprecated
 stale_after: 2026-09-24
 generated: { by: claude-code/claude-fable-5, at: 2026-08-24T00:00:00Z }
 ---
+
+> [!NOTE]
+> **この層は完了しました**（#86 / 2026-09-06）。**計画としての役目は終わっています。**
+> 実際に何を決め、何を反映したかは #86 の「まとめ」が正本です。
+> 以下は着手前に書いた計画で、実装と食い違う箇所がありえます。消さずに残しています。
 
 # 状態
 

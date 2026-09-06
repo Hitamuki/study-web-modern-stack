@@ -12,6 +12,12 @@ generated: { by: claude-code/claude-opus-5, at: 2026-09-05T00:00:00Z }
 > [!NOTE]
 > **Discussion [#29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29) は
 > 2026-09-06 に決着した。** この段階の DoR は満たされている。
+> **段階 1・2 も同日に完了した**ので、層 6 から順に着手できる。
+
+> [!IMPORTANT]
+> **ここから先は外部サービスの操作が挟まる。** アカウントの作成、トークンの発行、
+> ダッシュボードでの設定はエージェントが代行できない。何が必要かは
+> [index.md](/project/plan/deploy/index.md) の「着手前に人間がやること」にまとめてある。
 
 # 確定した載せ先
 
@@ -72,7 +78,9 @@ generated: { by: claude-code/claude-opus-5, at: 2026-09-05T00:00:00Z }
 > それを `github_actions_variable` として書き出せば手でコピーせずに済む。
 > **secret は Terraform で作らない**（値が state に平文で入るため。`gh secret set` を使う）。
 
-- state をどこに置くか（同ファイルの「state の置き場所」）
+- **state はローカルに置く（暫定 / 2026-09-06 の判断）。** つまり **CI から `apply` しない。**
+  無料枠の条件が未検証のままなので、必要になった時点でリモート state を検討する
+  （同ファイルの「state の置き場所」）
 - `mise.toml` に `terraform` / `tflint` / `terraform-docs` を戻す
 - README の【成功の定義】2（`plan` が通り `test` が成功する）を**ここで回復させる**
 - `Makefile` に Terraform のターゲットを足すか
