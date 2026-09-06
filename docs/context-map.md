@@ -92,7 +92,7 @@ flowchart TB
 
 このため **`users` テーブルを作らず、外部キー制約も張っていません。**
 `dummy.owner_id` は `auth.users.id`（JWT の `sub`）を指す `uuid` ですが、DB では存在確認ができません。
-形式の検証は `OwnerId` 値オブジェクトが担います（[domain-model.md](./domain-model.md) / [er-diagram.md](./er-diagram.md)）。
+形式の検証は `OwnerId` 値オブジェクトが担います（[domain-model.md](./domain-model.md) / [er-diagram-notes.md](./er-diagram-notes.md)）。
 
 ## メール配信
 

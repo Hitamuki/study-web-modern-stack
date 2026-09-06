@@ -25,6 +25,7 @@
     "@types/express": "catalog:backend",
     "@types/node": "catalog:",
     "typescript": "catalog:",
-    "eslint": "catalog:"
+    "eslint": "catalog:",
+    "prisma-erd-generator": "catalog:backend"
   }
 }
