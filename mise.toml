@@ -5,6 +5,5 @@ terraform = "latest"
 tflint = "latest"
 terraform-docs = "latest"
 hasura-cli = "latest"
-# Supabase CLI。検証用ユーザーの作成とプロジェクト操作に使う（Discussion #19）
 supabase = "latest"
 github-cli = "latest"
