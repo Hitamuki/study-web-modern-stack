@@ -15,6 +15,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 - **ソースコード管理**: Git / GitHub
   - **開発フロー**: GitHub Stacked PRs (`gh stack`)
+  - **CI**: GitHub Actions（PR / `main` への push で `make check`）
 - **パッケージ管理**: pnpm (Workspace / Catalogs)
 - **ビルドツール**: Turborepo
 - **静的解析**: ESLint (typescript-eslint の型認識ルール)

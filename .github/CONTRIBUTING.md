@@ -161,6 +161,24 @@ Cloudflare / Render / GitHub 向けに作り直したときに、この節へ手
 管理するもの・しないものの切り分けは
 [project/plan/deploy/terraform-scope.md](../project/plan/deploy/terraform-scope.md) が正本です。
 
+## CI
+
+`.github/workflows/check.yml` が PR と `main` への push で `make check`
+（format-check / lint / test）を回します（[#88](https://github.com/Hitamuki/study-web-modern-stack/issues/88)）。
+ツールのバージョンは `mise.toml` が正本で、CI 側では二重管理しません。
+
+> [!WARNING]
+> **CI が緑でも「動作が壊れていない」ことにはなりません。**
+> `test` スクリプトを持つパッケージが 1 つも無いため、`make check` の `turbo run test` は
+> **0 タスク**です。担保しているのは整形（Biome）と静的解析（ESLint）だけです。
+> → [project/plan/deploy/findings.md](../project/plan/deploy/findings.md) の 3
+
+**`main` にブランチ保護は掛けていません。** CI が赤くてもマージは可能です。
+マージ前に Actions の結果を自分で確認してください。
+
+デプロイの workflow はまだありません。段階 3
+（[project/plan/deploy/phase-3.md](../project/plan/deploy/phase-3.md) の層 11）で足します。
+
 ## 開発フロー
 
 本リポジトリでは GitHub の **Stacked PRs**（積み上げ式プルリクエスト）で開発します。
