@@ -44,9 +44,17 @@ RESEND_API_KEY=""
 `apps/api/.env` に追記する値。**`HASURA_ACTION_SECRET` は上と同じ値**にします。
 
 ```bash
-DATABASE_URL="postgres://user:password@localhost:5433/memo"
+# Supabase の transaction pooler（6543）。#101 でローカルの PostgreSQL は廃止しました。
+DATABASE_URL="postgresql://postgres.<project-ref>:<パスワード>@aws-<n>-<region>.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
+# マイグレーション用の session pooler（5432）。DDL は transaction mode では通りません。
+DIRECT_DATABASE_URL="postgresql://postgres.<project-ref>:<パスワード>@aws-<n>-<region>.pooler.supabase.com:5432/postgres?sslmode=require"
 HASURA_ACTION_SECRET="<上と同じ値>"
 ```
+
+> [!NOTE]
+> 接続文字列は Supabase ダッシュボードの **Project Settings > Database** からコピーします。
+> pooler ホストの `<n>` は環境で変わるので、推測せず画面の値を使ってください。
+> 使い分けの理由は [.github/CONTRIBUTING.md](/.github/CONTRIBUTING.md) の「データベース」にあります。
 
 > [!IMPORTANT]
 > **service_role キーはどこにも書かないでください。** 全権を持ちます。

@@ -73,6 +73,10 @@ Hasura を PostgreSQL に接続することで、データベーススキーマ�
 
 ### 8. Docker Compose によるローカル開発環境の簡易構築
 
+> **追記（2026-09-06）**: [#101](https://github.com/Hitamuki/study-web-modern-stack/issues/101) で
+> **アプリの DB も Supabase に移し、`docker-compose.yml` から `postgres` を外しました。**
+> いまローカルで動く自前のコンテナは Hasura だけです。以下は当時の記録です。
+
 `docker-compose.yml` を用いて PostgreSQL と Hasura を一括起動。コンテナ間ネットワークにより Hasura が Postgres に接続可能。ホストポートの競合を避けるため、5433:5432 のマッピングを実施。
 
 ### 9. Hasura コンソールの操作体験

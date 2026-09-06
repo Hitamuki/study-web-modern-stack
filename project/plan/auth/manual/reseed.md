@@ -22,29 +22,37 @@ Supabase で作った実ユーザーの UUID とは一致しません。差し�
 
 > [!NOTE]
 > **2 つの DB は「JWT の中の UUID」だけで繋がっています。**
-> ユーザーの実体は Supabase 側の `auth.users`、メモはローカルの Docker PostgreSQL にあり、
-> 外部キーも JOIN もありません（Issue #21 の判断）。だから手で揃える必要があります。
+> [!NOTE]
+> **この差し替えは #101 で不要になりました。**
+> `make db-seed` が `.env` の `SUPABASE_USER_UID_1` をそのまま所有者に使うようになったためです。
+> 以下は当時の記録です。
 
-# 手順
-
-手順 1 で控えた 2 人の UUID を使います。
+**いまの手順は `make db-seed` だけです。**
 
 ```bash
 make backend-up
+make db-seed
+```
+
+`.env` の `SUPABASE_USER_UID_1`（実在する検証用ユーザー）に 3 件、
+他人役の `00000000-0000-4000-8000-000000000002` に 1 件が付きます。
+
+他人役は `auth.users` に存在しないためログインできませんが、
+「他人のレコードが見えないこと」を確かめる相手としては十分です。
+`public.users` から `auth.users` への外部キーは張っていないので、この行を置けます。
+
+## 以前の手順（#101 より前）
+
+ユーザーの実体は Supabase 側の `auth.users`、メモはローカルの Docker PostgreSQL にあり、
+外部キーも JOIN もありませんでした（Issue #21 の判断）。そのため手で揃える必要がありました。
+
+```bash
 make db-seed    # 固定 UUID の状態に戻す
 
 docker compose exec -T postgres psql -U user -d memo <<'SQL'
 UPDATE dummy SET owner_id = '<ユーザー A の UUID>'
  WHERE owner_id = '00000000-0000-4000-8000-000000000001';
-UPDATE dummy SET owner_id = '<ユーザー B の UUID>'
- WHERE owner_id = '00000000-0000-4000-8000-000000000002';
-SELECT owner_id, count(*) FROM dummy GROUP BY owner_id ORDER BY owner_id;
 SQL
 ```
-
-A に 3 件、B に 1 件が付いていれば完了です。
-
-> [!TIP]
-> `make db-seed` を流すたびに固定 UUID へ戻ります。差し替えも合わせて実行するようにしてください。
 
 **次は [../verification.md](/project/plan/auth/verification.md) の通し検証です。**

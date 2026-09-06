@@ -1,0 +1,73 @@
+# 本番の Supabase へスキーマを反映する。
+#
+# `make backend-init` はローカル固定（.env を読む）なので、本番用の経路が別に要る
+# → project/plan/deploy/findings.md の 6
+#
+# **手動起動のみ。** main へのマージで勝手に流さない。DDL は元に戻せないため、
+# 何を流すかを見てから人が起動する。
+name: db-migrate
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 反映先
+        required: true
+        default: production
+        type: choice
+        options:
+          - production
+      dry_run:
+        description: 差分の確認だけ行う（DB を変更しない）
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    name: prisma db push
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: jdx/mise-action@v2
+        with:
+          install_args: node pnpm
+
+      - run: make install
+
+      # 反映先は environment の secret から渡す。
+      # DIRECT_DATABASE_URL は session pooler（5432）。DDL は transaction pooler（6543）では通らない。
+      - name: 差分を確認する
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_TX_URL }}
+          DIRECT_DATABASE_URL: ${{ secrets.SUPABASE_DB_SESSION_URL }}
+        run: pnpm --filter @memo-app/api exec prisma migrate diff
+          --from-url "$DIRECT_DATABASE_URL"
+          --to-schema-datamodel prisma/schema.prisma
+          --script
+
+      - name: スキーマを反映する
+        if: ${{ !inputs.dry_run }}
+        env:
+          DATABASE_URL: ${{ secrets.SUPABASE_DB_TX_URL }}
+          DIRECT_DATABASE_URL: ${{ secrets.SUPABASE_DB_SESSION_URL }}
+        run: pnpm --filter @memo-app/api exec prisma db push --skip-generate
+
+      # Prisma が管理しないもの（認証 Hook、auth.users の同期トリガー）。
+      # 何度流しても同じ結果になるように書いてある。
+      - name: supabase/sql を適用する
+        if: ${{ !inputs.dry_run }}
+        env:
+          PGPASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
+          SESSION_URL: ${{ secrets.SUPABASE_DB_SESSION_URL }}
+        run: |
+          sudo apt-get update && sudo apt-get install -y --no-install-recommends postgresql-client
+          for f in supabase/sql/*.sql; do
+            echo "適用: $f"
+            psql "$SESSION_URL" -v ON_ERROR_STOP=1 -q < "$f"
+          done
