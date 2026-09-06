@@ -284,7 +284,8 @@ user = "resend"
 pass = "env(RESEND_API_KEY)"
 # #71: 検証済みドメインのアドレスに差し替える。
 admin_email = "noreply@example.com"
-sender_name = "study-web-modern-stack"
+# 受信者の一覧に表示される差出人名。Discussion #46 で決めたラテン文字表記に揃える。
+sender_name = "SK8TrickHub"
 
 # Uncomment to customize email template
 # [auth.email.template.invite]
