@@ -22,7 +22,8 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 - **整形**: Biome (Formatter)
 - **インフラ**: 無料枠の PaaS / Terraform (tffmt, tflint, terraform plan, terraform test)
   - 載せ先は Cloudflare Workers / Hasura Cloud / Supabase / Render（[Discussion #29](https://github.com/Hitamuki/study-web-modern-stack/discussions/29)）
-  - `infra/` は AWS 向けだったため [#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で削除。[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で載せ先向けに作り直す
+  - `infra/` が管理するのは **Cloudflare / Render / GitHub** のみ（[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100)）
+  - **Cloudflare CLI**: `cf`（`mise.toml` では `"npm:cf"`。素の `cf` は Cloud Foundry なので注意）
 - **ミドルウェア**: Hasura (GraphQL Engine)
 - **データベース**: PostgreSQL
 - **バックエンド**: TypeScript / Node.js / NestJS
@@ -49,7 +50,7 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 ### インフラ準備
 
-- **Terraform**（AWS 向けに実施済み。[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で `infra/` ごと削除し、[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で無料枠プラットフォーム向けに作り直す）
+- **Terraform**（AWS 向けの実績。[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で `infra/` ごと削除し、[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で Cloudflare / Render / GitHub 向けに作り直した）
   - ✅`main.tf` への基本リソース（VPC/RDS）定義
   - ✅`terraform fmt` による自動整形
   - ✅`terraform validate` による構文チェック
@@ -57,6 +58,12 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
   - ✅`terraform plan` による実行計画の確認
   - ✅`terraform test` による変数・バリデーションの簡易テスト実装
   - ✅`terraform-docs` による自動ドキュメント生成
+- **Terraform の再導入**（無料枠向け / [#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100)）
+  - ✅Cloudflare Workers（静的アセット + カスタムドメイン）と Cloudflare DNS の定義
+  - ✅Render の Web Service（Docker）の定義
+  - ✅GitHub Actions の変数を Terraform の出力から生成
+  - ✅既存の Resend 用 DNS レコードを `import` ブロックで取り込み
+  - ✅`terraform test` による plan の検証（有料プランを弾く `validation` を含む）
 
 ### バックエンドロジック & Hasura 連携
 
@@ -134,7 +141,6 @@ pnpm Catalogs と Turborepo を用いたモノレポ構成で、インフラ（�
 
 1. GitHub にコードが管理され、ESLint の解析をパスしていること
 2. Terraform で `plan` が通り、`test` が成功すること
-   - **[#99](https://github.com/Hitamuki/study-web-modern-stack/issues/99) で `infra/` を削除したため、一時的に満たせない。**[#100](https://github.com/Hitamuki/study-web-modern-stack/issues/100) で回復する
 3. Hasura Actions を経由して NestJS のドメインロジックが実行されること
 4. フロントエンド（Web、モバイル、デスクトップ）から、同一の GraphQL API を通じてメモが表示・投稿できること
 5. 無料枠のサービスで常設稼働すること
